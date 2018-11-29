@@ -51,6 +51,9 @@ function pageFunction( page ){ // called in loadPage() / pageHashLoad()
     case 'reservations':
       mainReservations();
       break;
+    case 'reservations/view' :
+      viewReservation( args );
+      break;
     case 'reservations/overview' :
       overviewReservations();
       break;

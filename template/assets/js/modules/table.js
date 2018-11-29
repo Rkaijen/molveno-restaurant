@@ -44,9 +44,22 @@ function getTablesSeats( tables ){
   }
 }
 
+function getTablesReservationNotOccupied(){
+  let tables = [];
+  for( let table of _glob.arr.tables ){
+    if( !isTableReservationOccupied( table.id ) ){
+      tables.push( table )
+    }
+  }
+  return tables
+}
+
 function getTableBySeats( persons ){
-    for( let table of _glob.arr.tables ){
-      if( persons/1 <= table.seats/1 ){
+    let tables = getTablesReservationNotOccupied()
+    tables.sort((a, b) => parseFloat(a.chairs) - parseFloat(b.chairs));
+    console.log( tables )
+    for( let table of tables  ){
+      if( persons/1 <= table.chairs/1  ){
         return table.id;
       }
     }

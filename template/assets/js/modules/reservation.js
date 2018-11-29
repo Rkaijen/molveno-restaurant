@@ -64,7 +64,7 @@ function addReservation(){
       for( let reservation of _glob.arr.reservations ) chairs -= table_chairs( reservation.table );
       // select random unoccupied table
       let table = tableReservation();
-      console.log(table)
+
       document.querySelector( `select#table_select option[value="${table}"]`).selected = true;
       $( 'label[for="table_select"]').show(); // show label for table select
       let update_header = () => {
@@ -126,11 +126,19 @@ function addReservation(){
                 update_header();
               }else { // next table is occupied; select previous table
                 if( !isTableReservationOccupied( tables_arr[tables_arr.length-1]-1 ) ){ // check if previous table is occupied
-                  document.querySelector( `select#table_select option[value="${tables_arr[tables_arr.length-1]-1}"]`).selected = true;
-                  update_header();
+                  try{
+                    document.querySelector( `select#table_select option[value="${tables_arr[tables_arr.length-1]-1}"]`).selected = true;
+                    update_header();
+                  }catch{
+                    let new_table = getTableBySeats( document.querySelector('input#persons').value );
+                    console.log( new_table )
+                    document.querySelector( `select#table_select option[value="${new_table}"]`).selected = true;
+                    update_header();
+                    checkPersonsTableSeats();
+                  }
                 }else{ // previous table is occupied; select new table and check if it's occupied
                   let new_table = getTableBySeats( document.querySelector('input#persons').value );
-              
+
                   document.querySelector( `select#table_select option[value="${new_table}"]`).selected = true;
                   checkPersonsTableSeats();
                   //if( !isTableReservationOccupied( tableReservation() ) )
@@ -208,147 +216,6 @@ function addReservation(){
       });
   });
 
-  /*add_form = document.createElement( 'form' ), // form element which is added
-  reservations = new Reservation, // class instance
-  prop_label = reservations.propertyLabels(), // call method of instance for labels input
-  add_form_header = document.createElement( 'h3' );
-  add_form_header.innerText = 'Add Reservation';
-  let add_form_fields = [ // form fields & labels; update to add/remove fields
-    { id : 'guest', label : prop_label.guest },
-    { id : 'timestamp', label : prop_label.timestamp },
-    { id : 'persons', label : prop_label.persons },
-    { id : 'table', label : prop_label.table }
-  ]
-  let valid_date = false,
-  valid_data = true;
-  for( let field of add_form_fields ){
-
-    if ( field.id === 'table' ) { // TODO : select table(s) for this reservation
-
-
-      let add_form_field = document.createElement( 'input' ),
-      select_table_rand = tableReservation(); // returns random available table
-      add_form_field.setAttribute( 'type', 'hidden' )
-      add_form_field.setAttribute( 'id', 'table' )
-
-      add_form_field.value = select_table_rand;
-      add_form.appendChild( add_form_field );
-      let add_form_field_table_label = document.createElement( 'div' ),
-      add_form_field_table_val = document.createElement( 'div' ),
-      add_form_row = document.createElement( 'div' );
-      add_form_row.setAttribute( 'class','row' );
-
-
-      add_form_field_table_label.setAttribute( 'class', 'col-sm-2' );
-      add_form_field_table_label.innerText = 'Table'
-      add_form_field_table_val.setAttribute( 'class', 'col-sm-10' );
-      add_form_field_table_val.setAttribute( 'id', 'table_val' );
-      add_form_field_table_val.innerText = select_table_rand;
-      add_form_row.appendChild(add_form_field_table_label );
-      add_form_row.appendChild(add_form_field_table_val );
-      add_form.appendChild( add_form_row );
-
-    /*}else if ( field.id === 'timestamp' ) {
-    // TODO: let the new CrEl() magic happen!
-
-      let row,col,form_group,label,input
-      //row
-      row = document.createElement( 'div' )
-            row.setAttribute( 'class', 'row' );
-      //row =  new CrEl( add_form ).create('div')
-        //.attr('class','row');
-
-        // col label
-        col = new CrEl( row ).create('div')
-          .attr('class','col-sm-2 col-form-label');
-          // label
-          label = new CrEl( col ).create('label') // TODO: Uncaught TypeError: this.parent.appendChild is not a function (crEl.js:18)
-          .attr('for','date')
-          .inner('Date/Time');
-
-        // col date
-        col = new CrEl( row ).create('div')
-        .attr('class','col-sm-5 col-form-label');
-        // form-group date
-        form_group = new CrEl( col )
-          .attr('class','form group');
-          // label date
-          label = new CrEl( form_group ).create('label')
-            .attr('for','date')
-            .inner('Date');
-          // input date
-          input = new CrEl( form_group ).create('input')
-          .attr('type', 'hidden')
-          .attr('id', 'date')
-          .attr('placeholder','Date')
-          .attr('autocomplete', 'off');
-
-
-        // col time
-        col = new CrEl( row ).create('div')
-        .attr('class','col-sm-5 col-form-label');
-        // form-group date
-        form_group = new CrEl( col )
-          .attr('class','form group');
-          // label date
-          label = new CrEl( form_group ).create('label')
-            .attr('for','time')
-            .inner('Time');
-          // input date
-          input = new CrEl( form_group ).create('input')
-          .attr('type', 'hidden')
-          .attr('id', 'time')
-          .attr('placeholder','Time')
-          .attr('autocomplete', 'off');
-
-
-
-
-    }else{
-      let add_form_field = document.createElement( 'input' ),
-      add_form_field_col = document.createElement( 'div' ),
-      add_form_label = document.createElement( 'label' ),
-      add_form_row = document.createElement( 'div' );
-      // form row
-      add_form_row.setAttribute( 'class','form-group row' );
-      // label
-      add_form_label.innerText = field.label;
-      add_form_label.setAttribute( 'class', 'col-sm-2 col-form-label' );
-      add_form_label.setAttribute( 'for', field.id );
-      add_form_row.appendChild( add_form_label );
-      // input
-      add_form_field.setAttribute( 'id', field.id );
-      add_form_field.setAttribute( 'autocomplete','off' );
-      if ( field.id === 'persons' ){
-        add_form_field.setAttribute( 'type','number' );
-      }
-      add_form_field.setAttribute( 'class', 'form-control');
-      add_form_field_col.setAttribute( 'class', 'col-sm-10' );
-      add_form_field_col.appendChild( add_form_field );
-      add_form_row.appendChild( add_form_field_col );
-      add_form.appendChild( add_form_row );
-
-
-
-    }
-
-  }
-
-  // submit button
-  let button_submit = document.createElement( 'button' ),
-  add_form_row = document.createElement( 'div' );
-  add_form_row.setAttribute( 'class','row' );
-  add_form_row.setAttribute( 'style','padding:10px;' );
-  button_submit.setAttribute( 'class', 'btn ')
-  button_submit.innerText = 'Add Reservation';
-  add_form_row.appendChild( button_submit )
-  add_form.appendChild( add_form_row )
-
-  output.innerHTML  = ''; // clear output
-  output.appendChild( add_form_header );
-  output.appendChild( add_form ); // append form to output
-  //let valid_data = true;*/
-
   $( 'nav#primary a#reservations').addClass( 'active' );
 }//
 
@@ -409,6 +276,7 @@ function overviewReservations(){
     button_edit.innerHTML = '<i class="far fa-edit"></i> Edit';
     button_edit.addEventListener( 'click', (event) => {
       updateReservation( item.id )
+      //location.hash = `#reservations/update/${item.id}`
     });
 
     let button_delete = document.createElement( 'button' );
@@ -416,6 +284,7 @@ function overviewReservations(){
     button_delete.innerHTML = '<i class="fas fa-minus-circle"></i> Delete';
     button_delete.addEventListener( 'click', (event) => {
       deleteReservation( item.id )
+      //location.hash = `#reservations/delete/${item.id}`;
     });
 
     let button_group = document.createElement( 'div' );
@@ -611,8 +480,8 @@ function viewReservation( id ){
   let nav_tab_view = document.createElement( 'li' );
   nav_tab_view.setAttribute( 'class', 'nav-item' );
   nav_tab_view.setAttribute( 'id', 'nav_tab_delete' );
-  nav_tab_view.innerHTML = '<a href="#" class="nav-link active"><i class="fas fa-minus-circle"></i> View Reservation</a> ';
-
+  nav_tab_view.innerHTML = '<a href="#" class="nav-link active"> View Reservation</a> ';
+  console.log( id )
 }
 
 
@@ -633,7 +502,7 @@ function deleteReservation( id ){
   let nav_tab_delete = document.createElement( 'li' );
   nav_tab_delete.setAttribute( 'class', 'nav-item' );
   nav_tab_delete.setAttribute( 'id', 'nav_tab_delete' );
-  nav_tab_delete.innerHTML = '<a href="#" class="nav-link active"><i class="fas fa-minus-circle"></i> Delete Reservation</a> ';
+  nav_tab_delete.innerHTML = '<a href="#reservations/delete" class="nav-link active"><i class="fas fa-minus-circle"></i> Delete Reservation</a> ';
 
   //nav_tab_delete.innerHTML = '<a href="#" class="nav-link active">Delete Reservation</a> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
   nav_tab_delete.addEventListener( 'click', (event) => {
