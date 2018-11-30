@@ -43,12 +43,26 @@ function addReservation(){
         $(`label[for="${event.target.id}"]`).fadeIn(); // show label on input change (placeholders are not visible)
       });
       // date input
-      $('input#date').datepicker( { format:'dd-mm-yyyy', startDate: '0' }).on( 'change' , (event) =>{
-        $('#date_feedback').remove();
-        $('input#date').after(`<small class="muted feedback" id="date_feedback">${moment(event.target.value, "DD-MM-YYYY").calendar()}</div>`);
-      });
-      //$('input#time_arrival').timepicker();
+      $('input#date').datepicker( { format:'dd-mm-yyyy', startDate: '0' }).on( 'change' , (event) => update_date() );
 
+      let update_date = () => {
+        $('#date_feedback').remove();
+        let input_date = $('input#date').val() + ' '+ $('input#time_arrival').val();
+
+        $('input#date').after(`<small class="muted feedback" id="date_feedback">${moment(input_date,'DD-MM-YYYY h:mm a').calendar()}</div>`);
+
+      }
+      $('input#time_arrival').val( moment().format('LT')).timepicker({template: false,
+                showInputs: false,
+                minuteStep: 5}).on( 'change' , (event) => {
+                  update_date();
+                  console.log( $('input#time_arrival').val() )
+
+                  $('input#time_depart').val( moment( $('input#time_arrival').val(), 'h:mm a' ).add(3,'hours').format('LT') )
+                });
+      $('input#time_depart').val (moment( $('input#time_arrival').val(), 'h:mm a' ).add(3,'hours') ).timepicker({template: false,
+                showInputs: false,
+                minuteStep: 5});
       let chairs=0;
       for( let table of _glob.arr.tables ) chairs +=table.chairs // total amount of chairs
 
@@ -89,6 +103,9 @@ function addReservation(){
 
         $( '#page_output h3').html( `Add Reservation <small class="text-muted">for <b>${name}</b> at table <b>${tables.join('+')}</b> (${seats} seats)<small>`);
       }
+      $( `select#table_select` ).on( 'change', (event) =>{
+        console.log( $( `select#table_select` ).val() )
+      });
       $('input#firstname,input#preposition,input#lastname').on( 'keyup', ( event ) => update_header() );
       $('select#table_select').on( 'change', ( event ) => update_header() );
       table = document.querySelector( `select#table_select` );
@@ -236,7 +253,6 @@ function overviewReservations(){
     { label : 'Guest', field : 'guest' },
     { label : 'Persons', field : 'persons' },
     { label : 'Table', field : 'table' },
-    //{ label : 'Paid', field : 'hasPaid'},
     { label : '', field : 'options' },
 
   ]
@@ -289,7 +305,6 @@ function overviewReservations(){
 
     let button_group = document.createElement( 'div' );
     button_group.setAttribute( 'class','btn-group btn-group-sm' );
-    //button_group.appendChild( button_paid );
     button_group.appendChild( button_edit );
     button_group.appendChild( button_delete );
 
@@ -300,16 +315,6 @@ function overviewReservations(){
         table_td.setAttribute( 'style', 'text-align:right;width:125px;')
         table_td.appendChild( button_group );
 
-      }else if (field.field === 'hasPaid'){
-        if( item[ field.field ] ){
-          table_td.innerHTML = '<i class="far fa-check-square"></i>';
-        }else{
-          table_td.innerHTML = '<i class="far fa-square"></i>';
-        }
-        table_td.addEventListener( 'click', (event) =>{
-          hasPaidReservation(!(item.hasPaid), item.id)
-        })
-        table_td.setAttribute( 'style','cursor:pointer')
 
       }else if (field.field === 'timestamp') {
 
@@ -534,11 +539,7 @@ function deleteReservation( id ){
   button_confirm.setAttribute( 'style', 'margin-right:5px;')
   button_confirm.innerText = 'Delete';
   button_confirm.addEventListener( 'click', (event) => {
-    /*for( let i = 0; i < arrayReservation.length-1; i++){
-      if ( arrayReservation[i].id === id) {
-        arrayReservation.splice(i, 1);
-      }
-    } */
+
     let tmp_arr = [];
     for( let item of arrayReservation ){
       if( item.id !== id ){ // remove by exclusion
