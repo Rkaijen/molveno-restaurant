@@ -534,11 +534,7 @@ function deleteReservation( id ){
   button_confirm.setAttribute( 'style', 'margin-right:5px;')
   button_confirm.innerText = 'Delete';
   button_confirm.addEventListener( 'click', (event) => {
-    /*for( let i = 0; i < arrayReservation.length-1; i++){
-      if ( arrayReservation[i].id === id) {
-        arrayReservation.splice(i, 1);
-      }
-    } */
+
     let tmp_arr = [];
     for( let item of arrayReservation ){
       if( item.id !== id ){ // remove by exclusion
