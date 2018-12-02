@@ -34,6 +34,10 @@ function getRandomInt(min, max) { // random nummer tussen min en max
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+
+function setModule( id, action ){
+  glob( 'module', id, () => action() )
+}
 function data( element, name, value ) { // data-[name] attribute
 
     element = document.querySelector( element );

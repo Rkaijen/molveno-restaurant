@@ -4,15 +4,6 @@
 */
 function globArr(){
 
-
-  /*
-  let pages = [];
-  for( let _module in modules ){
-    glob( 'arr', 'pages', { id : _module.id, label : })
-  }
-  */
-
-
   glob( 'arr', 'reservations' , [
     //id, timestamp, guest, persons, table, arrangement, comments
     // http://listofrandomnames.com/index.cfm?generated
@@ -110,18 +101,20 @@ function globArr(){
 function globModule(){
 
   let modules = [
-    { id : 'dashboard', label : 'Dashboard',
-      module : () => { // _glob.module.dashboard(); _glob.module[ 'dashboard' ]();
-      // mainDashboard
-      }
-    },
-    { id : 'reservations', label : 'Manage Reservations',
-      module : () => {
-        mainReservations();
-      }
-    },
+    { id : 'dashboard', label : 'Dashboard', primaryNav : true, module : () => mainDashboard() },
+    { id : 'reservations', label : 'Manage Reservations', primaryNav : true, module : () => mainReservations() },
   ];
   for( let _module in modules ){
     glob( 'module', _module.id, _module.module );
+
   }
+
+
+    /*
+    let pages = [];
+    for( let _module in modules ){
+      glob( 'arr', 'pages', { id : _module.id, label : })
+    }
+    */
+
 }

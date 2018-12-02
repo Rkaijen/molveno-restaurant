@@ -17,7 +17,7 @@ let reservation = {
 }
 
 /* einde nep gegevens */
-
+glob( 'module', 'invoices', () => mainInvoices() )
 function mainInvoices(){
   showInvoice(reservation);
 }

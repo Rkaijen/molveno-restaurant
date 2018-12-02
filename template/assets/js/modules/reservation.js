@@ -3,39 +3,33 @@
 * assets/js/modules/reservation.js
 * TODO ccolombijn : addReservation() - table selection / date/time input & validation
 *
-*        tableReservation()
-*        updateReservation() - build form
-*                            - populate with data from array
-*                            - pointer via location.hash?
-*       deleteReservation()  - ''
-* decrease amount of code with helpers/tools
+*
 * integration REST API
 */
-
-function mainReservations(){
-  overviewReservations();
-}
+setModule( 'reservations', () => overviewReservations() )
+setModule( 'reservations/add', () => addReservation() )
+setModule( 'reservations/overview', () => overviewReservations() )
+setModule( 'reservations/update', () => updateReservation( location.hash.split('/')[2]) )
+setModule( 'reservations/delete', () => deleteReservation( location.hash.split('/')[2]) )
+setModule( 'reservations/view', () => viewReservation( location.hash.split('/')[2]) )
 
 function getReservation( id ){
-  for( let reservation of _glob.arr.reservations ){
-    if( reservation.id/1 === id/1 ) return reservation
-  }
+  for( let reservation of _glob.arr.reservations ) if( reservation.id/1 === id/1 ) return reservation
 }
 
 function setReservation( reservation ){
-  for(let i = 0; i < _glob.arr.reservations.length; i++){
-    if( _glob.arr.reservations[i].id/1 === reservation.id/1 ) _glob.arr.reservations[i] = reservation
-  }
+  for( let i = 0; i < _glob.arr.reservations.length; i++) if( _glob.arr.reservations[i].id/1 === reservation.id/1 ) _glob.arr.reservations[i] = reservation
 }
 
 
 /* -----------------------------------------------------------------------------
 * add
 */
+
 function addReservation(){
   let arrayReservation = _glob.arr.reservations;
   navActiveItm( 'reservations/add' );
-  let output = document.querySelector( '#page_output' ); // element for ouput in UI
+  let output = document.querySelector( '#page_output' );
   $( output ).load( 'templates/add-reservation.html', ()=> {
       let add_form = document.querySelector( '#page_output form' ),
       valid_date = false,
@@ -373,36 +367,34 @@ function overviewReservations(){
 /* -----------------------------------------------------------------------------
 * update
 */
+
 function updateReservation( id ){
   navTab({
-    id : 'update',
-    hashlocation : `#reservations/update/${id}`,
-    icon : '',
-    label : 'Edit Reservation',
+    id : 'update', hashlocation : `#reservations/update/${id}`, icon : '', label : 'Edit Reservation',
     action : () => {
       updateReservation( id )
     }
   })
   let output = document.querySelector( '#page_output' )
   $( output ).load( 'templates/update-reservation.html', () => {
-    let form = document.querySelector( '#page_output form'),
-    update_reservation = form.elements,
-    reservation = getReservation( id ),
+    let form = output.querySelector( 'form'),
+    update_reservation = form.elements, reservation = getReservation( id ),
     guest_fields = [ 'firstname', 'preposition', 'lastname', 'email', 'telephone' ];
     for( let field of update_reservation ){
       if( guest_fields.includes( field.id ) ){
         field.setAttribute( 'disabled', 'disabled' )
         let guest = getGuest( reservation.guest )
         field.value = guest[ field.id ]
+        for( let guest_field of guest_fields ) if( guest[ guest_field ] === '' ) $( `#col_${guest_field}` ).hide()
+        $( 'button#edit_guest' ).on( 'click', (event) => location.hash = `#guest/update/${guest.id}` )
       }else if ( field.id === 'table_select' ) {
-
         for( let table of reservation.table ) document.querySelector( `select#table_select option[value="${table}"]`).selected = true;
       } else {
         field.value = reservation[ field.id ]
       }
     }
     $( form ).on( 'submit', (event) => {
-      event.preventDefault;
+      event.preventDefault();
       update_reservation = event.target.elements;
       setReservation({
         id : id,

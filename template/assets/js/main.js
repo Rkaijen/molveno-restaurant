@@ -43,7 +43,8 @@
 
 
     globArr();
-    globModule();
+    
+    console.log( _glob )
     navMenu( _glob.arr.pages );
     pageHashLoad();
     window.onhashchange = pageHashLoad;
