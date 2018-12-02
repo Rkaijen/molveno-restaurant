@@ -34,22 +34,34 @@ function navItm( item ){
   navItm_li.appendChild( navItm_a );
   return navItm_li;
 }
-/*
-function navClickEvent( event ){
-  //event.preventDefault();
-  pageLoader( event.target );
-  navActiveItm( event.target.href );
+
+function navTab( item ){
+  $( 'a.nav-link' ).removeClass('active');
+  navTabRemove( item.id )
+  $(`nav#primary a${item.hashlocation.split('/')[0]}`).addClass('active')
+  //if( $( `#nav_tab_${item.id} a[href="item.hashlocation"]` ).length > 0 ){
+  //  navActiveItm( item.hashlocation.slice(1) )
+  //}else{
+
+    let nav_tab = document.createElement( 'li' );
+    nav_tab.setAttribute( 'class', 'nav-item' );
+    nav_tab.setAttribute( 'id', `nav_tab_${item.id}` );
+    nav_tab.innerHTML =  `<a href="${item.hashlocation}" class="nav-link active"><i class="${item.icon}"></i> ${item.label}</a> `;
+
+    //nav_tab_delete.innerHTML = '<a href="#" class="nav-link active">Delete Reservation</a> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+    nav_tab.addEventListener( 'click', (event) => {
+      item.action()
+    });
+    let nav_tabs = document.querySelector( 'ul.nav-tabs');
+    nav_tabs.appendChild( nav_tab );
+  //}
 }
-*/
+
+function navTabRemove( id ) {
+  $( `#nav_tab_${id}` ).remove();
+}
+
 function navActiveItm( target ){
-  /*let navLinks = document.querySelectorAll( 'nav#primary ul li a');
-  for( let navLink of navLinks ){
-    let navLinkClass = navLink.getAttribute( 'class' );
-    if( navLinkClass ) navLinkClass.replace( 'active', '' );
-    if( navLinkClass.indexOf( 'active' ) ) navLink.setAttribute( navLinkClass )
-  }
-  let targetClass = target.getAttribute( 'class' );
-  target.setAttribute( 'class', `${targetClass} active`) */
   $( 'nav a' ).removeClass( 'active' );
   $( `nav a[href="#${target}"]` ).addClass( 'active' );
 }

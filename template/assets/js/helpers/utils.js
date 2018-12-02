@@ -6,15 +6,28 @@
 
 // Bootstrap Alert
 function bsAlert( target, type, icon, msg ){
-  let info_alert_id = getRandomInt( 1000, 9999 );
-  let info_alert = $( '<div></div>' ).addClass( 'alert alert-' + type) .attr( 'role', 'alert' ).attr( 'id', info_alert_id );
-  info_alert.html( `<i class="fas fa-${icon}"></i> ${msg}` );
-  $( target ).prepend( info_alert );
+  let info_alert_id = getRandomInt( 1000, 9999 )
+  let info_alert = $( '<div></div>' ).addClass( 'alert alert-' + type) .attr( 'role', 'alert' ).attr( 'id', info_alert_id )
+  info_alert.html( `<i class="fas fa-${icon}"></i> ${msg}` )
+  $( target ).prepend( info_alert )
   setTimeout( () => {
-    info_alert.fadeOut();
-    setTimeout( () => { $( '#' + info_alert_id ).remove() } ,1000 );
-  }, 5000 );
-
+    info_alert.fadeOut()
+    setTimeout( () => { $( '#' + info_alert_id ).remove() } ,1000 )
+  }, 5000 )
+}
+// Bootstrap Button
+function bsBtn( label, type, icon, action ){
+  let button = document.createElement( 'button' )
+  button.setAttribute( 'class', `btn ${type}` )
+  button.innerHTML = `<i class="${icon}"></i> ${label}`;
+  button.addEventListener( 'click', (event) => action() )
+  return button
+}
+function bsBtnGrp ( buttons ){
+  let button_group = document.createElement( 'div' )
+  button_group.setAttribute( 'class','btn-group btn-group-sm' )
+  for( let button of buttons ) button_group.appendChild( button )
+  return button_group
 }
 
 function getRandomInt(min, max) { // random nummer tussen min en max

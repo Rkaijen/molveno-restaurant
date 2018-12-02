@@ -51,6 +51,9 @@ function pageFunction( page ){ // called in loadPage() / pageHashLoad()
     case 'reservations':
       mainReservations();
       break;
+    case 'reservations/update' :
+      updateReservation( args );
+      break;
     case 'reservations/view' :
       viewReservation( args );
       break;
@@ -65,8 +68,10 @@ function pageFunction( page ){ // called in loadPage() / pageHashLoad()
       break;
     case 'invoices' :
       mainInvoices();
-    default:
-      // mainHome()
+      break;
+    case 'dashboard' :
+      mainDashboard()
+      break;
   }
 }
 

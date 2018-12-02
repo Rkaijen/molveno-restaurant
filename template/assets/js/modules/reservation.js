@@ -18,15 +18,17 @@ function mainReservations(){
 
 function getReservation( id ){
   for( let reservation of _glob.arr.reservations ){
-    if( reservation.id === id ) return reservation
+    if( reservation.id/1 === id/1 ) return reservation
   }
 }
 
 function setReservation( reservation ){
   for(let i = 0; i < _glob.arr.reservations.length; i++){
-    if( _glob.arr.reservations[i].id === reservation.id ) _glob.arr.reservations[i] = reservation
+    if( _glob.arr.reservations[i].id/1 === reservation.id/1 ) _glob.arr.reservations[i] = reservation
   }
 }
+
+
 /* -----------------------------------------------------------------------------
 * add
 */
@@ -122,7 +124,7 @@ function addReservation(){
 
         $( '#page_output h3').html( `Add Reservation <small class="text-muted">for <b>${name}</b>${persons} at table <b>${tables.join('+')}</b> (${seats} seats)<small>`);
       }
-      
+
       $('input#firstname,input#preposition,input#lastname,input#persons').on( 'keyup', ( event ) => update_header() );
       $('#reservation,#add_options').hide();
       $('input#email,input#telephone').on( 'change', ( event ) => {
@@ -266,6 +268,20 @@ function addReservation(){
   $( 'nav#primary a#reservations').addClass( 'active' );
 }//
 
+function validateReservation( form, callback ){
+  let button = form.querySelector( 'button' );
+  $( button ).attr( 'disabled','disabled' )
+  $( 'input#date').on( 'change', (event) => {
+    button.removeAttribute( 'disabled' )
+  })
+  $( form ).on( 'submit', (event) => {
+    event.preventDefault()
+    let valid_data = true;
+
+    if( valid_data ) callback()
+  })
+
+}
 
 /* -----------------------------------------------------------------------------
 * overview
@@ -284,7 +300,6 @@ function overviewReservations(){
     { label : 'Persons', field : 'persons' },
     { label : 'Table', field : 'table' },
     { label : '', field : 'options' },
-
   ]
 
   let table = document.createElement( 'table' ),
@@ -307,45 +322,25 @@ function overviewReservations(){
   let table_tbody = document.createElement( 'tbody' );
   for( let item of arrayReservation ) {
     table_tr = document.createElement( 'tr' );
-    // options buttons
-
-
-    let button_edit = document.createElement( 'button' );
-    button_edit.setAttribute( 'class', 'btn btn-sm' )
-    button_edit.innerHTML = '<i class="far fa-edit"></i> Edit';
-    button_edit.addEventListener( 'click', (event) => {
-      updateReservation( item.id )
-      // TODO ccolombijn : make pageloader id endpoint work
-      //location.hash = `#reservations/update/${item.id}`
-    });
-
-    let button_delete = document.createElement( 'button' );
-    button_delete.setAttribute( 'class', 'btn btn-sm' )
-    button_delete.innerHTML = '<i class="fas fa-minus-circle"></i> Delete';
-    button_delete.addEventListener( 'click', (event) => {
-      deleteReservation( item.id )
-      // TODO ccolombijn : make pageloader id endpoint work
-      //location.hash = `#reservations/delete/${item.id}`;
-    });
-
-    let button_group = document.createElement( 'div' );
-    button_group.setAttribute( 'class','btn-group btn-group-sm' );
-    button_group.appendChild( button_edit );
-    button_group.appendChild( button_delete );
-
 
     for( let field of overview_fields ){
       let table_td = document.createElement( 'td' );
       if ( field.field === 'options' ){
         table_td.setAttribute( 'style', 'text-align:right;width:125px;')
-        table_td.appendChild( button_group );
+        //table_td.appendChild( button_group );
+        table_td.appendChild(
+          bsBtnGrp([
+            bsBtn( 'Edit', 'btn-sm', 'far fa-edit', () => {
+              location.hash = `#reservations/update/${item.id}`
+            }),
+            bsBtn( 'Delete', 'btn-sm', 'fas fa-minus-circle', () => {
+              location.hash = `#reservations/delete/${item.id}`
+            })
+          ])
+        )
       }else if (field.field === 'guest') {
-        let firstname = getGuest( item.guest ).firstname,
-        preposition = getGuest( item.guest ).preposition,
-        lastname = getGuest( item.guest ).lastname;
 
-        if( preposition !== '' ) preposition =+ ' ';
-        table_td.innerText = `${firstname} ${preposition}${lastname}`;
+        table_td.innerText = getGuestName( item.guest );
         $( table_td ).on( 'click', (event) => {
           location.hash = `#guests/view/${getGuest( item.guest ).id}`
         });
@@ -378,7 +373,16 @@ function overviewReservations(){
 /* -----------------------------------------------------------------------------
 * update
 */
-function _updateReservation( id ){
+function updateReservation( id ){
+  navTab({
+    id : 'update',
+    hashlocation : `#reservations/update/${id}`,
+    icon : '',
+    label : 'Edit Reservation',
+    action : () => {
+      updateReservation( id )
+    }
+  })
   let output = document.querySelector( '#page_output' )
   $( output ).load( 'templates/update-reservation.html', () => {
     let form = document.querySelector( '#page_output form'),
@@ -386,11 +390,12 @@ function _updateReservation( id ){
     reservation = getReservation( id ),
     guest_fields = [ 'firstname', 'preposition', 'lastname', 'email', 'telephone' ];
     for( let field of update_reservation ){
-      if( guest_fields.contains( field.id ) ){
+      if( guest_fields.includes( field.id ) ){
         field.setAttribute( 'disabled', 'disabled' )
         let guest = getGuest( reservation.guest )
         field.value = guest[ field.id ]
-      }else if ( field.id === 'table' ) {
+      }else if ( field.id === 'table_select' ) {
+
         for( let table of reservation.table ) document.querySelector( `select#table_select option[value="${table}"]`).selected = true;
       } else {
         field.value = reservation[ field.id ]
@@ -412,117 +417,32 @@ function _updateReservation( id ){
   })
 }
 
-function updateReservation( id ){
-  let arrayReservation = _glob.arr.reservations;
-  navActiveItm( 'reservations/add' );
-  let output = document.querySelector( '#page_output' ),
-  update_form = document.createElement( 'form' ),
-  reservations = new Reservation,
-  prop_label = reservations.propertyLabels(),
-  update_form_header = document.createElement( 'h3' );
-  update_form_header.innerText = 'Edit Reservation';
-  update_form.appendChild( update_form_header )
-  let update_form_fields = [
-    { id : 'guest', label : prop_label.guest },
-    { id : 'timestamp', label : prop_label.timestamp },
-    { id : 'persons', label : prop_label.persons },
-    { id : 'table', label : prop_label.table }
-  ]
-  $('a.nav-link').removeClass('active');
-  $('#nav_tab_edit').remove();
-  let nav_tab_update = document.createElement( 'li' );
-  nav_tab_update.setAttribute( 'class', 'nav-item' );
-  nav_tab_update.setAttribute( 'id', 'nav_tab_edit' );
-  nav_tab_update.innerHTML = '<a href="#" class="nav-link active"><i class="fas fa-edit"></i> Edit Reservation</a> ';
-  nav_tab_update.addEventListener( 'click', (event) => {
-    updateReservation( id )
-  });
-  let nav_tabs = document.querySelector( 'ul.nav-tabs');
-  nav_tabs.appendChild( nav_tab_update );
-  let reservation = getReservation( id );
-
-  for( let field of update_form_fields ){
-
-    let update_form_field = document.createElement( 'input' ),
-    update_form_field_col = document.createElement( 'div' ),
-    update_form_label = document.createElement( 'label' ),
-    update_form_row = document.createElement( 'div' );
-
-    update_form_row.setAttribute( 'class','form-group row' );
-
-    update_form_label.innerText = field.label;
-    update_form_label.setAttribute( 'class', 'col-sm-2 col-form-label' );
-    update_form_label.setAttribute( 'for', field.id );
-    update_form_row.appendChild( update_form_label );
-
-    update_form_field.setAttribute( 'id', field.id );
-    update_form_field.setAttribute( 'class', 'form-control');
-    update_form_field.value = reservation[ field.id ];
-    update_form_field_col.setAttribute( 'class', 'col-sm-10' )
-
-    update_form_field_col.appendChild( update_form_field );
-    update_form_row.appendChild( update_form_field_col );
-    update_form.appendChild( update_form_row );
-
-
-
-  }
-
-  let button_update = document.createElement( 'button' ),
-  update_form_row = document.createElement( 'div' );
-  update_form_row.setAttribute( 'class','row' );
-  update_form_row.setAttribute( 'style','padding:10px;' );
-  button_update.setAttribute( 'class', 'btn ')
-  button_update.innerText = 'Update Reservation';
-  update_form_row.appendChild( button_update );
-  update_form.appendChild( update_form_row );
-
-
-  update_form.addEventListener( 'submit', (event) => {
-    event.preventDefault() // prevent form submit
-    let reservation = event.target.elements;
-
-    let update_data = {
-      guest : reservation.guest,
-      persons : reservation.persons,
-      timestamp : _timestamp,
-      table : _table
-      //hasPaid : _hasPaid
-    }
-    update_data[ 'id' ] = id;
-    $('#nav_tab_edit').remove();
-
-    setReservation(update_data)
-    bsAlert( '.page-content','primary','',`Reservation for <b>${update_data.guest}</b> has been saved` )
-    overviewReservations();
-  });
-
-  output.innerHTML = '';
-  output.appendChild( update_form );
-
-
-}
-
 /* -----------------------------------------------------------------------------
 * view
 */
 
 function viewReservation( id ){
-  let arrayReservation = _glob.arr.reservations;
-  let output = document.querySelector( '#page_output' ), // element for ouput in UI
-  view = document.createElement( 'div' ),
-  reservations = new Reservation, // class instance
-  prop_label = reservations.propertyLabels(), // call method of instance for labels input
-  view_header = document.createElement( 'h3' );
-  view_header.innerText = 'View Reservation';
-  view.appendChild( view_header )
-  $('a.nav-link').removeClass('active');
-  $('#nav_tab_view').remove();
-  let nav_tab_view = document.createElement( 'li' );
-  nav_tab_view.setAttribute( 'class', 'nav-item' );
-  nav_tab_view.setAttribute( 'id', 'nav_tab_delete' );
-  nav_tab_view.innerHTML = '<a href="#" class="nav-link active"> View Reservation</a> ';
-  console.log( id )
+  let reservation = formatReservation( getReservation( id ) ),
+  guest = getGuestName( getReservation( id ).guest ),
+  output = document.getElementById( 'page_output' )
+  navTab({
+    id : 'view',
+    hashlocation : `#reservations/view/${id}`,
+    icon : '',
+    label : 'View Reservation',
+    action : () => {
+      viewReservation( id )
+    }
+  })
+  $( output ).load( 'templates/view-reservation.html', () => {
+    $( '#guest' ).html( guest )
+    $( '#reservation' ).html( reservation )
+    let confirm_button = output.querySelector( 'button' )
+    $( confirm_button ).on( 'click', (event) => {
+      updateReservation( id )
+      navTabRemove( 'view' );
+    })
+  })
 }
 
 
@@ -531,87 +451,32 @@ function viewReservation( id ){
 */
 
 function deleteReservation( id ){
-  //location.hash = `#reservations/delete/${id}`
-  let arrayReservation = _glob.arr.reservations; // get array data
-  let reservation_data = getReservation( id ); // get current reservation data
-  let output = document.getElementById( 'page_output' ); // element for output in UI
-  let container_confirm = document.createElement( 'div' ); // element for confirmation in UI
-  //let nav_tab_active = document.querySelector( '.nav-link.active' ); // current active tab
-  //if (nav_tab_active) nav_tab_active.innerText = `Delete Reservation` // set text of current tab
-  $('a.nav-link').removeClass('active');
-  $('#nav_tab_delete').remove();
-  let nav_tab_delete = document.createElement( 'li' );
-  nav_tab_delete.setAttribute( 'class', 'nav-item' );
-  nav_tab_delete.setAttribute( 'id', 'nav_tab_delete' );
-  nav_tab_delete.innerHTML = '<a href="#reservations/delete" class="nav-link active"><i class="fas fa-minus-circle"></i> Delete Reservation</a> ';
-
-  //nav_tab_delete.innerHTML = '<a href="#" class="nav-link active">Delete Reservation</a> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
-  nav_tab_delete.addEventListener( 'click', (event) => {
-    deleteReservation( id );
-  });
-  let nav_tabs = document.querySelector( 'ul.nav-tabs');
-  nav_tabs.appendChild( nav_tab_delete );
-  container_confirm.setAttribute( 'style', 'padding:25px') // TODO : fix this in stylesheet
-  //header
-  let header_confirm = document.createElement('h3');
-  header_confirm.innerText = 'Confirm Delete Reservation';
-  container_confirm.appendChild( header_confirm );
-
-  // question
-  let question_confirm = document.createElement( 'p' );
-  question_confirm.innerText = 'Are you sure you want to delete this reservation?';
-  container_confirm.appendChild( question_confirm );
-
-  // details
-  let details = document.createElement( 'div' );
-  details.innerHTML = `<h4>Guest : ${reservation_data.guest}</h4>`
-  details.innerHTML += `<p>Time : ${reservation_data.timestamp}</p>`
-  details.innerHTML += `<p>Table : ${reservation_data.table}</p>`
-  container_confirm.appendChild( details );
-
-  // confirm
-  let button_confirm = document.createElement( 'button' );
-  button_confirm.setAttribute( 'class', 'btn btn-dark' )
-  button_confirm.setAttribute( 'style', 'margin-right:5px;')
-  button_confirm.innerText = 'Delete';
-  button_confirm.addEventListener( 'click', (event) => {
-
-    let tmp_arr = [];
-    for( let item of arrayReservation ){
-      if( item.id !== id ){ // remove by exclusion
-        tmp_arr.push( item )
-      }
-
+  let reservation = formatReservation( getReservation( id ) ),
+  guest = getGuestName( getReservation( id ).guest ),
+  output = document.getElementById( 'page_output' )
+  navTab({
+    id : 'delete',
+    hashlocation : `#reservations/delete/${id}`,
+    icon : 'fas fa-minus-circle',
+    label : 'Delete Reservation-',
+    action : () => {
+      deleteReservation( id )
     }
-    arrayReservation = tmp_arr;
-    _glob.arr.reservations = arrayReservation; // save data to array
-    overviewReservations();
-    //location.hash = 'reservations'
+  })
+  $( output ).load( 'templates/delete-reservation.html', () => {
+    $( '#guest' ).html( guest )
+    $( '#reservation' ).html( reservation )
+    let confirm_button = output.querySelector( 'button' )
+    $( confirm_button ).on( 'click', (event) => {
+      let tmp_arr = [];
+      for( let item of _glob.arr.reservations ) if( item.id/1 !== id/1 ) tmp_arr.push( item )
+      _glob.arr.reservations = tmp_arr;
+      overviewReservations();
+      navTabRemove( 'delete' );
+      bsAlert( '#page_output', 'primary', '', `Reservation ${reservation} for ${guest} has been deleted` )
 
-    nav_tabs.removeChild( nav_tab_delete );
-    //nav_tab_active.innerText = 'Overview'
-    // alert user something has happened
-    bsAlert( '#page_output', 'primary', '', `Reservation of Guest <b>${reservation_data.guest}</b> at ${reservation_data.timestamp} has been deleted` )
-
-  });
-  container_confirm.appendChild( button_confirm );
-
-  // cancel
-  let button_cancel = document.createElement( 'button' );
-  button_cancel.setAttribute( 'class', 'btn ' )
-  button_cancel.innerText = 'Cancel';
-  button_cancel.addEventListener( 'click', (event) => {
-    overviewReservations();
-    //location.hash = 'reservations'
-
-    nav_tabs.removeChild( nav_tab_delete );
-    //nav_tab_active.innerText = 'Overview'
-
-  });
-  container_confirm.appendChild( button_cancel );
-
-  output.innerHTML = '';
-  output.appendChild( container_confirm );
+    })
+  })
 
 }
 /* -----------------------------------------------------------------------------
@@ -636,20 +501,9 @@ function tableReservation( persons ){
   }
   return select_table_rand;
 }
-function selectTableReservation( id ){
-
-}
-
 /* -----------------------------------------------------------------------------
-* payments
+* format
 */
-
-function hasPaidReservation(setBool, id){
-  console.log("has paid " + setBool);
-  let currentReservation = getReservation(id);
-  console.log("1" + currentReservation.hasPaid);
-  currentReservation.hasPaid = setBool;
-  console.log("2" + currentReservation.hasPaid);
-  setReservation(currentReservation);
-  overviewReservations();
+function formatReservation( reservation ){
+  if ( reservation )return `<b>${moment(reservation.date,'DD-MM-YYYY').format('dddd LL')}</b> from <b>${reservation.time_arrival}</b> to <b>${reservation.time_depart}</b> for <b>${reservation.persons}</b> persons at table <b>${reservation.table.join('+')}</b>`
 }

@@ -33,6 +33,15 @@ function getGuest( id ){
     if ( guest.id === id ) return guest;
   }
 }
+
+function getGuestName( id ){
+  let guest = getGuest( id ),
+  firstname = guest.firstname,
+  preposition = guest.preposition,
+  lastname = guest.lastname;
+  if( preposition !== '' ) preposition =+ ' '
+  return `${firstname} ${preposition}${lastname}`
+}
 /* -----------------------------------------------------------------------------
 * update
 */
@@ -58,7 +67,7 @@ function deleteGuestFromReservation( id ){
   let new_arr = [];
   let guests = _glob.arr.guests;
   for( let guest of guests ){
-    if ( guest.id !== id ) new_arr.push( guest );
+    if ( guest.id/1 !== id/1 ) new_arr.push( guest );
   }
   _glob.arr.guests = new_arr; // NOTE : make call to REST API in the near future...
 }
