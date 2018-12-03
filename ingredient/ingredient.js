@@ -39,7 +39,7 @@ class Ingredient{
       type : 'Type'
     }
   }
-} /*
+}
  let data =  {
    id : 2345,
    name : 'test',
@@ -53,4 +53,3 @@ class Ingredient{
  console.log( obj.price )
  obj = new Ingredient( 2345, 'test', 2.23, 0, 'test', [], 3 )
  console.log( obj )
- */

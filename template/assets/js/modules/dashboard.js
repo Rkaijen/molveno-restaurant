@@ -4,7 +4,7 @@
 * TODO : build module; add functions (overview, view, add, update & delete) to let things happen
 */
 //glob( 'pages', 'dashboard', { label : 'Dashboard' })
-setModule( 'dashboard', () => mainDashboard() )
+glob( 'module',  'dashboard', () => mainDashboard() )
 function mainDashboard(){
 
 }

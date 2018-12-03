@@ -3,6 +3,8 @@
 * assets/js/modules/guest.js
 * TODO : build module; add functions (overview, view, get, add, update & delete) to let things happen
 */
+glob( 'module',  'guests', () => mainGuest() )
+glob( 'module',  'guests/update', () => updateGuest( location.hash.split('/')[2]) )
 function mainGuest(){
   overviewGuest();
 }
@@ -25,6 +27,8 @@ function viewGuest(){
   console.log("viewGuest says hi");
 }
 /* -----------------------------------------------------------------------------
+
+/* -----------------------------------------------------------------------------
 * get
 */
 function getGuest( id ){
@@ -45,8 +49,8 @@ function getGuestName( id ){
 /* -----------------------------------------------------------------------------
 * update
 */
-function updateGuest(){
-  console.log("updateGuest says hi");
+function updateGuest( id ){
+  console.log( id );
 }
 /* -----------------------------------------------------------------------------
 * delete

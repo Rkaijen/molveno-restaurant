@@ -32,7 +32,7 @@ function glob( element, key, val ){
       try{
         return _glob[ element ][ key ];
       }catch( error ){
-        console.warn( error )
+        //console.warn( error )
       }
     }
   }

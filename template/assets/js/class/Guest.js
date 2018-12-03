@@ -1,12 +1,10 @@
 'use strict'
 /*
-* guest/guest.js
-* BELANGRIJK; wijzig de properties naar (alleen) wat nodig is voor
-* reservering (ivm privacy e.d. zoals genoemd tijdens de demo)
+* assets/js/class/guest.js
 */
 class Guest {
   constructor(id, firstname, preposition, lastname,
-  dateofbirth, gender, email, phonenumber, street, housenumber, city, postalcode) {
+  email, telephone, reservation ) {
     //console.log(arguments)
   if(typeof id === 'object'){  // arguments als object
     let data = id; // feitelijk id parameter dus..
@@ -14,27 +12,17 @@ class Guest {
     this._firstname = data.firstname;
     this._preposition = data.preposition;
     this._lastname = data.lastname;
-    this._dateofbirth = data.dateofbirth;
-    this._gender = data.gender;
     this._email = data.email;
-    this._phonenumber = data.phonenumber;
-    this._street = data.street;
-    this._housenumber = data.housenumber;
-    this._city = data.city;
-    this._postalcode = data.postalcode;
+    this._telephone = data.telephone;
+    this._reservation = data.reservation;
   } else { // specifieke arguments uit parameters
     this._id = id;
     this._firstname = firstname;
     this._preposition = preposition;
     this._lastname = lastname;
-    this._dateofbirth = dateofbirth;
-    this._gender = gender;
     this._email = email;
-    this._phonenumber = phonenumber;
-    this._street = street;
-    this._housenumber = housenumber;
-    this._city = city;
-    this._postalcode = postalcode;
+    this._telephone = telephone;
+    this._reservation = reservation;
   }
 
 ///*
