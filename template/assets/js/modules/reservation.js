@@ -1,14 +1,15 @@
 'use strict'
 /*
 * assets/js/modules/reservation.js
-* TODO : addReservation() - table selection / date/time input & validation
-*        https://github.com/Spectrum-McRaj/Restaurant-Hans/issues/8
+* TODO ccolombijn : addReservation() - table selection / date/time input & validation
+*
 *        tableReservation()
 *        updateReservation() - build form
 *                            - populate with data from array
 *                            - pointer via location.hash?
 *       deleteReservation()  - ''
 * decrease amount of code with helpers/tools
+* integration REST API
 */
 
 function mainReservations(){
@@ -17,13 +18,13 @@ function mainReservations(){
 
 function getReservation( id ){
   for( let reservation of _glob.arr.reservations ){
-    if( reservation.id === id ) return reservation;
+    if( reservation.id === id ) return reservation
   }
 }
 
 function setReservation( reservation ){
   for(let i = 0; i < _glob.arr.reservations.length; i++){
-    if( _glob.arr.reservations[i].id === reservation.id ) _glob.arr.reservations[i] = reservation;
+    if( _glob.arr.reservations[i].id === reservation.id ) _glob.arr.reservations[i] = reservation
   }
 }
 /* -----------------------------------------------------------------------------
@@ -42,6 +43,7 @@ function addReservation(){
       $('input.form-control').on( 'change', (event) => {
         $(`label[for="${event.target.id}"]`).fadeIn(); // show label on input change (placeholders are not visible)
       });
+      // -----------------------------------------------------------------------
       // date input
       $('input#date').datepicker( { format:'dd-mm-yyyy', startDate: '0' }).on( 'change' , (event) => update_date() );
 
@@ -63,6 +65,9 @@ function addReservation(){
       $('input#time_depart').val (moment( $('input#time_arrival').val(), 'h:mm a' ).add(3,'hours') ).timepicker({template: false,
                 showInputs: false,
                 minuteStep: 5});
+
+      // -----------------------------------------------------------------------
+      // table_select
       let chairs=0;
       for( let table of _glob.arr.tables ) chairs +=table.chairs // total amount of chairs
 
@@ -81,6 +86,8 @@ function addReservation(){
 
       document.querySelector( `select#table_select option[value="${table}"]`).selected = true;
       $( 'label[for="table_select"]').show(); // show label for table select
+
+      // update_header
       let update_header = () => {
         let firstname = document.querySelector( 'input#firstname' ).value,
         preposition = document.querySelector( 'input#preposition' ).value,
@@ -92,6 +99,8 @@ function addReservation(){
         seats = 0;
         if( preposition !== '' ) preposition += ' ';
         name = firstname + ' ' + preposition + lastname;
+        let persons = document.querySelector( 'input#persons' ).value;
+        if(persons) persons = ' for '+persons+' persons'
         for (let i=0; i<table.options.length; i++) {
           if (table.options[i].selected) {
 
@@ -101,15 +110,20 @@ function addReservation(){
           }
         }
 
-        $( '#page_output h3').html( `Add Reservation <small class="text-muted">for <b>${name}</b> at table <b>${tables.join('+')}</b> (${seats} seats)<small>`);
+        $( '#page_output h3').html( `Add Reservation <small class="text-muted">for <b>${name}</b>${persons} at table <b>${tables.join('+')}</b> (${seats} seats)<small>`);
       }
       $( `select#table_select` ).on( 'change', (event) =>{
         console.log( $( `select#table_select` ).val() )
       });
-      $('input#firstname,input#preposition,input#lastname').on( 'keyup', ( event ) => update_header() );
+      $('input#firstname,input#preposition,input#lastname,input#persons').on( 'keyup', ( event ) => update_header() );
+      $('#reservation,#add_options').hide();
+      $('input#email,input#telephone').on( 'change', ( event ) => {
+        $('#reservation,#add_options').fadeIn();
+      });
       $('select#table_select').on( 'change', ( event ) => update_header() );
       table = document.querySelector( `select#table_select` );
       for ( let i = 0; i < table.options.length; i++ )  if( isTableReservationOccupied( table.options[i].value ) ) table.options[i].setAttribute('disabled','disabled');
+
       $('input#persons').on( 'change', ( event ) => {
 
         if( event.target.value > 0 && event.target.value < chairs ){ // persons is OK
@@ -137,6 +151,7 @@ function addReservation(){
             }
 
             let persons = document.querySelector('input#persons').value;
+
             if( persons > seats ){
               if( !isTableReservationOccupied( tables_arr[tables_arr.length-1]+1 ) ){ // check if next table is occupied
                 document.querySelector( `select#table_select option[value="${tables_arr[tables_arr.length-1]+1}"]`).selected = true;
@@ -147,8 +162,10 @@ function addReservation(){
                     document.querySelector( `select#table_select option[value="${tables_arr[tables_arr.length-1]-1}"]`).selected = true;
                     update_header();
                   }catch{
+
                     let new_table = getTableBySeats( document.querySelector('input#persons').value );
-                    console.log( new_table )
+
+
                     document.querySelector( `select#table_select option[value="${new_table}"]`).selected = true;
                     update_header();
                     checkPersonsTableSeats();
@@ -165,7 +182,7 @@ function addReservation(){
 
             }
           } // checkPersonsTableSeats
-            checkPersonsTableSeats();
+          checkPersonsTableSeats();
         }else if (event.target.value > chairs) { // persons more than available seats
           $( '#persons-invalid' ).remove();
           $( 'input#persons' ).removeClass( 'is-valid' ).addClass( 'is-invalid' ).after( '<div class="invalid-feedback" id="persons-invalid">'+(event.target.value/1-chairs)+' more persons than seats available ('+chairs+')</div>' );
@@ -195,13 +212,19 @@ function addReservation(){
         },
         _guest = addGuestFromReservation( guest_data ),
         _persons = document.getElementById('persons').value,
-        _timestamp =  document.getElementById('timestamp').value,
+        //_timestamp =  document.getElementById('timestamp').value,
+        _date = document.getElementById('date').value,
+        _time_arrival = document.getElementById('time_arrival').value,
+        _time_depart = document.getElementById('time_depart').value,
         _table =  document.getElementById('table').value,
         add_data = {
           id : reservationId,
           guest : _guest,
           persons : _persons,
-          timestamp : _timestamp,
+          //timestamp : _timestamp,
+          date : _date,
+          time_arrival : _time_arrival,
+          time_depart : _time_depart,
           table : _table
         };
         //console.log(add_data)
@@ -215,9 +238,8 @@ function addReservation(){
           valid_data = false;
 
         }
+
         if(valid_data){
-
-
            // save reservation to array
            arrayReservation.unshift( add_data );
           _glob.arr.reservations = arrayReservation;
