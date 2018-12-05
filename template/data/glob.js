@@ -1,7 +1,13 @@
 'use strict';
 /*
 * data/glob.js
+* TODO : getGlobDataAPI()
 */
+
+function getGlobDataAPI(){
+
+}
+
 function globArr(){
 
   glob( 'arr', 'reservations' , [
@@ -67,54 +73,6 @@ function globArr(){
       // id, order, guest, amount, menuitems
   ] );
 
-  glob( 'arr', 'pages', [
-    //Load these pages
-    {
-      id : 'dashboard',
-      label : 'Dashboard'
-    },{
-      id : 'reservations',
-      label : 'Manage Reservations'
-    },{
-      id : 'guests',
-      label : 'Manage Guests'
-    },{
-      id : 'menu',
-      label : 'Manage Menu Items',
-      items : [
-        {
-          id : 'ingredients',
-          label : 'Manage Ingredients'
-        }
-      ]
-    },{
-      id : 'tables',
-      label : 'Manage Tables'
-    },{
-      id : 'invoices',
-      label : 'Invoices'
-    }
-  ]); // pages
 
-}
-
-function globModule(){
-
-  let modules = [
-    { id : 'dashboard', label : 'Dashboard', primaryNav : true, module : () => mainDashboard() },
-    { id : 'reservations', label : 'Manage Reservations', primaryNav : true, module : () => mainReservations() },
-  ];
-  for( let _module in modules ){
-    glob( 'module', _module.id, _module.module );
-
-  }
-
-
-    /*
-    let pages = [];
-    for( let _module in modules ){
-      glob( 'arr', 'pages', { id : _module.id, label : })
-    }
-    */
 
 }

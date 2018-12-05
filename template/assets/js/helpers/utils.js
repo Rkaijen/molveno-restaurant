@@ -5,7 +5,7 @@
 
 
 // Bootstrap Alert
-function bsAlert( target, type, icon, msg ){
+function bsAlert( target, type, icon, msg, callback ){
   let info_alert_id = getRandomInt( 1000, 9999 )
   let info_alert = $( '<div></div>' ).addClass( 'alert alert-' + type) .attr( 'role', 'alert' ).attr( 'id', info_alert_id )
   info_alert.html( `<i class="fas fa-${icon}"></i> ${msg}` )
@@ -14,6 +14,7 @@ function bsAlert( target, type, icon, msg ){
     info_alert.fadeOut()
     setTimeout( () => { $( '#' + info_alert_id ).remove() } ,1000 )
   }, 5000 )
+  callback()
 }
 // Bootstrap Button
 function bsBtn( label, type, icon, action ){
@@ -35,9 +36,7 @@ function getRandomInt(min, max) { // random nummer tussen min en max
 }
 
 
-function setModule( id, action ){
-  glob( 'module', id, () => action() )
-}
+
 function data( element, name, value ) { // data-[name] attribute
 
     element = document.querySelector( element );

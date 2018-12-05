@@ -6,6 +6,7 @@
 *
 * integration REST API
 */
+// WARNING : can cause ReferenceError; see https://github.com/Spectrum-McRaj/Restaurant-Hans/issues/14
 glob( 'module',  'reservations', () => overviewReservations() )
 glob( 'module',  'reservations/add', () => addReservation() )
 glob( 'module',  'reservations/overview', () => overviewReservations() )
@@ -18,7 +19,9 @@ function getReservation( id ){
 }
 
 function setReservation( reservation ){
-  for( let i = 0; i < _glob.arr.reservations.length; i++) if( _glob.arr.reservations[i].id/1 === reservation.id/1 ) _glob.arr.reservations[i] = reservation
+  for( let i = 0; i < _glob.arr.reservations.length; i++) {
+    if( _glob.arr.reservations[i].id/1 === reservation.id/1 ) _glob.arr.reservations[i] = reservation
+  }
   return reservation
 }
 
@@ -71,7 +74,7 @@ function addReservation(){
       let chairs=0;
       for( let table of _glob.arr.tables ) chairs +=table.chairs
       let table_chairs = ( id ) => {
-        for( let table of _glob.arr.tables ) if( table.id === id ) return table.chairs
+        for( let table of _glob.arr.tables ) if( table.id/1 === id/1 ) return table.chairs
       }
       for( let reservation of _glob.arr.reservations ) for( let table of reservation.table ) chairs -= table_chairs( table )
       let table = tableReservation()
@@ -86,10 +89,10 @@ function addReservation(){
         tables = [],
         count = 0,
         seats = 0;
-        if( preposition !== '' ) preposition += ' ';
+        if( preposition !== '' ) preposition += ' '
         name = firstname + ' ' + preposition + lastname;
         let persons = document.querySelector( 'input#persons' ).value;
-        if( persons ) persons = ' for ' + persons + ' persons'
+        if( persons ) persons = ` for ${persons} persons`
         for (let i=0; i<table.options.length; i++) {
           if (table.options[i].selected) {
             tables[count] =table.options[i].value;
@@ -261,6 +264,7 @@ function validateReservation( form, callback ){
 */
 
 function overviewReservations(){
+  //if(location.hash !== '#reservations/overview') location.hash = '#reservations/overview'
   navActiveItm( 'reservations/overview' )
   $( 'nav#primary a#reservations').addClass( 'active' )
   let nav_tab_active = document.querySelector( '.nav-link.active' )
@@ -310,7 +314,8 @@ function overviewReservations(){
           location.hash = `#guests/view/${getGuest( item.guest ).id}`
         })
       }else if (field.field === 'reservation' ) {
-        table_td.innerText = `${moment(item.date,'DD-MM-YYYY').format('dddd LL')} ${item.time_arrival}-${item.time_depart}`
+        table_td.innerHTML = `<a href="#reservations/view/${item.id}">${moment(item.date,'DD-MM-YYYY').format('dddd LL')} ${item.time_arrival}-${item.time_depart}</a>`
+
       }else if (field.field === 'table') {
         table_td.innerText = item.table.join( '+' )
       }else {
@@ -336,10 +341,11 @@ function overviewReservations(){
 
 function updateReservation( id ){
   navTab({
-    id : 'update', href : `#reservations/update/${id}`, icon : '', label : 'Edit Reservation',
-    action : () => {
-      updateReservation( id )
-    }
+    id : 'update',
+    href : `#reservations/update/${id}`,
+    icon : '',
+    label : 'Edit Reservation'
+
   })
   let output = document.querySelector( '#page_output' )
   $( output ).load( 'templates/update-reservation.html', () => {
@@ -363,19 +369,25 @@ function updateReservation( id ){
     $( form ).on( 'submit', (event) => {
       event.preventDefault()
       update_reservation = event.target.elements;
+
       let set_reservation = setReservation({
         id : id,
         guest : reservation.guest,
-        persons : update_reservation.persons,
-        date : update_reservation.date,
-        time_arrival : update_reservation.time_arrival,
-        time_depart : update_reservation.time_depart,
-        table : update_reservation.table
+        persons : update_reservation.persons.value,
+        date : update_reservation.date.value,
+        time_arrival : update_reservation.time_arrival.value,
+        time_depart : update_reservation.time_depart.value,
+        table : $( update_reservation.table_select ).val()
       })
+
       //let inst_reservation = new Reservation( set_reservation )
-      overviewReservations()
+      //overviewReservations()
+
       navTabRemove( 'update' )
-      bsAlert( '#page_output', 'primary', '', `Reservation for ${getGuestName(reservation.guest)} on ${formatReservation(set_reservation)} has been updated` )
+      bsAlert( '.page-content', 'primary', '', `Reservation for ${getGuestName(reservation.guest)} on ${formatReservation(set_reservation)} has been updated`,()=>{
+        location.hash = '#reservations/overview'
+      })
+
     })
     $( '.overview-link' ).on( 'click', (event) => navTabRemove( 'update' ) )
   })
@@ -401,11 +413,13 @@ function viewReservation( id ){
   $( output ).load( 'templates/view-reservation.html', () => {
     $( '#guest' ).html( guest )
     $( '#reservation' ).html( reservation )
-    let confirm_button = output.querySelector( 'button' )
-    $( confirm_button ).on( 'click', (event) => {
+    let edit_button = output.querySelector( 'button' ),
+    overview_link = output.querySelector( 'a.overview-link' )
+    $( edit_button ).on( 'click', () => {
       updateReservation( id )
-      navTabRemove( 'view' );
+      navTabRemove( 'view' )
     })
+    $( overview_link ).on( 'click', () => navTabRemove( 'view' ) )
   })
 }
 

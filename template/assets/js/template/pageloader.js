@@ -19,11 +19,15 @@ function loadMain( url, callback ){
   });
 }
 
+function setModule( modules ){
+  for( let _module of modules ) glob( 'module', _module.endpoint, () => module.action() )
+}
+
 function getModule( endpoint ){
   try{
     endpoint.indexOf( '/' ) > 0 ? _glob.module[ `${endpoint.split( '/' )[0]}/${endpoint.split( '/' )[1]}` ]() : _glob.module[ endpoint ]()
-  }catch {
-    console.warn( `${endpoint} is not a module` )
+  }catch( error ) {
+    console.warn( `${endpoint} : ${error}` )
   }
 }
 

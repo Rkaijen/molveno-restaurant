@@ -3,8 +3,13 @@
 * assets/js/modules/guest.js
 * TODO : build module; add functions (overview, view, get, add, update & delete) to let things happen
 */
+
 glob( 'module',  'guests', () => mainGuest() )
 glob( 'module',  'guests/update', () => updateGuest( location.hash.split('/')[2]) )
+// WARNING : can cause ReferenceError;
+// see https://github.com/Spectrum-McRaj/Restaurant-Hans/issues/14
+// should be replaced with setModule() registration in assets/js/main.js
+
 function mainGuest(){
   overviewGuest();
 }
@@ -32,10 +37,7 @@ function viewGuest(){
 * get
 */
 function getGuest( id ){
-  let guests = _glob.arr.guests;
-  for( let guest of guests ){
-    if ( guest.id === id ) return guest;
-  }
+  for( let guest of _glob.arr.guests )if ( guest.id/1 === id/1 ) return guest;
 }
 
 function getGuestName( id ){
@@ -46,11 +48,46 @@ function getGuestName( id ){
   if( preposition !== '' ) preposition =+ ' '
   return `${firstname} ${preposition}${lastname}`
 }
+
+
+function setGuest( guest ){
+  for( let i = 0; i < _glob.arr.guests.length; i++) if( _glob.arr.guests[i].id/1 === guest.id/1 ) _glob.arr.guests[i] = guest
+  return guest
+}
 /* -----------------------------------------------------------------------------
 * update
 */
 function updateGuest( id ){
-  console.log( id );
+  navTab({
+    id : 'update',
+    href : `#guests/update/${id}`,
+    icon : '',
+    label : 'Edit Guest'
+
+  })
+  let output = document.querySelector( '#page_output' )
+  $( output ).load( 'templates/update-guest.html', () => {
+    let form = output.querySelector( 'form'),
+    update_guest = form.elements,
+    guest = getGuest( id )
+
+    for( let field of update_guest ) field.value = guest[ field.id ]
+    $( form ).on( 'submit', (event) => {
+      event.preventDefault()
+      update_guest = event.target.elements;
+      let set_reservation = setReservation({
+        id : id,
+        firstname : update_guest.firstname,
+        preposition : update_guest.preposition,
+        lastname : update_guest.lastname,
+        telephone : update_guest.telephone,
+        email : update_guest.email
+      })
+      overviewGuests()
+      navTabRemove( 'update' )
+      bsAlert( '#page_output', 'primary', '', `Details for ${getGuestName(id)} have been updated` )
+    })
+  })
 }
 /* -----------------------------------------------------------------------------
 * delete
