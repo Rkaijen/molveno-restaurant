@@ -1,8 +1,6 @@
 # Restaurant Molveno
-## Hans
 
-
-# set up!
+# Our Team
 - Christoffel
 - Rob
 - Andries
