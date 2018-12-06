@@ -3,8 +3,7 @@
 
 
 # set up!
-- Jeroen
+- Christoffel
 - Rob
 - Andries
-- Christoffel
 - Martijn
