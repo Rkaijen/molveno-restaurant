@@ -20,7 +20,7 @@ function loadMain( url, callback ){
 }
 
 function setModule( modules ){
-  for( let _module of modules ) glob( 'module', _module.endpoint, () => module.action() )
+  for( let module of modules ) glob( 'module', module.endpoint, () => module.action() )
 }
 
 function getModule( endpoint ){
@@ -35,7 +35,7 @@ function pageHashLoad() {
   let hashLocation = location.hash,
   pageId = hashLocation.slice(1),
   pageUrl,
-  pagePrev = glob( 'var' , 'currentPageId');
+  pagePrev = glob( 'var' , 'currentPageId')
 
   if( pageId !==  '' ){
     navActiveItm( pageId );

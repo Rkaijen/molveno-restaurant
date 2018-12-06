@@ -4,19 +4,14 @@
 * TODO : build module; add functions (overview, view, get, add, update & delete) to let things happen
 */
 
-glob( 'module',  'guests', () => mainGuest() )
-glob( 'module',  'guests/update', () => updateGuest( location.hash.split('/')[2]) )
-// WARNING : can cause ReferenceError;
-// see https://github.com/Spectrum-McRaj/Restaurant-Hans/issues/14
-// should be replaced with setModule() registration in assets/js/main.js
 
-function mainGuest(){
-  overviewGuest();
+function mainGuests(){
+  overviewGuests();
 }
 /* -----------------------------------------------------------------------------
 * overview
 */
-function overviewGuest(){
+function overviewGuests(){
   console.log("overviewGuest says hi");
 }
 /* -----------------------------------------------------------------------------
@@ -25,14 +20,21 @@ function overviewGuest(){
 function addGuest(){
   console.log("addGuest says hi");
 }
+
+function addGuestFromReservation( guest ){
+
+  let addGuestId = getRandomInt(1000,9999);
+  guest[ 'id' ] = addGuestId;
+  _glob.arr.guests.push( guest ); // NOTE : make call to REST API in the near future...
+  return addGuestId;
+}
+
 /* -----------------------------------------------------------------------------
 * view
 */
 function viewGuest(){
   console.log("viewGuest says hi");
 }
-/* -----------------------------------------------------------------------------
-
 /* -----------------------------------------------------------------------------
 * get
 */
@@ -48,8 +50,9 @@ function getGuestName( id ){
   if( preposition !== '' ) preposition =+ ' '
   return `${firstname} ${preposition}${lastname}`
 }
-
-
+/* -----------------------------------------------------------------------------
+* get
+*/
 function setGuest( guest ){
   for( let i = 0; i < _glob.arr.guests.length; i++) if( _glob.arr.guests[i].id/1 === guest.id/1 ) _glob.arr.guests[i] = guest
   return guest
@@ -94,14 +97,6 @@ function updateGuest( id ){
 */
 function deleteGuest(){
   console.log("deleteGuest says hi");
-}
-
-function addGuestFromReservation( guest ){
-
-  let addGuestId = getRandomInt(1000,9999);
-  guest[ 'id' ] = addGuestId;
-  _glob.arr.guests.push( guest ); // NOTE : make call to REST API in the near future...
-  return addGuestId;
 }
 
 function deleteGuestFromReservation( id ){

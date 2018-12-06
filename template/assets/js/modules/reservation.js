@@ -6,16 +6,15 @@
 *
 * integration REST API
 */
-// WARNING : can cause ReferenceError; see https://github.com/Spectrum-McRaj/Restaurant-Hans/issues/14
-glob( 'module',  'reservations', () => overviewReservations() )
-glob( 'module',  'reservations/add', () => addReservation() )
-glob( 'module',  'reservations/overview', () => overviewReservations() )
-glob( 'module',  'reservations/update', () => updateReservation( location.hash.split('/')[2]) )
-glob( 'module',  'reservations/delete', () => deleteReservation( location.hash.split('/')[2]) )
-glob( 'module',  'reservations/view', () => viewReservation( location.hash.split('/')[2]) )
+
+function mainReservations(){
+  overviewReservations()
+}
 
 function getReservation( id ){
-  for( let reservation of _glob.arr.reservations ) if( reservation.id/1 === id/1 ) return reservation
+  for( let reservation of _glob.arr.reservations ) {
+    if( reservation.id/1 === id/1 ) return reservation
+  }
 }
 
 function setReservation( reservation ){
@@ -244,15 +243,105 @@ function addReservation(){
   $( 'nav#primary a#reservations').addClass( 'active' );
 }//
 
-function validateReservation( form, callback ){
-  let button = form.querySelector( 'button' )
-  $( button ).attr( 'disabled','disabled' )
-  $( 'input#date').on( 'change', (event) => {
-    button.removeAttribute( 'disabled' )
+function _addReservation(){
+  let output = document.querySelector( '#page_output' )
+  $( output ).load( 'templates/add-reservation.html', () => {
+    let add_form = output.querySelector( 'form' )
+    validateReservation( add_form, () => {
+      add_reservation = add_form.elements;
+      let add_reservation_id = getRandomInt(10000,99999),
+      add_guest_data = {
+        firstname : add_reservation.firstname.value,
+        preposition : add_reservation.preposition.value,
+        lastname : add_reservation.lastname.value,
+        email : add_reservation.email.value,
+        telephone : add_reservation.telephone.value,
+        reservation : add_reservation_id
+      },
+      add_reservation_data = {
+        id : add_reservation_id,
+        guest : addGuestFromReservation( add_guest_data ),
+        persons : add_reservation.persons.value,
+        date : add_reservation.date.value,
+        time_arrival : add_reservation.time_arrival.value,
+      }
+      _glob.arr.reservations.unshift( add_reservation_data )
+    })
   })
+}
+
+function validateReservationDate( form ){
+  let reservation = form.elements,
+  update_date = () => {
+    $('#date_feedback').remove()
+    $('input#date').after(`<small class="muted feedback" id="date_feedback">${moment($('input#date').val(),'DD-MM-YYYY').format('dddd LL')}</small>`)
+  }
+  $( reservation.date )
+    .datepicker( { format:'dd-mm-yyyy', startDate: '0' } )
+    .on( 'change' , (event) => update_date() )
+
+  $( reservation.time_arrival )
+    .val( moment().format('LT') )
+    .timepicker({
+      template: false,
+      showInputs: false,
+      minuteStep: 5
+    })
+    .on( 'change' , (event) => {
+        update_date()
+        $( reservation.time_depart )
+          .val(
+            moment( $( reservation.time_arrival ).val(), 'h:mm a' )
+            .add(3,'hours').format('LT')
+          )
+    })
+
+  $( reservation.time_depart )
+    .val (
+      moment( $( reservation.time_arrival ).val(), 'h:mm a' )
+      .add(3,'hours').format('LT')
+    )
+    .timepicker({
+      template: false,
+      showInputs: false,
+      minuteStep: 5
+    })
+}
+function validateReservationTable(){
+  if( location.hash.split( '/')[2] ){ // update?
+
+  }
+}
+function validateReservation( form, callback ){
+  let button = form.querySelector( 'button' ),
+  reservation = form.elements,
+  valid_data = true,
+  is_valid = (  input, valid, msg ) => {
+    $( `#${input.id}-invalid` ).remove()
+    if( valid ) {
+      $( input ).removeClass( 'is-invalid' )
+    } else {
+      $( input ).removeClass( 'is-valid' ).addClass( 'is-invalid' )
+      .after( `<div class="invalid-feedback" id="${input.id}-invalid">${msg}</div>` )
+    }
+  }
+
+
+  $( 'label' ).hide()
+  $( 'input.form-control' ).on( 'change', (event) => {
+    $( `label[for="${event.target.id}"]` ).fadeIn()
+  })
+
+
+  $( button ).attr( 'disabled','disabled' )
+  validateReservationDate( form )
+  $( 'input#date').on( 'change', (event) => {
+    if( valid_data ) button.removeAttribute( 'disabled' )
+  })
+
   $( form ).on( 'submit', (event) => {
     event.preventDefault()
-    let valid_data = true;
+
 
     if( valid_data ) callback()
   })
@@ -268,11 +357,11 @@ function overviewReservations(){
   navActiveItm( 'reservations/overview' )
   $( 'nav#primary a#reservations').addClass( 'active' )
   let nav_tab_active = document.querySelector( '.nav-link.active' )
-  nav_tab_active.innerText = `Overview`
+  nav_tab_active.innerHTML = `<i class="fas fa-list"></i> Overview`
   let arrayReservation = _glob.arr.reservations;
   let overview_fields = [
-    { label : 'Reservation', field : 'reservation' },
-    { label : 'Guest', field : 'guest' },
+    { label : '<i class="far fa-calendar"></i> Reservation', field : 'reservation' },
+    { label : '<i class="fas fa-user"></i> Guest', field : 'guest' },
     { label : 'Persons', field : 'persons' },
     { label : 'Table', field : 'table' },
     { label : '', field : 'options' },
@@ -285,9 +374,10 @@ function overviewReservations(){
   for( let field of overview_fields ){
     let table_th = document.createElement( 'th' )
     // TODO : fix (col width jump at row hover) in stylesheet
-    if( field.field === 'reservation' || field.field === 'options' || field.field === 'guest'  ) table_th.setAttribute( 'style', 'width:225px;' )
-    if( field.field === 'table' || field.field === 'persons' ) table_th.setAttribute( 'style', 'width:50px;' )
-    table_th.innerText = field.label;
+
+    if( field.field === 'options' || field.field === 'reservation'  ) table_th.setAttribute( 'style', 'width:250px;' )
+
+    table_th.innerHTML = field.label;
     table_tr.appendChild( table_th )
   }
   table_thead.appendChild( table_tr )
@@ -298,6 +388,7 @@ function overviewReservations(){
     for( let field of overview_fields ){
       let table_td = document.createElement( 'td' )
       if ( field.field === 'options' ){
+        table_td.setAttribute( 'style', 'text-align:right;' )
         table_td.appendChild(
           bsBtnGrp([
             bsBtn( 'Edit', 'btn-sm', 'far fa-edit', () => {
@@ -314,7 +405,7 @@ function overviewReservations(){
           location.hash = `#guests/view/${getGuest( item.guest ).id}`
         })
       }else if (field.field === 'reservation' ) {
-        table_td.innerHTML = `<a href="#reservations/view/${item.id}">${moment(item.date,'DD-MM-YYYY').format('dddd LL')} ${item.time_arrival}-${item.time_depart}</a>`
+        table_td.innerHTML = `<a href="#reservations/view/${item.id}"><b> ${moment(item.date,'DD-MM-YYYY').format('dddd LL')} </b><br><i class="far fa-clock"></i> ${item.time_arrival}-${item.time_depart}</a>`
 
       }else if (field.field === 'table') {
         table_td.innerText = item.table.join( '+' )
@@ -343,7 +434,7 @@ function updateReservation( id ){
   navTab({
     id : 'update',
     href : `#reservations/update/${id}`,
-    icon : '',
+    icon : 'far fa-edit',
     label : 'Edit Reservation'
 
   })
@@ -358,7 +449,6 @@ function updateReservation( id ){
         let guest = getGuest( reservation.guest )
         field.value = guest[ field.id ]
         for( let guest_field of guest_fields ) if( guest[ guest_field ] === '' ) $( `#col_${guest_field}` ).hide()
-        //$( 'button#edit_guest' ).on( 'click', (event) => location.hash = `#guests/update/${guest.id}` )
         $( '#edit_guest' ).attr( 'href', `#guests/update/${guest.id}` )
       }else if ( field.id === 'table_select' ) {
         for( let table of reservation.table ) document.querySelector( `select#table_select option[value="${table}"]`).selected = true
@@ -379,9 +469,6 @@ function updateReservation( id ){
         time_depart : update_reservation.time_depart.value,
         table : $( update_reservation.table_select ).val()
       })
-
-      //let inst_reservation = new Reservation( set_reservation )
-      //overviewReservations()
 
       navTabRemove( 'update' )
       bsAlert( '.page-content', 'primary', '', `Reservation for ${getGuestName(reservation.guest)} on ${formatReservation(set_reservation)} has been updated`,()=>{
@@ -404,22 +491,18 @@ function viewReservation( id ){
   navTab({
     id : 'view',
     href : `#reservations/view/${id}`,
-    icon : '',
-    label : 'View Reservation',
-    action : () => {
-      viewReservation( id )
-    }
+    icon : 'far fa-calendar',
+    label : 'View Reservation'
   })
   $( output ).load( 'templates/view-reservation.html', () => {
     $( '#guest' ).html( guest )
     $( '#reservation' ).html( reservation )
-    let edit_button = output.querySelector( 'button' ),
-    overview_link = output.querySelector( 'a.overview-link' )
-    $( edit_button ).on( 'click', () => {
-      updateReservation( id )
-      navTabRemove( 'view' )
-    })
-    $( overview_link ).on( 'click', () => navTabRemove( 'view' ) )
+    let edit_button = output.querySelector( 'a.btn-edit' )
+    edit_button.setAttribute( 'href', `#reservations/update/${id}` )
+    let delete_button = output.querySelector( 'a.btn-delete' )
+    delete_button.setAttribute( 'href', `#reservations/delete/${id}` )
+    $( 'a.btn-overview,a.btn-edit,a.btn-delete' ).on( 'click', () => navTabRemove( 'view' ) )
+
   })
 }
 

@@ -14,7 +14,7 @@ function bsAlert( target, type, icon, msg, callback ){
     info_alert.fadeOut()
     setTimeout( () => { $( '#' + info_alert_id ).remove() } ,1000 )
   }, 5000 )
-  callback()
+  if( callback ) callback()
 }
 // Bootstrap Button
 function bsBtn( label, type, icon, action ){

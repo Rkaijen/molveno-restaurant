@@ -184,7 +184,13 @@ main#page {
 #page-content h1 {
   font-size: 18px;
 }
-
+#page a {
+  color: #235f82;
+}
+#page a:hover {
+  color: #235f82;
+  text-decoration: none;
+}
 /* Bootstrap Buttons */
 #page_output table tr button.btn-sm{
   display: none;
@@ -197,8 +203,12 @@ main#page {
 
 .btn {
   margin-right: 8px;
+  background: none !important;
+  color: #235f82;
 }
-
+.btn-primary {
+  color:#fff !important;  
+}
 .btn-primary {
   background-color: #235F82 !important;
   border-color: #235F82 !important;
@@ -213,6 +223,7 @@ main#page {
 /* table */
 #page_output table {
   user-select: none;
+  border-collapse: collapse !important;
 }
 /* DataTable */
 
@@ -235,10 +246,10 @@ main#page {
 
 @media print{
   body{
-    display: none;
+    visibility: hidden;
   }
   .print{
-    display: block;
+    visibility: visible;
   }
 }
 

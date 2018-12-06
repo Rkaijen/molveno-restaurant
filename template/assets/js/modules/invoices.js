@@ -18,12 +18,6 @@ let reservation = {
 
 /* einde nep gegevens */
 
-
-glob( 'module', 'invoices', () => mainInvoices() )
-// WARNING : can cause ReferenceError;
-// see https://github.com/Spectrum-McRaj/Restaurant-Hans/issues/14
-// should be replaced with setModule() registration in assets/js/main.js
-
 function mainInvoices(){
   showInvoice(reservation);
 }

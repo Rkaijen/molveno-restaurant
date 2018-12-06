@@ -1,7 +1,7 @@
 <h3>View Reservation</h3><hr />
 <div class="row">
   <div class="card">
-  <h5 class="card-header">Reservation for <span id="guest"></span></h5>
+  <h5 class="card-header"><i class="far fa-calendar"></i> Reservation for <span id="guest"></span></h5>
   <div class="card-body">
 
     <p class="card-text" id="reservation"></p>
@@ -10,5 +10,7 @@
   </div>
 </div>
 <div class="row" style="padding:10px;" id="delete_options">
-  <button class="btn btn-primary ">Edit Reservation</button> <a href="#reservations/overview" role="button" class="btn btn-light overview-link">Back to Overview</a>
+  <a role="button" class="btn btn-light  btn-edit"><i class="far fa-edit"></i> Edit Reservation</a>
+  <a role="button" class="btn btn-light  btn-delete"><i class="fas fa-minus-circle"></i> Delete Reservation</a>
+  <a href="#reservations/overview" role="button" class="btn btn-light btn-overview"><i class="fas fa-list"></i> Back to Overview</a>
 </div>
