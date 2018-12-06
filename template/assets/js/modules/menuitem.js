@@ -3,14 +3,14 @@
 * assets/js/modules/MenuItemitem.js
 * TODO : build module; add functions (overview, view, add, update & delete) to let things happen
 */
-function mainMenuItem(){
-  overviewMenuItem();
+function mainMenuItems(){
+  overviewMenuItems();
 }
 /* -----------------------------------------------------------------------------
 * overview
 */
-function overviewMenuItem(){
-  console.log("overviewMenuItem says hi");
+function overviewMenuItems(){
+  console.log("overviewMenuItems says hi");
 }
 /* -----------------------------------------------------------------------------
 * view

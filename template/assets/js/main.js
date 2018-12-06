@@ -29,9 +29,13 @@
     'modules/invoices',
 
   ],()=>{
-    globArr();
     setModule([
       {
+        label : 'Dashboard',
+        primaryNav : true,
+        endpoint : 'dashboard',
+        action : () => mainDashboard()
+      },{
         label : 'Reservations',
         primaryNav : true,
         endpoint : 'reservations',
@@ -76,39 +80,28 @@
       },{
         endpoint : 'guests/delete',
         action : () => deleteGuest( location.hash.split('/')[2] )
+      },{
+        label : 'Menu',
+        primaryNav : true,
+        endpoint : 'menu',
+        action : () => mainMenu()
+      },{
+        label : 'Ingredients',
+        primaryNav : true,
+        primaryNavParent : 'menu',
+        endpoint : 'ingredients',
+        action : () => mainIngredients()
+      },{
+        label : 'Tables',
+        primaryNav : true,
+        endpoint : 'tables',
+        action : () => mainTables()
+      },{
+        label : 'Invoices',
+        primaryNav : true,
+        endpoint : 'invoices',
+        action : () => mainInvoices()
       }
     ])
-    glob( 'arr', 'pages', [
-      //Load these pages
-      {
-        id : 'dashboard',
-        label : 'Dashboard'
-      },{
-        id : 'reservations',
-        label : 'Manage Reservations'
-      },{
-        id : 'guests',
-        label : 'Manage Guests'
-      },{
-        id : 'menu',
-        label : 'Manage Menu Items',
-        items : [
-          {
-            id : 'ingredients',
-            label : 'Manage Ingredients'
-          }
-        ]
-      },{
-        id : 'tables',
-        label : 'Manage Tables'
-      },{
-        id : 'invoices',
-        label : 'Invoices'
-      }
-    ])
-    navMenu( _glob.arr.pages )
-    console.log( _glob )
-    pageHashLoad()
-    window.onhashchange = pageHashLoad
-  });
-})();
+  })
+})()

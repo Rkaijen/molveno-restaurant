@@ -3,13 +3,13 @@
 * assets/js/modules/table.js
 * TODO : build module; add functions (overview, view, add, update & delete) to let things happen
 */
-function mainTable(){
-  overviewTable();
+function mainTables(){
+  overviewTables();
 }
 /* -----------------------------------------------------------------------------
 * overview
 */
-function overviewTable(){
+function overviewTables(){
 
 }
 /* -----------------------------------------------------------------------------
