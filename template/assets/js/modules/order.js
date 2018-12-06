@@ -3,13 +3,13 @@
 * assets/js/modules/order.js
 * TODO : build module; add functions (overview, view, add, update & delete) to let things happen
 */
-function mainOrder(){
-  overviewOrder();
+function mainOrders(){
+  overviewOrders();
 }
 /* -----------------------------------------------------------------------------
 * overview
 */
-function overviewOrder(){
+function overviewOrders(){
   console.log("overviewOrder says hi");
 }
 /* -----------------------------------------------------------------------------

@@ -3,14 +3,14 @@
 * assets/js/modules/ingredient.js
 * TODO : build module; add functions (overview, view, add, update & delete) to let things happen
 */
-function mainIngredient(){
-  overviewIngredient();
+function mainIngredients(){
+  overviewIngredients();
 }
 /* -----------------------------------------------------------------------------
 * overview
 */
-function overviewIngredient(){
-  console.log("overviewIngredient says hi");
+function overviewIngredients(){
+  console.log("overviewIngredients says hi");
 }
 /* -----------------------------------------------------------------------------
 * view

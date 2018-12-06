@@ -3,13 +3,13 @@
 * assets/js/modules/table.js
 * TODO : build module; add functions (overview, view, add, update & delete) to let things happen
 */
-function mainTable(){
-  overviewTable();
+function mainTables(){
+  overviewTables();
 }
 /* -----------------------------------------------------------------------------
 * overview
 */
-function overviewTable(){
+function overviewTables(){
 
 }
 /* -----------------------------------------------------------------------------
@@ -79,5 +79,10 @@ function setTable( table ){
 * is
 */
 function isTableReservationOccupied( table ){
-  for( let reservation of _glob.arr.reservations )if( reservation.table/1 === table/1 ) return true;
+  for( let reservation of _glob.arr.reservations ){
+    for( let _table of reservation.table ){
+      //if( reservation.table.contains( table+'' ) ) return true
+      if( table/1 === _table/1 ) return true
+    }
+  }
 }
