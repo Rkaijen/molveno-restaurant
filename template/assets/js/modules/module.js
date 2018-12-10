@@ -12,8 +12,6 @@ const Module = (function(){
   }
 })()
 
-
-
 setModule([
   {endpoint : 'module/add',
     action : Module.add() }
