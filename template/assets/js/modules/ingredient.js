@@ -6,7 +6,7 @@
 
 const ingredient = (function(){
   let mainIngredients = function(){
-
+    overviewIngredients()
   }
 
 /* -----------------------------------------------------------------------------
