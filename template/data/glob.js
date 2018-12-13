@@ -20,6 +20,10 @@ function globArr(){
     { id : 23460, date : '23-12-2018', time_arrival : '10:30 AM', time_depart : '1:30 PM', guest : 64526, persons : 4, table : [21], comments : '' }
   ] );
 
+  glob( 'arr', 'ingredients',[
+    {id :12000, name : 'unknown', price : '00,00', type : '...vebnejnre...'}
+  ]);
+
   glob( 'arr', 'guests' , [
     // id, firstname, preposition, lastname, email, telephone, country
     { id : 84356, firstname : 'Corene', preposition : '', lastname : 'Lukowski', email : 'c.lukowski@verizon.ca', telephone : '', country : 'ca' },
