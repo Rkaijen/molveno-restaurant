@@ -92,6 +92,9 @@
         endpoint : 'ingredients',
         action : () => ingredient.main()
       },{
+        endpoint : 'ingredients/overview',
+        action : () => ingredient.overview()
+      },{
         label : 'Tables',
         primaryNav : true,
         endpoint : 'tables',
