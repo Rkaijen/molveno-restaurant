@@ -4,7 +4,7 @@
 * TODO : build module; add functions (overview, view, add, update & delete) to let things happen
 */
 
-const ingredient = function(){
+const ingredient = (function(){
   let mainIngredients = function(){
 
   }
@@ -40,4 +40,4 @@ const ingredient = function(){
     add : addIngredient,
     delete : deleteIngredient
   }
-}
+})()
