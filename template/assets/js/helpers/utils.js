@@ -35,7 +35,9 @@ function getRandomInt(min, max) { // random nummer tussen min en max
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-
+function isArray(array){
+  return Object.prototype.toString.call( array ) === '[object Array]'
+}
 
 function data( element, name, value ) { // data-[name] attribute
 

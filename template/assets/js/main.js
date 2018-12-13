@@ -39,22 +39,22 @@
         label : 'Reservations',
         primaryNav : true,
         endpoint : 'reservations',
-        action : () => mainReservations()
+        action : () => reservation.main()
       },{
         endpoint : 'reservations/overview',
-        action : () => overviewReservations()
+        action : () => reservation.overview()
       },{
         endpoint : 'reservations/add',
-        action : () => addReservation()
+        action : () => reservation.add()
       },{
         endpoint : 'reservations/view',
-        action : () => viewReservation( location.hash.split('/')[2] )
+        action : () => reservation.view( location.hash.split('/')[2] )
       },{
         endpoint : 'reservations/update',
-        action : () => updateReservation( location.hash.split('/')[2] )
+        action : () => reservation.update( location.hash.split('/')[2] )
       },{
         endpoint : 'reservations/delete',
-        action : () => deleteReservation( location.hash.split('/')[2] )
+        action : () => reservation.delete( location.hash.split('/')[2] )
       },{
         label : 'Invoices',
         primaryNav : true,

@@ -74,7 +74,7 @@ function pageModule() {
       }
     } else {
       loadPage( page, endpoint )
-      glob( 'var' , 'currentPageId' , endpoint )
+      glob( 'var' , 'current' , endpoint )
     }
 
   } else {
