@@ -90,7 +90,7 @@
         primaryNav : true,
         primaryNavParent : 'menu',
         endpoint : 'ingredients',
-        action : () => mainIngredients()
+        action : () => ingredient.main()
       },{
         label : 'Tables',
         primaryNav : true,
