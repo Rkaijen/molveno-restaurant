@@ -50,6 +50,9 @@ const reservation = (function(){
           time_depart : add_reservation.time_depart.value,
           table : $( add_reservation.table_select ).val()
         }
+
+        let reservation_cls_inst = new Reservation( add_reservation_data )
+        console.log( reservation_cls_inst )
         _glob.arr.reservations.unshift( add_reservation_data )
         let guest_name_prepostion = guest_data.preposition;
         if( guest_name_prepostion !== '') guest_name_prepostion =+ ' '
