@@ -3,30 +3,41 @@
 * assets/js/modules/ingredient.js
 * TODO : build module; add functions (overview, view, add, update & delete) to let things happen
 */
-function mainIngredients(){
-  overviewIngredients();
-}
+
+const ingredient = function(){
+  let mainIngredients = function(){
+
+  }
+
 /* -----------------------------------------------------------------------------
 * overview
 */
-function overviewIngredients(){
-  console.log("overviewIngredients says hi");
-}
-/* -----------------------------------------------------------------------------
-* view
-*/
-function viewIngredient(){
-  console.log("viewIngredient says hi");
-}
-/* -----------------------------------------------------------------------------
-* add
-*/
-function addIngredient(){
-  console.log("addIngredient says hi");
-}
-/* -----------------------------------------------------------------------------
-* delete
-*/
-function deleteIngredient(){
-  console.log("deleteIngredient says hi");
+  let overviewIngredients = function(){
+    console.log("overviewIngredients says hi");
+  }
+  /* -----------------------------------------------------------------------------
+  * view
+  */
+  let viewIngredient = function(id){
+    console.log("viewIngredient says hi");
+  }
+  /* -----------------------------------------------------------------------------
+  * add
+  */
+  let addIngredient = function(){
+    console.log("addIngredient says hi");
+  }
+  /* -----------------------------------------------------------------------------
+  * delete
+  */
+  let deleteIngredient = function(id){
+    console.log("deleteIngredient says hi");
+  }
+  return{
+    main : mainIngredients,
+    overview : overviewIngredients,
+    view : viewIngredient,
+    add : addIngredient,
+    delete : deleteIngredient
+  }
 }
