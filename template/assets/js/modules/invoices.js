@@ -11,7 +11,7 @@ let config = {
 
 let dishes = { 1:{desc:"Lobster with kaviar", price: 50.00}, 2: {desc:"Bordeaux Wine", price: 24.50}, 3: {desc:"Dame Blanche with champagne", price: 30.25}, 4:{desc:"Mushroom soup", price:12}}
 
-let reservation = {
+let reservation_ = {
      guest:"Dagobert Duck",
      items:[4,1,2,2,3],
 }
@@ -19,7 +19,7 @@ let reservation = {
 /* einde nep gegevens */
 
 function mainInvoices(){
-  showInvoice(reservation);
+  showInvoice(reservation_);
 }
 
 function showInvoice(process_reservation){

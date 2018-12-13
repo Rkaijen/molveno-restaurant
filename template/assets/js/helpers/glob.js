@@ -27,6 +27,7 @@ function glob( element, key, val ){
   if( key) {
     if( val) {
       glob[ key ] = val;
+      if( isArray( glob ) ) glob = new Set( glob )
       _glob[ element ] = glob;
     } else{
       try{
