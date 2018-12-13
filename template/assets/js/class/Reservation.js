@@ -28,14 +28,5 @@ class Reservation {
     }
 
   }
-  propertyLabels(){
-    return {
-      timestamp : 'Date/Time',
-      guest : 'Guest',
-      persons : 'Amount of persons',
-      table : 'Table',
-      comments : 'Notes',
-      hasPaid : 'Payment'
-    }
-  }
+  
 }
