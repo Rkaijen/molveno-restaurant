@@ -19,11 +19,12 @@ let overviewIngredients = () => {
   let nav_tab_active = document.querySelector( '.nav-link.active' )
   nav_tab_active.innerHTML = `<i class="fas fa-list"></i> Overview`
   let arrayIngredient = _glob.arr.ingredients;
-  let overview_fields = [
-    { label : '<i class="far fa-calendar"></i> Ingredient', field : 'ingredient' },
-    { label : '<i class="fas fa-user"></i> Unit', field : 'unit' },
+  let overview_fields  = [
+    { label : 'Ingredient', field : 'name' },
+    { label : 'Unit', field : 'unit' },
     { label : 'Price', field : 'price' },
     { label : 'Type', field : 'type' },
+    { label : 'Allergies', field : 'allergies' },
     { label : '', field : 'options' },
   ]
   let table = document.createElement( 'table' ),
