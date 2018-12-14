@@ -23,12 +23,34 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
   next();
 });
 
+/*
+class Guest {
 
+  constructor(name) {
+    this._name = name;
+  }
+
+  get name() {
+    return this._name;
+  }
+
+}
+
+*/
 // create a MySQL connection
 const connection = mysql.createConnection({
+
+/*
+    Guest christoffel = new Guest("Christoffel");
+    Guest raymond = new Guest("Raymond");
+
+    raymond.name="Poedel";
+    */
+
   host: 'localhost', // http://localhost:8081
   user: 'Hans',
   password: 'HansPass01',
