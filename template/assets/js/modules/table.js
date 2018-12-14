@@ -57,7 +57,7 @@ function getTablesReservationNotOccupied(){
 function getTableBySeats( persons ){
     let tables = getTablesReservationNotOccupied()
     tables.sort((a, b) => parseFloat(a.chairs) - parseFloat(b.chairs));
-    console.log( tables )
+    
     for( let table of tables  ){
       if( persons/1 <= table.chairs/1  ){
         return table.id;

@@ -50,7 +50,7 @@ const reservation = (function(){
           time_depart : add_reservation.time_depart.value,
           table : $( add_reservation.table_select ).val()
         }
-
+        console.log( reservation_data )
         let reservation_cls_inst = new Reservation( add_reservation_data )
         console.log( reservation_cls_inst )
         _glob.arr.reservations.unshift( add_reservation_data )
@@ -94,9 +94,21 @@ const reservation = (function(){
 
     $( form ).on( 'submit', (event) => {
       event.preventDefault()
+      if ( reservation.firstname.value === '' || reservation.firstname.value === '' ){
+        valid_data = false
+        bsAlert( '.page-content','warning','',`First and last name cannot be empty` )
+      }
+      if ( reservation.email.value === '' && reservation.telephone.value === '' ){
+        valid_data = false
+        bsAlert( '.page-content','warning','',`Telephone or email cannot be empty` )
+      }
+      if ( reservation.date.value === '' ){
+        valid_data = false
+        bsAlert( '.page-content','warning','',`Date cannot be empty` )
 
+      }
 
-      if( valid_data ) callback()
+      //if( valid_data ) callback()
     })
 
   }
@@ -204,6 +216,7 @@ const reservation = (function(){
                   document.querySelector( `select#table_select option[value="${tables_arr[tables_arr.length-1]+1}"]`).selected = true;
                   update_header()
                 }catch (error){
+                  console.log( error )
                   let new_table = getTableBySeats( document.querySelector('input#persons').value )
                   document.querySelector( `select#table_select option[value="${new_table}"]`).selected = true;
                   update_header()
@@ -214,8 +227,8 @@ const reservation = (function(){
                   try{
                     document.querySelector( `select#table_select option[value="${tables_arr[tables_arr.length-1]-1}"]`).selected = true;
                     update_header();
-                  }catch{
-
+                  }catch(error){
+                    console.log( error )
                     let new_table = getTableBySeats( document.querySelector('input#persons').value );
                     document.querySelector( `select#table_select option[value="${new_table}"]`).selected = true;
                     update_header();
