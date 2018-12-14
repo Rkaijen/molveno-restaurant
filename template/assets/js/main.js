@@ -95,7 +95,13 @@
         label : 'Tables',
         primaryNav : true,
         endpoint : 'tables',
-        action : () => mainTables()
+        action : () => table.main()
+      },{        
+        endpoint : 'tables/add',
+        action : () => table.add()
+      },{
+        endpoint : 'tables/overview',
+        action : () => table.overview()
       },{
         label : 'Invoices',
         primaryNav : true,
