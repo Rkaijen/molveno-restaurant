@@ -16,8 +16,6 @@ const table = (function(){
 * add
 */
   function add(){
-    console.log('this is add');
-
     let output = document.querySelector( '#page_output' )
     $( 'nav#primary a#tables').addClass( 'active' )
     $( output ).load( 'templates/add-table.html', () => {

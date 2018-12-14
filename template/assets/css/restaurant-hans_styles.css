@@ -126,7 +126,7 @@ main#page {
     padding: 24px 96px;
   }
 
-/* naviagtion */
+/* navigation */
 
 #page-navigation {
   position: absolute;
@@ -184,13 +184,13 @@ main#page {
 #page-content h1 {
   font-size: 18px;
 }
-#page a {
+/* #page a {
   color: #235f82;
-}
-#page a:hover {
+} */
+/* #page a:hover {
   color: #235f82;
   text-decoration: none;
-}
+} */
 /* Bootstrap Buttons */
 #page_output table tr button.btn-sm{
   display: none;
@@ -207,7 +207,7 @@ main#page {
   color: #235f82;
 }
 .btn-primary {
-  color:#fff !important;  
+  color:#fff !important;
 }
 .btn-primary {
   background-color: #235F82 !important;
@@ -217,6 +217,32 @@ main#page {
 .btn-light {
   background-color: rgba(0,0,0,0) !important;
   border-color: #9eb1bc !important;
+}
+
+/* Pagination layout */
+
+.page-link {
+  background: none;
+  border: none;
+  color: #212529;
+}
+.page-item .page-link a {
+  color: #212529;
+}
+.page-item.active .page-link {
+  color: #fff;
+  background-color:#112F40;
+  border-radius:
+}
+.page-item.active .page-link a {
+  color: #fff !important;
+}
+.page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    cursor: auto;
+    background: none;
+    border: 0;
 }
 
 
