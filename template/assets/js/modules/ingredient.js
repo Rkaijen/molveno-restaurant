@@ -8,7 +8,27 @@ const ingredient = (function(){
   let mainIngredients = function(){
     overviewIngredients();
   }
-
+  function getIngredient(id1){
+    let id;
+    if(isNaN(id)){
+      id = id1/1;
+    }else{
+      id = id1;
+    }
+    for( let ingredient of _glob.arr.ingredients ) {
+      let ingredientId;
+      if(isNaN(ingredient.id)){
+        ingredientId = ingredient.id/1;
+      }else{
+        ingredientId = ingredient.id;
+      }
+      if( ingredientId === id) {
+        return ingredient;
+      }
+    }
+    console.log("error 404: +ingredient with id:" + id + " is not found");
+    return;
+  }
 /* -----------------------------------------------------------------------------
 * overview
 */
@@ -80,9 +100,9 @@ let overviewIngredients = () => {
   /* -----------------------------------------------------------------------------
   * view
   */
-  let viewIngredient = ( id ) => {/*
-    let ingredient = formatIngredient( getIngredient( id ) ),
-    unit = getUnitName( getIngredient( id ).unit ),
+  let viewIngredient = ( id ) => {
+    /*
+    let ingredient = getIngredient( id ),
     output = document.getElementById( 'page_output' )
     navTab({
       id : 'view',
@@ -91,7 +111,6 @@ let overviewIngredients = () => {
       label : 'View Ingredient'
     })
     $( output ).load( 'templates/view-ingredient.html', () => {
-      $( '#unit' ).html( unit )
       $( '#ingredient' ).html( ingredient )
       let edit_button = output.querySelector( 'a.btn-edit' )
       edit_button.setAttribute( 'href', `#ingredients/update/${id}` )
