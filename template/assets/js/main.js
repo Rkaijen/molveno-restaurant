@@ -90,7 +90,10 @@
         primaryNav : true,
         primaryNavParent : 'menu',
         endpoint : 'ingredients',
-        action : () => mainIngredients()
+        action : () => ingredient.main()
+      },{
+        endpoint : 'ingredients/overview',
+        action : () => ingredient.overview()
       },{
         label : 'Tables',
         primaryNav : true,

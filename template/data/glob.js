@@ -20,6 +20,14 @@ function globArr(){
     { id : 23460, date : '23-12-2018', time_arrival : '10:30 AM', time_depart : '1:30 PM', guest : 64526, persons : 4, table : [21], comments : '' }
   ] );
 
+  glob( 'arr', 'ingredients',[
+    {id :12000, name : 'Spaghetti', price : '1,00', type : 'pasta', unit : 'gram', allergies : 'gluten'},
+    {id :12001, name : 'steak', price : '2,00', type : 'meat', unit : 'stuks', allergies : 'none'},
+    {id :12002, name : 'goat cheese', price : '01,50', type : 'cheese', unit : 'liter', allergies : 'milk'},
+    {id :12003, name : 'wallnuts', price : '00,57', type : 'nuts', unit : 'gram', allergies : 'nuts'},
+    {id :12004, name : 'carrot', price : '0,30', type : 'vegetable', unit : 'gram', allergies : 'none'}
+  ]);
+
   glob( 'arr', 'guests' , [
     // id, firstname, preposition, lastname, email, telephone, country
     { id : 84356, firstname : 'Corene', preposition : '', lastname : 'Lukowski', email : 'c.lukowski@verizon.ca', telephone : '', country : 'ca' },
