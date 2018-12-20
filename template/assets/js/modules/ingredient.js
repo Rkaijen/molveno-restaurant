@@ -42,7 +42,7 @@ let overviewIngredients = () => {
   let overview_fields  = [
     { label : 'Ingredient', field : 'name' },
     { label : 'Unit', field : 'unit' },
-    { label : 'Price', field : 'price' },
+    { label : 'Price per unit', field : 'price' },
     { label : 'Type', field : 'type' },
     { label : 'Allergies', field : 'allergies' },
     { label : '', field : 'options' },
