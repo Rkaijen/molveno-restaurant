@@ -86,6 +86,17 @@
         endpoint : 'menu',
         action : () => mainMenu()
       },{
+        label : 'Menu Item',
+        primaryNav : true,
+        endpoint : 'menuitems',
+        action : () => menuitem.main()
+      },{
+        endpoint : 'menuitems/add',
+        action : () => menuitem.add()
+      },{
+        endpoint : 'menuitems/overview',
+        action : () => menuitem.overview()
+      },{
         label : 'Ingredients',
         primaryNav : true,
         primaryNavParent : 'menu',
@@ -102,7 +113,7 @@
         primaryNav : true,
         endpoint : 'tables',
         action : () => table.main()
-      },{        
+      },{
         endpoint : 'tables/add',
         action : () => table.add()
       },{
