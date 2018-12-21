@@ -1,7 +1,7 @@
 'use strict'
 /*
 * assets/js/modules/ingredient.js
-* TODO : build module; add functions (overview, view, add, update & delete) to let things happen
+* TODO : build module; add functions (overview, view, add, upunit & delete) to let things happen
 */
 
 const ingredient = (function(){
@@ -29,7 +29,13 @@ const ingredient = (function(){
     console.log("error 404: +ingredient with id:" + id + " is not found");
     return;
   }
-/* -----------------------------------------------------------------------------
+  function setIngredient( ingredient ) {
+    console.log("set entered");
+    for( let i = 0; i < _glob.arr.ingredients.length; i++) {
+      if( _glob.arr.ingredients[i].id/1 === ingredient.id/1 ) _glob.arr.ingredients[i] = ingredient
+    }
+    return ingredient
+  }/* -----------------------------------------------------------------------------
 * overview
 */
 let overviewIngredients = () => {
@@ -43,7 +49,7 @@ let overviewIngredients = () => {
     { label : 'Ingredient', field : 'name' },
     { label : 'Unit', field : 'unit' },
     { label : 'Price per unit', field : 'price' },
-    { label : 'Type', field : 'type' },
+    { label : 'Category', field : 'category' },
     { label : 'Allergies', field : 'allergies' },
     { label : '', field : 'options' },
   ]
@@ -73,7 +79,7 @@ let overviewIngredients = () => {
         table_td.appendChild(
           bsBtnGrp([
             bsBtn( 'Edit', 'btn-sm', 'far fa-edit', () => {
-              location.hash = `#ingredients/update/${item.id}`
+              location.hash = `#ingredients/upunit/${item.id}`
             }),
             bsBtn( 'Delete', 'btn-sm', 'fas fa-minus-circle', () => {
               location.hash = `#ingredients/delete/${item.id}`
@@ -113,18 +119,59 @@ let overviewIngredients = () => {
     $( output ).load( 'templates/view-ingredient.html', () => {
       $( '#ingredient' ).html( ingredient )
       let edit_button = output.querySelector( 'a.btn-edit' )
-      edit_button.setAttribute( 'href', `#ingredients/update/${id}` )
+      edit_button.setAttribute( 'href', `#ingredients/upunit/${id}` )
       let delete_button = output.querySelector( 'a.btn-delete' )
       delete_button.setAttribute( 'href', `#ingredients/delete/${id}` )
       $( 'a.btn-overview,a.btn-edit,a.btn-delete' ).on( 'click', () => navTabRemove( 'view' ) )
 
     })
   */}
+  function validateIngredient( form, callback ){
+
+    let button = form.querySelector( 'button' ),
+    ingredient = form.elements,
+    valid_data = true,
+    is_valid = (  input, valid, msg ) => {
+      $( `#${input.id}-invalid` ).remove()
+      if( valid ) {
+        $( input ).removeClass( 'is-invalid' )
+      } else {
+        $( input ).removeClass( 'is-valid' ).addClass( 'is-invalid' )
+        .after( `<div class="invalid-feedback" id="${input.id}-invalid">${msg}</div>` )
+      }
+    }
+
+    $( form ).on( 'submit', (event) => {
+      event.preventDefault()
+
+
+      if( valid_data ) callback()
+    })
+
+  }
   /* -----------------------------------------------------------------------------
   * add
   */
   let addIngredient = function(){
     console.log("addIngredient says hi");
+    let output = document.querySelector( '#page_output' )
+    $( output ).load( 'templates/add-ingredient.html', () => {
+      let add_form = output.querySelector( 'form' )
+      validateIngredient( add_form, () => {
+        let add_ingredient = add_form.elements;
+        let add_ingredient_id = getRandomInt(10000,99999),
+        add_ingredient_data = {
+          id : add_ingredient_id,
+          name : add_ingredient.name.value,
+          unit : add_ingredient.unit.value,
+          category : add_ingredient.category.value,
+          price : add_ingredient.price.value,
+          allergies : add_ingredient.allergies.value
+        }
+        _glob.arr.ingredients.unshift( add_ingredient_data )
+        location.hash = '#ingredients'
+      })
+    })
   }
   /* -----------------------------------------------------------------------------
   * delete
