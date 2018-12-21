@@ -3,7 +3,7 @@
  * assets/js/class/Ingredient.js
  */
 class Ingredient{
-  constructor( id, name, price, inStock, unit, allergies, type){
+  constructor( id, name, price, inStock, unit, allergies, category){
     if( typeof id === 'object'){ // arguments als object
       let data = id;
       this.id = data.id;
@@ -12,7 +12,7 @@ class Ingredient{
       this.inStock = data.inStock;
       this.unit = data.unit;
       this.allergies = data.allergies;
-      this.type = data.type;
+      this.category = data.category;
     } else {
       this.id = id;
       this.name = name;
@@ -20,7 +20,7 @@ class Ingredient{
       this.inStock = inStock;
       this.unit = unit;
       this.allergies = allergies;
-      this.type = type;
+      this.category = category;
     }
   }
   used(amount){
@@ -38,7 +38,7 @@ class Ingredient{
       inStock : 'In Stock',
       unit : 'Unit',
       allergies : 'Allergy Information',
-      type : 'Type'
+      category : 'Category'
     }
   }
 }
