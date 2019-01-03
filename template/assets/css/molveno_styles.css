@@ -184,13 +184,7 @@ main#page {
 #page-content h1 {
   font-size: 18px;
 }
-/* #page a {
-  color: #235f82;
-} */
-/* #page a:hover {
-  color: #235f82;
-  text-decoration: none;
-} */
+
 /* Bootstrap Buttons */
 #page_output table tr button.btn-sm{
   display: none;
@@ -226,6 +220,11 @@ main#page {
   border: none;
   color: #212529;
 }
+.page-link:hover {
+  color: #fff;
+  background: #5F89A2;
+}
+
 .page-item .page-link a {
   color: #212529;
 }
@@ -265,6 +264,13 @@ main#page {
 #page_output table.dataTable thead .sorting_desc:after {
   content: "" !important;
   /* sort-by-attributes-alt */
+}
+#page_output tbody a {
+  color: #235f82;
+}
+#page_output tbody a:hover {
+  color: #235f82;
+  text-decoration: none;
 }
 
 
