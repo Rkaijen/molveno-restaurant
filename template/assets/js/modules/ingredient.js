@@ -178,6 +178,30 @@ let overviewIngredients = () => {
   */
   let deleteIngredient = function(id){
     console.log("deleteIngredient says hi");
+    /*let ingredient = formatIngredient( getIngredient( id ) ),
+    guest = getGuestName( getIngredient( id ).guest ),
+    output = document.getElementById( 'page_output' )
+    navTab({
+      id : 'delete',
+      href : `#ingredients/delete/${id}`,
+      icon : 'fas fa-minus-circle',
+      label : 'Delete Ingredient'
+    })
+    $( output ).load( 'templates/delete-ingredient.html', () => {
+      $( '#ingredient' ).html( ingredient )
+      let confirm_button = output.querySelector( 'button' )
+      $( confirm_button ).on( 'click', (event) => {
+        let tmp_arr = [];
+        for( let item of _glob.arr.ingredients ) if( item.id/1 !== id/1 ) tmp_arr.push( item )
+        _glob.arr.ingredients = tmp_arr;
+        overviewIngredients()
+        navTabRemove( 'delete' )
+        bsAlert( '#page_output', 'primary', '', `Ingredient for <b>${guest}</b> ${ingredient} has been deleted` )
+
+      })
+      $( '.overview-link' ).on( 'click', (event) => navTabRemove( 'delete' ) )
+    })
+*/
   }
   return{
     main : mainIngredients,

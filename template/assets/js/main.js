@@ -95,6 +95,9 @@
         endpoint : 'ingredients/overview',
         action : () => ingredient.overview()
       },{
+        endpoint : 'ingredient/delete',
+        action : () => ingredient.delete( location.hash.split('/')[2] )
+      },{
         endpoint : 'ingredients/add',
         action : () => ingredient.add()
       },{
@@ -102,7 +105,7 @@
         primaryNav : true,
         endpoint : 'tables',
         action : () => table.main()
-      },{        
+      },{
         endpoint : 'tables/add',
         action : () => table.add()
       },{
