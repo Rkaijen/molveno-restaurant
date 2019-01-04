@@ -3,12 +3,12 @@
 }
 
 html {
-  min-height: 100%;
-  background: #f7f6f2 url("../images/Molveno_logo_small.png") no-repeat;
-  background-position: right 16px bottom 16px;
+  background: #f7f6f2;
+  height: 100%;
 }
 body {
   background: none;
+  min-height: 100%;
 }
 
 html,body {
@@ -183,10 +183,43 @@ main#page {
       color: #000 !important;
     }
 
+/* page general styling settings */
+
+.page {
+  position: relative;
+  min-height: -moz-calc(100vh - 100px); /* Firefox */
+  min-height: -webkit-calc(100vh - 100px); /* WebKit */
+  min-height: -o-calc(100vh - 100px); /* Opera */
+  min-height: calc(100vh - 100px);
+  padding-bottom: 135px; /* reserved height for page-footer */
+}
+
 /* page header */
 
 #page-content h1 {
   font-size: 18px;
+}
+
+/* page footer */
+
+.page-footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.page-footer .row {
+  border-top: 1px solid #ccc;
+  padding-top: 16px;
+}
+
+.page-footer .site-branding {
+  text-indent: -9999px;
+  white-space: nowrap;
+  float: right;
+  width: 360px; /* size w of logo */
+  height: 62px; /* size h of logo */
+  background: url("../images/Molveno_logo_small.png") no-repeat; /* url of logo-img */
 }
 
 /* Bootstrap Buttons */
