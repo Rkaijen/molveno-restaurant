@@ -29,7 +29,7 @@
     'modules/invoices',
 
   ],()=>{
-    setModule([
+    let modules = [
       {
         label : 'Dashboard',
         primaryNav : true,
@@ -95,7 +95,7 @@
         endpoint : 'ingredients/overview',
         action : () => ingredient.overview()
       },{
-        endpoint : 'ingredient/delete',
+        endpoint : 'ingredients/delete',
         action : () => ingredient.delete( location.hash.split('/')[2] )
       },{
         endpoint : 'ingredients/add',
@@ -117,6 +117,8 @@
         endpoint : 'invoices',
         action : () => mainInvoices()
       }
-    ])
+    ]
+    setModule( modules)
+    console.log( typeof _glob[ 'module' ][ 'ingredients/delete' ] )
   })
 })()
