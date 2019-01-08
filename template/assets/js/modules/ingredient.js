@@ -35,7 +35,9 @@ const ingredient = (function(){
       if( _glob.arr.ingredients[i].id/1 === ingredient.id/1 ) _glob.arr.ingredients[i] = ingredient
     }
     return ingredient
-  }/* -----------------------------------------------------------------------------
+  }  let formatIngredient = ( ingredient ) => {
+      if(ingredient){ return (ingredient.name + ": " + ingredient.category + ", " + ingredient.price + " per " + ingredient.unit);}
+      }/* -----------------------------------------------------------------------------
 * overview
 */
 let overviewIngredients = () => {
@@ -154,6 +156,28 @@ let overviewIngredients = () => {
 
   let deleteIngredient = function(id){
     console.log(id);
+      let ingredient = formatIngredient(getIngredient( id )),
+      output = document.getElementById( 'page_output' )
+      navTab({
+        id : 'delete',
+        href : `#ingredients/delete/${id}`,
+        icon : 'fas fa-minus-circle',
+        label : 'Delete Ingredient'
+      })
+      $( output ).load( 'templates/delete-ingredient.html', () => {
+        $( '#ingredient' ).html( ingredient )
+        let confirm_button = output.querySelector( 'button' )
+        $( confirm_button ).on( 'click', (event) => {
+          let tmp_arr = [];
+          for( let item of _glob.arr.ingredients ) if( item.id/1 !== id/1 ) tmp_arr.push( item )
+          _glob.arr.ingredients = tmp_arr;
+          overviewIngredients()
+          navTabRemove( 'delete' )
+          bsAlert( '#page_output', 'primary', '', `are you sure you want to delete:  ${ingredient} has been deleted` )
+
+        })
+        $( '.overview-link' ).on( 'click', (event) => navTabRemove( 'delete' ) )
+      })
   }
   /* -----------------------------------------------------------------------------
   * add
@@ -163,7 +187,7 @@ let overviewIngredients = () => {
     let output = document.querySelector( '#page_output' )
     $( output ).load( 'templates/add-ingredient.html', () => {
       let add_form = output.querySelector( 'form' )
-      validateIngredient( add_form, () => {
+      finaliseIngredient( add_form, () => {
         let add_ingredient = add_form.elements;
         let add_ingredient_id = getRandomInt(10000,99999),
         add_ingredient_data = {
