@@ -132,7 +132,7 @@ const table = (function(){
     output.appendChild( datatable )
 
     $( 'table' ).DataTable()
-    if( arrayReservation.length < 11 ) $('ul.pagination').hide()
+    
 
   }
 
@@ -173,7 +173,7 @@ function getTablesReservationNotOccupied(){
 function getTableBySeats( persons ){
     let tables = getTablesReservationNotOccupied()
     tables.sort((a, b) => parseFloat(a.chairs) - parseFloat(b.chairs));
-    
+
     for( let table of tables  ){
       if( persons/1 <= table.chairs/1  ){
         return table.id;
