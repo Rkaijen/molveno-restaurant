@@ -29,7 +29,7 @@
     'modules/invoices',
 
   ],()=>{
-    setModule([
+    let modules = [
       {
         label : 'Dashboard',
         primaryNav : true,
@@ -95,6 +95,9 @@
         endpoint : 'ingredients/overview',
         action : () => ingredient.overview()
       },{
+        endpoint : 'ingredients/delete',
+        action : () => ingredient.delete( location.hash.split('/')[2] )
+      },{
         endpoint : 'ingredients/add',
         action : () => ingredient.add()
       },{
@@ -102,7 +105,7 @@
         primaryNav : true,
         endpoint : 'tables',
         action : () => table.main()
-      },{        
+      },{
         endpoint : 'tables/add',
         action : () => table.add()
       },{
@@ -114,6 +117,8 @@
         endpoint : 'invoices',
         action : () => mainInvoices()
       }
-    ])
+    ]
+    setModule( modules)
+    console.log( typeof _glob[ 'module' ][ 'ingredients/delete' ] )
   })
 })()
