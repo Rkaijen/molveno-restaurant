@@ -15,7 +15,7 @@ html,body {
   font-family: 'Open Sans', sans-serif;
 }
 
-<<<<<<< HEAD:assets/css/molveno_styles.css
+
 button:focus,
 a:focus, a:active,
 button::-moz-focus-inner,
@@ -34,9 +34,6 @@ select:focus::-ms-value {
   background-color: $input-bg;
   color: $input-color;
 }
-=======
-
->>>>>>> 8c69dfa7cbf3af0ca6da46ece0794bee0a7a7fb3:assets/css/molveno_styles.css
 
 nav#primary {
   height: 100%;
