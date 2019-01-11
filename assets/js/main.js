@@ -97,6 +97,12 @@
         endpoint : 'menuitems/overview',
         action : () => menuitem.overview()
       },{
+        endpoint : 'menuitems/view',
+        action : () => menuitem.view()
+      },{
+        endpoint : 'menuitems/delete',
+        action : () => menuitem.delete( location.hash.split('/')[2] )
+      },{
         label : 'Ingredients',
         primaryNav : true,
         primaryNavParent : 'menu',
@@ -130,6 +136,6 @@
       }
     ]
     setModule( modules)
-    console.log( typeof _glob[ 'module' ][ 'ingredients/delete' ] )
+    
   })
 })()

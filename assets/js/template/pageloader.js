@@ -29,7 +29,7 @@ function setModule( modules ){
       id : 'guests',
       label : 'Manage Guests'
     },{
-      id : 'menu',
+      id : 'menuitems',
       label : 'Manage Menu Items',
       items : [
         {
@@ -51,12 +51,12 @@ function setModule( modules ){
 }
 
 function getModule( endpoint ){
-      console.log( endpoint)
-  try{
+
+  //try{
     endpoint.indexOf( '/' ) > 0 ? _glob.module[ `${endpoint.split( '/' )[0]}/${endpoint.split( '/' )[1]}` ]() : _glob.module[ endpoint ]()
-  }catch( error ) {
-    console.warn( `${endpoint} : ${error}` )
-  }
+  //}catch( error ) {
+  //  console.warn( `${endpoint} : ${error}` )
+  //}
 }
 
 function pageModule() {
