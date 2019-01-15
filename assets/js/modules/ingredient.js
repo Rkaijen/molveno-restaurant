@@ -218,6 +218,12 @@ let overviewIngredients = () => {
     $( output ).load( 'templates/edit-ingredient.html', () => {
       let form = output.querySelector( 'form'),
       edit_ingredient = form.elements, ingredient = getIngredient( id )
+      let ingred = getIngredient(id);
+      document.getElementById("name").value = ingred.name;
+      document.getElementById("price").value = ingred.price;
+      document.getElementById("unit").value = ingred.unit;
+      document.getElementById("category").value = ingred.category;
+      document.getElementById("allergies").value = ingred.allergies;
       $( form ).on( 'submit', (event) => {
         event.preventDefault()
         edit_ingredient = event.target.elements;
