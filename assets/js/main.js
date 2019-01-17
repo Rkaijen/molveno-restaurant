@@ -112,6 +112,12 @@
         endpoint : 'tables/overview',
         action : () => table.overview()
       },{
+        endpoint : 'tables/update',
+        action : () => table.update( location.hash.split('/')[2] )
+      },{
+        endpoint : 'tables/delete',
+        action : () => table.delete( location.hash.split('/')[2] )
+      },{
         label : 'Invoices',
         primaryNav : true,
         endpoint : 'invoices',
