@@ -98,6 +98,9 @@
         endpoint : 'ingredients/delete',
         action : () => ingredient.delete( location.hash.split('/')[2] )
       },{
+        endpoint : 'ingredients/edit',
+        action : () => ingredient.edit( location.hash.split('/')[2] )
+      },{
         endpoint : 'ingredients/add',
         action : () => ingredient.add()
       },{
