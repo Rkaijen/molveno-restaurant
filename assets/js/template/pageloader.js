@@ -30,7 +30,7 @@ function setModule( modules ){
       label : 'Manage Guests'
     },{
       id : 'menu',
-      label : 'Manage Menu Items',
+      label : 'Manage Menu',
       items : [
         {
           id : 'ingredients',
@@ -40,9 +40,6 @@ function setModule( modules ){
     },{
       id : 'tables',
       label : 'Manage Tables'
-    },{
-      id : 'invoices',
-      label : 'Invoices'
     }
   ])
   navMenu( _glob.arr.pages )

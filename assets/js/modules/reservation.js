@@ -151,14 +151,17 @@ const reservation = (function(){
       .timepicker({
         template: false,
         showInputs: false,
-        minuteStep: 5
+        minuteStep: 5,
+        showMeridian: false
 
       })
       .on( 'change' , (event) => {
 
           if( $('#date').val() === moment().format( 'DD-MM-YYYY') ) {
-
-            if( $('#time_arrival').val().split(':')[0]/1 < moment().format('LT').split( ':' )[0]/1+3 ){
+            let current_hour =  moment().format('HH').split( ':' )[0],
+            min_hour = moment().add(3,'hours').format('HH').split( ':' )[0]
+            console.log( current_hour + ' > ' + min_hour )
+            if( $('#time_arrival').val().split(':')[0]/1 < moment().format('HH:mm').split( ':' )[0]/1+3 ){
               $('#time_arrival-invalid').remove()
               $('#time_arrival').removeClass( 'is-valid' ).addClass( 'is-invalid' ).after( '<div class="invalid-feedback" id="time_arrival-invalid">Time of arrival must be at least 3 hours in advance</div>' );
 
@@ -167,24 +170,28 @@ const reservation = (function(){
               $('#time_arrival-invalid').remove()
             }
 
+          }else{
+            $('#time_arrival').removeClass( 'is-invalid' )
+            $('#time_arrival-invalid').remove()
           }
           update_date()
           $( reservation.time_depart )
             .val(
-              moment( $( reservation.time_arrival ).val(), 'hh:mm' )
-              .add(3,'hours').format('LT')
+              moment( $( reservation.time_arrival ).val(), 'HH:mm' )
+              .add(3,'hours').format('HH:mm')
             )
       })
 
     $( reservation.time_depart )
       .val (
-        moment( $( reservation.time_arrival ).val(), 'hh:mm' )
-        .add(3,'hours').format('LT')
+        moment( $( reservation.time_arrival ).val(), 'HH:mm' )
+        .add(3,'hours').format('HH')
       )
       .timepicker({
         template: false,
         showInputs: false,
-        minuteStep: 5
+        minuteStep: 5,
+        showMeridian: false
 
       })
   }
@@ -449,6 +456,9 @@ const reservation = (function(){
       let form = output.querySelector( 'form'),
       update_reservation = form.elements, reservation = getReservation( id ),
       guest_fields = [ 'firstname', 'preposition', 'lastname', 'email', 'telephone' ]
+
+
+
       for( let field of update_reservation ){
         if( guest_fields.includes( field.id ) ){
           //field.setAttribute( 'disabled', 'disabled' )
@@ -462,9 +472,10 @@ const reservation = (function(){
           field.value = reservation[ field.id ]
         }
       }
-      $( form ).on( 'submit', (event) => {
-        event.preventDefault()
-        update_reservation = event.target.elements;
+      //$( form ).on( 'submit', (event) => {
+      validateReservation(form, () => {
+        //event.preventDefault()
+        update_reservation = form.elements;
 
         let set_reservation = setReservation({
           id : id,
