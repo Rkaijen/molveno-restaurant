@@ -21,11 +21,11 @@ function globArr(){
   ] );
 
   glob( 'arr', 'ingredients',[
-    {id :12000, name : 'Spaghetti', price : '1,00', type : 'pasta', unit : 'gram', allergies : 'gluten'},
-    {id :12001, name : 'steak', price : '2,00', type : 'meat', unit : 'stuks', allergies : 'none'},
-    {id :12002, name : 'goat cheese', price : '01,50', type : 'cheese', unit : 'liter', allergies : 'milk'},
-    {id :12003, name : 'wallnuts', price : '00,57', type : 'nuts', unit : 'gram', allergies : 'nuts'},
-    {id :12004, name : 'carrot', price : '0,30', type : 'vegetable', unit : 'gram', allergies : 'none'}
+    {id :12000, name : 'Spaghetti', price : 1.00, type : 'pasta', unit : 'gram', allergies : 'gluten'},
+    {id :12001, name : 'steak', price : 2.00, type : 'meat', unit : 'stuks', allergies : 'none'},
+    {id :12002, name : 'goat cheese', price : 1.50, type : 'cheese', unit : 'liter', allergies : 'milk'},
+    {id :12003, name : 'wallnuts', price : 0.57, type : 'nuts', unit : 'gram', allergies : 'nuts'},
+    {id :12004, name : 'carrot', price : 0.30, type : 'vegetable', unit : 'gram', allergies : 'none'}
   ]);
 
   glob( 'arr', 'guests' , [

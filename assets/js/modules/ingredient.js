@@ -238,13 +238,16 @@ let overviewIngredients = () => {
         })
 
         navTabRemove( 'edit' )
-        bsAlert( '.page-content', 'primary', '', `Ingredient for ${getGuestName(ingredient.guest)} on ${formatIngredient(set_ingredient)} has been editd`,()=>{
+        bsAlert( '.page-content', 'primary', '', ` ingredient: ${formatIngredient(set_ingredient)} has been edited`,()=>{
           location.hash = '#ingredients/overview'
         })
-
+          console.log("pass 1");
       })
+      console.log("pass 2");
       $( '.overview-link' ).on( 'click', (event) => navTabRemove( 'edit' ) )
+      console.log("pass 3");
     })
+    console.log("pass 4");
   }
 
   return{
