@@ -15,8 +15,6 @@ html,body {
   font-family: 'Open Sans', sans-serif;
 }
 
-
-
 nav#primary {
   height: 100%;
   width: 240px;
@@ -317,6 +315,10 @@ main#page {
   text-decoration: none;
 }
 
+
+.col-hidden {
+  display: none;
+}
 
 /* print media */
 
