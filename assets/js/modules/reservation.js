@@ -84,7 +84,7 @@ const reservation = (function(){
     })
 
 
-    $( button ).attr( 'disabled','disabled' )
+    if($( 'input#date').val() === '') $( button ).attr( 'disabled','disabled' )
     validateReservationDate( form )
     validateReservationTable( form )
     $( 'input#date').on( 'change', (event) => {
@@ -161,9 +161,9 @@ const reservation = (function(){
             let current_hour =  moment().format('HH').split( ':' )[0],
             min_hour = moment().add(3,'hours').format('HH').split( ':' )[0]
             console.log( current_hour + ' > ' + min_hour )
-            if( $('#time_arrival').val().split(':')[0]/1 < moment().format('HH:mm').split( ':' )[0]/1+3 ){
+            if( $('#time_arrival').val().split(':')[0]/1 < moment().format('HH:mm').split( ':' )[0]/1 ){
               $('#time_arrival-invalid').remove()
-              $('#time_arrival').removeClass( 'is-valid' ).addClass( 'is-invalid' ).after( '<div class="invalid-feedback" id="time_arrival-invalid">Time of arrival must be at least 3 hours in advance</div>' );
+              $('#time_arrival').removeClass( 'is-valid' ).addClass( 'is-invalid' ).after( '<div class="invalid-feedback" id="time_arrival-invalid">Time of arrival should be in the future</div>' );
 
             }else{
               $('#time_arrival').removeClass( 'is-invalid' )
