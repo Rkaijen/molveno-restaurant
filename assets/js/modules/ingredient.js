@@ -199,7 +199,10 @@ let overviewIngredients = () => {
           allergies : add_ingredient.allergies.value
         }
         _glob.arr.ingredients.unshift( add_ingredient_data )
-        location.hash = '#ingredients'
+          bsAlert( 'article.page-content','primary','',`Ingredient ${add_ingredient_data.name} has been saved`,() => {
+            location.hash = '#ingredients'
+        })
+
       })
     })
   }
