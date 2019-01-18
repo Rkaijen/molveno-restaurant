@@ -187,7 +187,7 @@ let overviewIngredients = () => {
     let output = document.querySelector( '#page_output' )
     $( output ).load( 'templates/add-ingredient.html', () => {
       let add_form = output.querySelector( 'form' )
-      finaliseIngredient( add_form, () => {
+      validateIngredient( add_form, () => {
         let add_ingredient = add_form.elements;
         let add_ingredient_id = getRandomInt(10000,99999),
         add_ingredient_data = {

@@ -13,11 +13,11 @@ function globArr(){
   glob( 'arr', 'reservations' , [
     //id, timestamp, guest, persons, table, arrangement, comments
     // http://listofrandomnames.com/index.cfm?generated
-    { id : 23456, date : '19-12-2018', time_arrival : '10:45 AM', time_depart : '1:45 PM', guest : 84356, persons : 2, table : [3], comments : '' },
-    { id : 23457, date : '20-12-2018', time_arrival : '6:30 PM', time_depart : '9:30 PM', guest : 74309, persons : 5, table : [8], comments : '' },
-    { id : 23458, date : '20-12-2018', time_arrival : '11:30 AM', time_depart : '3:30 PM', guest : 48526, persons : 4, table : [12], comments : '' },
-    { id : 23459, date : '21-12-2018', time_arrival : '11:30 AM', time_depart : '3:30 PM', guest : 38756, persons : 4, table : [16], comments : '' },
-    { id : 23460, date : '23-12-2018', time_arrival : '10:30 AM', time_depart : '1:30 PM', guest : 64526, persons : 4, table : [21], comments : '' }
+    { id : 23456, date : '19-01-2018', time_arrival : '9:45', time_depart : '12:45', guest : 84356, persons : 2, table : [3], comments : '' },
+    { id : 23457, date : '20-01-2018', time_arrival : '10:15', time_depart : '13:15', guest : 74309, persons : 5, table : [8], comments : '' },
+    { id : 23458, date : '20-12-2018', time_arrival : '11:25', time_depart : '14:25', guest : 48526, persons : 4, table : [12], comments : '' },
+    { id : 23459, date : '21-12-2018', time_arrival : '10:35', time_depart : '13:35', guest : 38756, persons : 4, table : [16], comments : '' },
+    { id : 23460, date : '23-12-2018', time_arrival : '9:25', time_depart : '12:25', guest : 64526, persons : 4, table : [21], comments : '' }
   ] );
 
   glob( 'arr', 'ingredients',[
@@ -34,7 +34,7 @@ function globArr(){
     { id : 74309, firstname : 'Boyce', preposition : '', lastname : 'Villafuerte', email : 'b.villafuerte@tiscali.it', telephone : '+393164716566', country : 'it' },
     { id : 48526, firstname : 'Lisette', preposition : '', lastname : 'Copeland', email : 'l.copeland@vodafone.co.uk', telephone : '', country : 'uk' },
     { id : 38756, firstname : 'Horacio', preposition : '', lastname : 'Lomeli', email : 'h.lomeli@telefonica.it', telephone : '', country : 'it' },
-    { id : 64526, firstname : 'Jan', preposition : '', lastname : 'Cornellisen', email : 'j.cornelissen@telfort.nl', telephone : '+3130584532', country : 'nl' },
+    { id : 64526, firstname : 'Jan', preposition : '', lastname : 'Cornelissen', email : 'j.cornelissen@telfort.nl', telephone : '+3130584532', country : 'nl' },
   ] );
 
   glob( 'arr', 'tables' , [
