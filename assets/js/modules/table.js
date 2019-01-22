@@ -52,7 +52,7 @@ const table = (function(){
     nav_tab_active.innerHTML = `<i class="fas fa-list"></i> Overview`
     let arrayTables = _glob.arr.tables;
     let overview_fields = [
-      { label : 'Table number', field : 'id' },
+      { label : 'Table number', field : 'nr' },
       { label : '<i class="fas fa-chair"></i> Chairs', field : 'chairs' },
       { label : '<i class="fab fa-accessible-icon"></i> Wheelchair access', field : 'wheelchair' },
       { label : 'Status', field : 'status' },
