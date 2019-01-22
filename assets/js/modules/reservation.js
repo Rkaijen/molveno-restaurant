@@ -78,7 +78,7 @@ const reservation = (function(){
     }
 
 
-    $( 'label' ).hide()
+    //$( 'label' ).hide()
     $( 'input.form-control' ).on( 'change', (event) => {
       $( `label[for="${event.target.id}"]` ).fadeIn()
     })
