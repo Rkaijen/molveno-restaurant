@@ -222,6 +222,13 @@ main#page {
   font-size: 18px;
 }
 
+/* page content */
+
+#page_output > .row {
+  margin-right: 0;
+  margin-left: 0;
+}
+
 /* page footer */
 
 .page-footer {

@@ -15,7 +15,7 @@ const table = (function(){
 /* -----------------------------------------------------------------------------
 * add
 */
-  function add(){
+  function addTable(){
     let output = document.querySelector( '#page_output' )
     $( 'nav#primary a#tables').addClass( 'active' )
     $( output ).load( 'templates/add-table.html', () => {
@@ -23,27 +23,20 @@ const table = (function(){
       validateTable( add_form, () => {
         let add_table = add_form.elements;
         let add_table_data = {
-          id : parseInt(add_table.table_id.value),
+          id : parseInt(add_table.id.value),
           chairs : add_table.chairs.value,
           wheelchair : add_table.wheelchair.value,
           status : add_table.table_status.value
         }
         _glob.arr.tables.unshift( add_table_data )
         console.log( _glob.arr.tables )
-        bsAlert( '.page-content','primary','',`Table for <b>${add_table.table_id.value}</b> has been saved` )
+        bsAlert( '.page-content','primary','',`Table for <b>${add_table.id.value}</b> has been saved` )
         location.hash = '#tables'
       })
     })
 
   }
-  let validateTable = ( form, callback ) => {
-    let valid_data = true;
 
-    $( form ).on( 'submit', (event) => {
-      event.preventDefault()
-      if( valid_data ) callback()
-    })
-  }
 
   /* -----------------------------------------------------------------------------
   * Overview
@@ -56,8 +49,8 @@ const table = (function(){
     let arrayTables = _glob.arr.tables;
     let overview_fields = [
       { label : 'Table number', field : 'id' },
-      { label : '<i class="fas fa-chair"></i> Chair per table', field : 'chairs' },
-      { label : '<i class="fab fa-accessible-icon"></i> Wheelchair accessible', field : 'wheelchair' },
+      { label : '<i class="fas fa-chair"></i> Chairs', field : 'chairs' },
+      { label : '<i class="fab fa-accessible-icon"></i> Wheelchair access', field : 'wheelchair' },
       { label : 'Status', field : 'status' },
       { label : '', field : 'options' },
     ]
@@ -132,14 +125,99 @@ const table = (function(){
     output.appendChild( datatable )
 
     $( 'table' ).DataTable()
-    
+
 
   }
 
+/* -----------------------------------------------------------------------------
+* update
+*/
+  function updateTable(id){
+    navTab({
+      id : 'update',
+      href : `#tables/update/${id}`,
+      icon : 'far fa-edit',
+      label : 'Edit Table'
+
+    })
+    let output = document.querySelector( '#page_output' )
+    $( output ).load( 'templates/update-table.html', () => {
+      let form = output.querySelector( 'form'),
+      update_table = form.elements, table = getTable( id ),
+      table_fields = [ 'id', 'chairs', 'wheelchair', 'status' ]
+      for( let field of update_table ){
+        if( table_fields.includes( field.id ) ){
+          let table = getTable( id )
+          field.value = table[ field.id ]
+        }
+      }
+      $( form ).on( 'submit', (event) => {
+        event.preventDefault()
+        update_table = event.target.elements;
+
+        let set_table = setTable({
+          id : parseInt(update_table.id.value),
+          chairs : update_table.chairs.value,
+          wheelchair : update_table.wheelchair.value,
+          status : update_table.table_status.value
+        })
+
+        navTabRemove( 'update' )
+        bsAlert( 'article.page-content', 'primary', '', `Table ${getTable(table.id).id} has been updated`,()=>{
+          location.hash = '#tables/overview'
+        })
+
+      })
+      $( '.overview-link' ).on( 'click', (event) => navTabRemove( 'update' ) )
+    })
+  }
+
+  let validateTable = ( form, callback ) => {
+    let valid_data = true;
+
+    $( form ).on( 'submit', (event) => {
+      event.preventDefault()
+      if( valid_data ) callback()
+    })
+  }
+
+  /* -----------------------------------------------------------------------------
+  * delete
+  */
+
+  let deleteTable = ( id ) => {
+    let table = getTable( id ),
+    output = document.getElementById( 'page_output' )
+    navTab({
+      id : 'delete',
+      href : `#tables/delete/${id}`,
+      icon : 'fas fa-minus-circle',
+      label : 'Delete Reservation'
+    })
+    $( output ).load( 'templates/delete-table.html', () => {
+      $( '#table_id' ).html( id )
+      let confirm_button = output.querySelector( 'button' )
+      $( confirm_button ).on( 'click', (event) => {
+        let tmp_arr = [];
+        for( let item of _glob.arr.tables ) if( item.id/1 !== id/1 ) tmp_arr.push( item )
+        _glob.arr.tables = tmp_arr;
+        overviewTables()
+        navTabRemove( 'delete' )
+        bsAlert( '#page_output', 'primary', '', `Table ${getTable(table.id).id} has been deleted` )
+
+      })
+      $( '.overview-link' ).on( 'click', (event) => navTabRemove( 'delete' ) )
+    })
+
+  }
+
+
   return {
-    add : add,
-    overview: overviewTables,
     main : mainTables,
+    add : addTable,
+    overview: overviewTables,
+    update : updateTable,
+    delete : deleteTable
   }
 })()
 
@@ -186,7 +264,7 @@ function getTableBySeats( persons ){
 */
 function setTable( table ){
   for(let i = 0; i < _glob.arr.tables.length; i++){
-    if( _glob.arr.tables[i].id === reservation.id ) _glob.arr.tables[i] = table;
+    if( _glob.arr.tables[i].id === table.id ) _glob.arr.tables[i] = table;
   }
 }
 

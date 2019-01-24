@@ -17,6 +17,14 @@ const menuitem = (function() {
     navActiveItm( 'menuitems/overview' )
     $( 'nav#primary a#menuitems').addClass( 'active' )
     let nav_tab_active = document.querySelector( '.nav-link.active' )
+    let arrayMenuItems = _glob.arr.menuitems;
+    let overview_fields = [
+      { label : '<i class="far fa-calendar"></i> Reservation', field : 'reservation' },
+      { label : '<i class="fas fa-user"></i> Guest', field : 'guest' },
+      { label : 'Persons', field : 'persons' },
+      { label : 'Table', field : 'table' },
+      { label : '', field : 'options' },
+    ]
     let output = document.querySelector( '#page_output' ),
     overview = document.createElement( 'table' )
     overview[ 'id' ] = 'menuitems_overview'

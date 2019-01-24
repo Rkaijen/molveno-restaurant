@@ -1,7 +1,7 @@
 'use strict'
 /*
 * assets/js/modules/ingredient.js
-* TODO : build module; add functions (overview, view, add, upunit & delete) to let things happen
+* TODO : build module; add functions (overview, view, add, edit & delete) to let things happen
 */
 
 const ingredient = (function(){
@@ -81,7 +81,7 @@ let overviewIngredients = () => {
         table_td.appendChild(
           bsBtnGrp([
             bsBtn( 'Edit', 'btn-sm', 'far fa-edit', () => {
-              location.hash = `#ingredients/upunit/${item.id}`
+              location.hash = `#ingredients/edit/${item.id}`
             }),
             bsBtn( 'Delete', 'btn-sm', 'fas fa-minus-circle', () => {
               location.hash = `#ingredients/delete/${item.id}`
@@ -122,7 +122,7 @@ let overviewIngredients = () => {
     $( output ).load( 'templates/view-ingredient.html', () => {
       $( '#ingredient' ).html( ingredient )
       let edit_button = output.querySelector( 'a.btn-edit' )
-      edit_button.setAttribute( 'href', `#ingredients/upunit/${id}` )
+      edit_button.setAttribute( 'href', `#ingredients/edit/${id}` )
       let delete_button = output.querySelector( 'a.btn-delete' )
       delete_button.setAttribute( 'href', `#ingredients/delete/${id}` )
       $( 'a.btn-overview,a.btn-edit,a.btn-delete' ).on( 'click', () => navTabRemove( 'view' ) )
@@ -206,6 +206,46 @@ let overviewIngredients = () => {
   /* -----------------------------------------------------------------------------
   * delete
   */
+  let editIngredient = ( id ) => {
+    navTab({
+      id : 'edit',
+      href : `#ingredients/edit/${id}`,
+      icon : 'far fa-edit',
+      label : 'Edit Ingredient'
+
+    })
+    let output = document.querySelector( '#page_output' )
+    $( output ).load( 'templates/edit-ingredient.html', () => {
+      let form = output.querySelector( 'form'),
+      edit_ingredient = form.elements, ingredient = getIngredient( id )
+      let ingred = getIngredient(id);
+      document.getElementById("name").value = ingred.name;
+      document.getElementById("price").value = ingred.price;
+      document.getElementById("unit").value = ingred.unit;
+      document.getElementById("category").value = ingred.category;
+      document.getElementById("allergies").value = ingred.allergies;
+      $( form ).on( 'submit', (event) => {
+        event.preventDefault()
+        edit_ingredient = event.target.elements;
+
+        let set_ingredient = setIngredient({
+          id : id,
+          name : edit_ingredient.name.value,
+          unit : edit_ingredient.unit.value,
+          category : edit_ingredient.category.value,
+          price : edit_ingredient.price.value,
+          allergies : edit_ingredient.allergies.value
+        })
+
+        navTabRemove( 'edit' )
+        bsAlert( '.page-content', 'primary', '', `Ingredient for ${getGuestName(ingredient.guest)} on ${formatIngredient(set_ingredient)} has been editd`,()=>{
+          location.hash = '#ingredients/overview'
+        })
+
+      })
+      $( '.overview-link' ).on( 'click', (event) => navTabRemove( 'edit' ) )
+    })
+  }
 
   return{
     main : mainIngredients,
@@ -213,6 +253,6 @@ let overviewIngredients = () => {
     delete : deleteIngredient,
     view : viewIngredient,
     add : addIngredient,
-
+    edit : editIngredient
   }
 })()

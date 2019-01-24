@@ -115,6 +115,9 @@
         endpoint : 'ingredients/delete',
         action : () => ingredient.delete( location.hash.split('/')[2] )
       },{
+        endpoint : 'ingredients/edit',
+        action : () => ingredient.edit( location.hash.split('/')[2] )
+      },{
         endpoint : 'ingredients/add',
         action : () => ingredient.add()
       },{
@@ -128,6 +131,12 @@
       },{
         endpoint : 'tables/overview',
         action : () => table.overview()
+      },{
+        endpoint : 'tables/update',
+        action : () => table.update( location.hash.split('/')[2] )
+      },{
+        endpoint : 'tables/delete',
+        action : () => table.delete( location.hash.split('/')[2] )
       },{
         label : 'Invoices',
         primaryNav : true,
