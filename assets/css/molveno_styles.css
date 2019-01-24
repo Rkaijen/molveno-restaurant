@@ -15,7 +15,6 @@ html,body {
   font-family: 'Open Sans', sans-serif;
 }
 
-<<<<<<< HEAD
 
 button:focus,
 a:focus, a:active,
@@ -36,8 +35,6 @@ select:focus::-ms-value {
   color: $input-color;
 }
 
-=======
->>>>>>> 08794381430172c6cced7d8564b4113a0543d0c8
 nav#primary {
   height: 100%;
   width: 240px;

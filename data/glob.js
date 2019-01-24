@@ -19,10 +19,9 @@ function globArr(){
     { id : 23459, date : '21-12-2018', time_arrival : '10:35', time_depart : '13:35', guest : 38756, persons : 4, table : [16], comments : '' },
     { id : 23460, date : '23-12-2018', time_arrival : '9:25', time_depart : '12:25', guest : 64526, persons : 4, table : [21], comments : '' }
   ] );
-  
+
 
   glob( 'arr', 'ingredients',[
-<<<<<<< HEAD
     {id :12000, name : 'macaroni', price : 1.00, category : 'pasta', unit : 'gram', allergies : 'gluten'},
     {id :12001, name : 'steak', price : 2.00, category : 'meat', unit : 'piece', allergies : 'none'},
     {id :12002, name : 'cheddar cheese', price : 1.50, category : 'cheese', unit : 'gram', allergies : 'milk'},
@@ -36,14 +35,6 @@ function globArr(){
     {id :12010, name : 'potatoes', price : 0.45, category : 'vegetable', unit : 'gram', allergies : 'none'},
     {id :12011, name : 'Coca cola', price : 0.50, category : 'beverage', unit : 'piece', allergies : 'none'},
     {id :12012, name : 'Hotdogs', price : 0.73, category : 'meat', unit : 'piece', allergies : 'none'},
-
-=======
-    {id :12000, name : 'Spaghetti', price : 1.00, type : 'pasta', unit : 'gram', allergies : 'gluten'},
-    {id :12001, name : 'steak', price : 2.00, type : 'meat', unit : 'stuks', allergies : 'none'},
-    {id :12002, name : 'goat cheese', price : 1.50, type : 'cheese', unit : 'liter', allergies : 'milk'},
-    {id :12003, name : 'wallnuts', price : 0.57, type : 'nuts', unit : 'gram', allergies : 'nuts'},
-    {id :12004, name : 'carrot', price : 0.30, type : 'vegetable', unit : 'gram', allergies : 'none'}
->>>>>>> 08794381430172c6cced7d8564b4113a0543d0c8
   ]);
 
   glob( 'arr', 'guests' , [
