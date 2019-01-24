@@ -29,7 +29,16 @@ const reservation = (function(){
   let addReservation = () => {
     let output = document.querySelector( '#page_output' )
     $( output ).load( 'templates/add-reservation.html', () => {
-      let add_form = output.querySelector( 'form' )
+      navActiveItm( 'reservations/add' )
+      $( 'nav#primary a#reservations').addClass( 'active' )
+
+      let add_form = output.querySelector( 'form' ),
+      table_select = document.querySelector( 'select#table_select')
+      for( let table of _glob.arr.tables ){
+        let table_option = document.createElement( 'option' )
+        table_option.innerHTML = table.nr
+        table_select.appendChild( table_option )
+      }
       validateReservation( add_form, () => {
         let add_reservation = add_form.elements;
         let add_reservation_id = getRandomInt(10000,99999),
@@ -78,7 +87,7 @@ const reservation = (function(){
     }
 
 
-    $( 'label' ).hide()
+    //$( 'label' ).hide()
     $( 'input.form-control' ).on( 'change', (event) => {
       $( `label[for="${event.target.id}"]` ).fadeIn()
     })
@@ -95,15 +104,15 @@ const reservation = (function(){
       event.preventDefault()
       if ( reservation.firstname.value === '' || reservation.firstname.value === '' ){
         valid_data = false
-        bsAlert( '.page-content','warning','',`First and last name cannot be empty` )
+        bsAlert( 'article.page-content','warning','fas fa-exclamation-triangle',`First and last name cannot be empty` )
       }
       if ( reservation.email.value === '' && reservation.telephone.value === '' ){
         valid_data = false
-        bsAlert( 'article.page-content','warning','',`Telephone or email cannot be empty` )
+        bsAlert( 'article.page-content','warning','fas fa-exclamation-triangle',`Telephone or email cannot be empty` )
       }
       if ( reservation.date.value === '' ){
         valid_data = false
-        bsAlert( 'article.page-content','warning','',`Date cannot be empty` )
+        bsAlert( 'article.page-content','warning','fas fa-exclamation-triangle',`Date cannot be empty` )
 
       }
 
@@ -132,7 +141,8 @@ const reservation = (function(){
         seats += getTable(table.options[i].value).chairs
       }
     }
-    $( '#page_output h3').html( `Add Reservation <small class="text-muted">for <b>${name}</b>${persons} at table <b>${tables.join('+')}</b> (${seats} seats)<small>`);
+
+    if( firstname !== '') $( '#page_output h3').html( `${$('#page_output h3 span').html()} <small class="text-muted">for <b>${name}</b>${persons} at table <b>${tables.join('+')}</b> (${seats} seats)<small>`);
   }
 
   let validateReservationDate = ( form ) => {
@@ -146,11 +156,11 @@ const reservation = (function(){
       .datepicker( { format:'dd-mm-yyyy', startDate: '0' } )
       .on( 'change' , (event) => update_date() )
 
-    $( reservation.time_arrival )
-      .val( moment().add(3,'hours').format('LT') )
-      .timepicker({
-        template: false,
-        showInputs: false,
+    if( reservation.time_arrival.value === '' ) {
+        reservation.time_arrival.value  = moment().format('LT')
+    }
+    $( reservation.time_arrival ).timepicker({
+
         minuteStep: 5,
         showMeridian: false
 
@@ -181,22 +191,21 @@ const reservation = (function(){
               .add(3,'hours').format('HH:mm')
             )
       })
+      if( reservation.time_depart.value === '' ){
+          reservation.time_depart.value = moment().add(3,'hours').format('LT')
+      }
 
-    $( reservation.time_depart )
-      .val (
-        moment( $( reservation.time_arrival ).val(), 'HH:mm' )
-        .add(3,'hours').format('HH')
-      )
-      .timepicker({
-        template: false,
-        showInputs: false,
+      $( reservation.time_depart ).timepicker({
+
+
+
         minuteStep: 5,
         showMeridian: false
 
       })
   }
   let validateReservationTable = ( form ) => {
-
+    update_header()
     let chairs = 0,
     valid_data = true;
     for( let table of _glob.arr.tables ) chairs +=table.chairs
@@ -206,12 +215,17 @@ const reservation = (function(){
     for( let reservation of _glob.arr.reservations ) for( let table of reservation.table ) chairs -= table_chairs( table )
     let table = tableReservation()
 
-    if( location.hash.split( '/')[2] ){ // update?
+    //if( location.hash.split( '/')[2] ){ // update?
 
-    } else {
+    //} else {
+      let tables = form.querySelector( 'select#table_select' )
+      $( tables ).on( 'change' ,(event) => {
+        update_header()
+      })
+
       let persons = form.querySelector( 'input#persons' )
       $( persons ).on( 'change', (event) => {
-
+        update_header()
         if( event.target.value > 0 && event.target.value < chairs ){
           $( 'input#persons' ).removeClass( 'is-invalid' )
           $( '#persons-invalid' ).remove();
@@ -219,7 +233,7 @@ const reservation = (function(){
 
           // TODO : we want to select a table with more seats or combine tables
           // ---------------------------------------------------------------------
-
+          /*
 
           let checkPersonsTableSeats = () => {
             let seats = 0, tables_arr = []
@@ -268,6 +282,7 @@ const reservation = (function(){
             }
           } // checkPersonsTableSeats
           checkPersonsTableSeats()
+          */
         }else if (event.target.value > chairs) {
           $( '#persons-invalid' ).remove();
           $( 'input#persons' ).removeClass( 'is-valid' ).addClass( 'is-invalid' ).after( '<div class="invalid-feedback" id="persons-invalid">'+(event.target.value/1-chairs)+' more persons than seats available ('+chairs+')</div>' );
@@ -282,7 +297,7 @@ const reservation = (function(){
           document.querySelector('button').removeAttribute('disabled');
         }
       })
-    }
+    //}
   }
 
   /* -----------------------------------------------------------------------------
@@ -403,7 +418,7 @@ const reservation = (function(){
     output.appendChild( table )
 
     $( 'table' ).DataTable()
-    if( arrayReservation.length < 11 ) $('ul.pagination').hide()
+
 
   }
 
