@@ -29,13 +29,8 @@ function setModule( modules ){
       id : 'guests',
       label : 'Manage Guests'
     },{
-<<<<<<< HEAD
-      id : 'menuitems',
-      label : 'Manage Menu Items',
-=======
       id : 'menu',
       label : 'Manage Menu',
->>>>>>> 08794381430172c6cced7d8564b4113a0543d0c8
       items : [
         {
           id : 'ingredients',
