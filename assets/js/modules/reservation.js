@@ -141,7 +141,8 @@ const reservation = (function(){
         seats += getTable(table.options[i].value).chairs
       }
     }
-    $( '#page_output h3').html( `Add Reservation <small class="text-muted">for <b>${name}</b>${persons} at table <b>${tables.join('+')}</b> (${seats} seats)<small>`);
+
+    if( firstname !== '') $( '#page_output h3').html( `${$('#page_output h3 span').html()} <small class="text-muted">for <b>${name}</b>${persons} at table <b>${tables.join('+')}</b> (${seats} seats)<small>`);
   }
 
   let validateReservationDate = ( form ) => {
@@ -204,7 +205,7 @@ const reservation = (function(){
       })
   }
   let validateReservationTable = ( form ) => {
-
+    update_header()
     let chairs = 0,
     valid_data = true;
     for( let table of _glob.arr.tables ) chairs +=table.chairs
@@ -214,9 +215,13 @@ const reservation = (function(){
     for( let reservation of _glob.arr.reservations ) for( let table of reservation.table ) chairs -= table_chairs( table )
     let table = tableReservation()
 
-    if( location.hash.split( '/')[2] ){ // update?
+    //if( location.hash.split( '/')[2] ){ // update?
 
-    } else {
+    //} else {
+      let tables = form.querySelector( 'select#table_select' )
+      $( tables ).on( 'change' ,(event) => {
+        update_header()
+      })
 
       let persons = form.querySelector( 'input#persons' )
       $( persons ).on( 'change', (event) => {
@@ -292,7 +297,7 @@ const reservation = (function(){
           document.querySelector('button').removeAttribute('disabled');
         }
       })
-    }
+    //}
   }
 
   /* -----------------------------------------------------------------------------
@@ -413,7 +418,7 @@ const reservation = (function(){
     output.appendChild( table )
 
     $( 'table' ).DataTable()
-    if( arrayReservation.length < 11 ) $('ul.pagination').hide()
+
 
   }
 
