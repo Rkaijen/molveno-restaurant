@@ -30,9 +30,13 @@ const table = (function(){
         }
         _glob.arr.tables.unshift( add_table_data )
         console.log( _glob.arr.tables )
-        bsAlert( '.page-content','primary','',`Table for <b>${add_table.id.value}</b> has been saved` )
-        location.hash = '#tables'
+
+        navTabRemove( 'update' )
+        bsAlert( 'article.page-content', 'primary', '', `Table for <b>${add_table.id.value}</b> has been saved`,()=>{
+          location.hash = '#tables/overview'
+        })
       })
+      $( '.overview-link' ).on( 'click', (event) => navTabRemove( 'update' ) )
     })
 
   }
@@ -140,8 +144,10 @@ const table = (function(){
       label : 'Edit Table'
 
     })
-    let output = document.querySelector( '#page_output' )
+    let output = document.querySelector( '#page_output' );
+
     $( output ).load( 'templates/update-table.html', () => {
+      output.querySelector( '#h2_title_id' ).innerHTML = id;
       let form = output.querySelector( 'form'),
       update_table = form.elements, table = getTable( id ),
       table_fields = [ 'id', 'chairs', 'wheelchair', 'status' ]
@@ -162,6 +168,8 @@ const table = (function(){
           status : update_table.table_status.value
         })
 
+
+
         navTabRemove( 'update' )
         bsAlert( 'article.page-content', 'primary', '', `Table ${getTable(table.id).id} has been updated`,()=>{
           location.hash = '#tables/overview'
@@ -174,6 +182,11 @@ const table = (function(){
 
   let validateTable = ( form, callback ) => {
     let valid_data = true;
+    let table_id_input = document.getElementById('id');
+
+    let new_table_id = (_glob.arr.tables.length)+1;
+    table_id_input.setAttribute('min',new_table_id);
+    table_id_input.value = new_table_id;
 
     $( form ).on( 'submit', (event) => {
       event.preventDefault()
@@ -195,6 +208,11 @@ const table = (function(){
       label : 'Delete Reservation'
     })
     $( output ).load( 'templates/delete-table.html', () => {
+      let delete_table_id = output.getElementsByClassName('delete_table_id');
+      for (let i = 0; i < delete_table_id.length; i++) {
+        delete_table_id[i].innerHTML = id;
+      }
+
       $( '#table_id' ).html( id )
       let confirm_button = output.querySelector( 'button' )
       $( confirm_button ).on( 'click', (event) => {

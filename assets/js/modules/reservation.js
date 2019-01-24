@@ -50,13 +50,12 @@ const reservation = (function(){
           time_depart : add_reservation.time_depart.value,
           table : $( add_reservation.table_select ).val()
         }
-        console.log( reservation_data )
-        let reservation_cls_inst = new Reservation( add_reservation_data )
-        console.log( reservation_cls_inst )
+
+
         _glob.arr.reservations.unshift( add_reservation_data )
         let guest_name_prepostion = guest_data.preposition;
         if( guest_name_prepostion !== '') guest_name_prepostion =+ ' '
-        bsAlert( '.page-content','primary','',`Reservation for <b>${guest_data.firstname} ${guest_name_prepostion}${guest_data.lastname}</b> has been saved` )
+        bsAlert( 'article.page-content','primary','',`Reservation for <b>${guest_data.firstname} ${guest_name_prepostion}${guest_data.lastname}</b> has been saved` )
         location.hash = '#reservations'
       })
     })
@@ -85,7 +84,7 @@ const reservation = (function(){
     })
 
 
-    $( button ).attr( 'disabled','disabled' )
+    if($( 'input#date').val() === '') $( button ).attr( 'disabled','disabled' )
     validateReservationDate( form )
     validateReservationTable( form )
     $( 'input#date').on( 'change', (event) => {
@@ -100,15 +99,15 @@ const reservation = (function(){
       }
       if ( reservation.email.value === '' && reservation.telephone.value === '' ){
         valid_data = false
-        bsAlert( '.page-content','warning','',`Telephone or email cannot be empty` )
+        bsAlert( 'article.page-content','warning','',`Telephone or email cannot be empty` )
       }
       if ( reservation.date.value === '' ){
         valid_data = false
-        bsAlert( '.page-content','warning','',`Date cannot be empty` )
+        bsAlert( 'article.page-content','warning','',`Date cannot be empty` )
 
       }
 
-      //if( valid_data ) callback()
+      if( valid_data ) callback()
     })
 
   }
@@ -137,6 +136,7 @@ const reservation = (function(){
   }
 
   let validateReservationDate = ( form ) => {
+
     let reservation = form.elements,
     update_date = () => {
       $('#date_feedback').remove()
@@ -147,30 +147,52 @@ const reservation = (function(){
       .on( 'change' , (event) => update_date() )
 
     $( reservation.time_arrival )
-      .val( moment().format('LT') )
+      .val( moment().add(3,'hours').format('LT') )
       .timepicker({
         template: false,
         showInputs: false,
-        minuteStep: 5
+        minuteStep: 5,
+        showMeridian: false
+
       })
       .on( 'change' , (event) => {
+
+          if( $('#date').val() === moment().format( 'DD-MM-YYYY') ) {
+            let current_hour =  moment().format('HH').split( ':' )[0],
+            min_hour = moment().add(3,'hours').format('HH').split( ':' )[0]
+            console.log( current_hour + ' > ' + min_hour )
+            if( $('#time_arrival').val().split(':')[0]/1 < moment().format('HH:mm').split( ':' )[0]/1 ){
+              $('#time_arrival-invalid').remove()
+              $('#time_arrival').removeClass( 'is-valid' ).addClass( 'is-invalid' ).after( '<div class="invalid-feedback" id="time_arrival-invalid">Time of arrival should be in the future</div>' );
+
+            }else{
+              $('#time_arrival').removeClass( 'is-invalid' )
+              $('#time_arrival-invalid').remove()
+            }
+
+          }else{
+            $('#time_arrival').removeClass( 'is-invalid' )
+            $('#time_arrival-invalid').remove()
+          }
           update_date()
           $( reservation.time_depart )
             .val(
-              moment( $( reservation.time_arrival ).val(), 'h:mm a' )
-              .add(3,'hours').format('LT')
+              moment( $( reservation.time_arrival ).val(), 'HH:mm' )
+              .add(3,'hours').format('HH:mm')
             )
       })
 
     $( reservation.time_depart )
       .val (
-        moment( $( reservation.time_arrival ).val(), 'h:mm a' )
-        .add(3,'hours').format('LT')
+        moment( $( reservation.time_arrival ).val(), 'HH:mm' )
+        .add(3,'hours').format('HH')
       )
       .timepicker({
         template: false,
         showInputs: false,
-        minuteStep: 5
+        minuteStep: 5,
+        showMeridian: false
+
       })
   }
   let validateReservationTable = ( form ) => {
@@ -409,7 +431,7 @@ const reservation = (function(){
         _glob.arr.reservations = tmp_arr;
         overviewReservations()
         navTabRemove( 'delete' )
-        bsAlert( '#page_output', 'primary', '', `Reservation for <b>${guest}</b> ${reservation} has been deleted` )
+        bsAlert( 'article.page-content', 'primary', '', `Reservation for <b>${guest}</b> ${reservation} has been deleted` )
 
       })
       $( '.overview-link' ).on( 'click', (event) => navTabRemove( 'delete' ) )
@@ -434,12 +456,15 @@ const reservation = (function(){
       let form = output.querySelector( 'form'),
       update_reservation = form.elements, reservation = getReservation( id ),
       guest_fields = [ 'firstname', 'preposition', 'lastname', 'email', 'telephone' ]
+
+
+
       for( let field of update_reservation ){
         if( guest_fields.includes( field.id ) ){
-          field.setAttribute( 'disabled', 'disabled' )
+          //field.setAttribute( 'disabled', 'disabled' )
           let guest = getGuest( reservation.guest )
           field.value = guest[ field.id ]
-          for( let guest_field of guest_fields ) if( guest[ guest_field ] === '' ) $( `#col_${guest_field}` ).hide()
+          //for( let guest_field of guest_fields ) if( guest[ guest_field ] === '' ) $( `#col_${guest_field}` ).hide()
           $( '#edit_guest' ).attr( 'href', `#guests/update/${guest.id}` )
         }else if ( field.id === 'table_select' ) {
           for( let table of reservation.table ) document.querySelector( `select#table_select option[value="${table}"]`).selected = true
@@ -447,9 +472,10 @@ const reservation = (function(){
           field.value = reservation[ field.id ]
         }
       }
-      $( form ).on( 'submit', (event) => {
-        event.preventDefault()
-        update_reservation = event.target.elements;
+      //$( form ).on( 'submit', (event) => {
+      validateReservation(form, () => {
+        //event.preventDefault()
+        update_reservation = form.elements;
 
         let set_reservation = setReservation({
           id : id,
@@ -460,9 +486,18 @@ const reservation = (function(){
           time_depart : update_reservation.time_depart.value,
           table : $( update_reservation.table_select ).val()
         })
+        let set_guest = setGuest({
+          id : reservation.guest,
+          firstname : update_reservation.firstname.value,
+          preposition : update_reservation.preposition.value,
+          lastname : update_reservation.lastname.value,
+          email : update_reservation.email.value,
+          telephone : update_reservation.telephone.value,
+          reservation : id
+        })
 
         navTabRemove( 'update' )
-        bsAlert( '.page-content', 'primary', '', `Reservation for ${getGuestName(reservation.guest)} on ${formatReservation(set_reservation)} has been updated`,()=>{
+        bsAlert( 'article.page-content', 'primary', '', `Reservation for ${getGuestName(reservation.guest)} on ${formatReservation(set_reservation)} has been updated`,()=>{
           location.hash = '#reservations/overview'
         })
 

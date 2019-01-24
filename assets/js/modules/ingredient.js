@@ -187,7 +187,7 @@ let overviewIngredients = () => {
     let output = document.querySelector( '#page_output' )
     $( output ).load( 'templates/add-ingredient.html', () => {
       let add_form = output.querySelector( 'form' )
-      finaliseIngredient( add_form, () => {
+      validateIngredient( add_form, () => {
         let add_ingredient = add_form.elements;
         let add_ingredient_id = getRandomInt(10000,99999),
         add_ingredient_data = {
@@ -199,7 +199,10 @@ let overviewIngredients = () => {
           allergies : add_ingredient.allergies.value
         }
         _glob.arr.ingredients.unshift( add_ingredient_data )
-        location.hash = '#ingredients'
+          bsAlert( 'article.page-content','primary','',`Ingredient ${add_ingredient_data.name} has been saved`,() => {
+            location.hash = '#ingredients'
+        })
+
       })
     })
   }
@@ -238,13 +241,16 @@ let overviewIngredients = () => {
         })
 
         navTabRemove( 'edit' )
-        bsAlert( '.page-content', 'primary', '', `Ingredient for ${getGuestName(ingredient.guest)} on ${formatIngredient(set_ingredient)} has been editd`,()=>{
+        bsAlert( '.page-content', 'primary', '', ` ingredient: ${formatIngredient(set_ingredient)} has been edited`,()=>{
           location.hash = '#ingredients/overview'
         })
-
+          console.log("pass 1");
       })
+      console.log("pass 2");
       $( '.overview-link' ).on( 'click', (event) => navTabRemove( 'edit' ) )
+      console.log("pass 3");
     })
+    console.log("pass 4");
   }
 
   return{

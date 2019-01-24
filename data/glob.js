@@ -13,15 +13,16 @@ function globArr(){
   glob( 'arr', 'reservations' , [
     //id, timestamp, guest, persons, table, arrangement, comments
     // http://listofrandomnames.com/index.cfm?generated
-    { id : 23456, date : '19-12-2018', time_arrival : '10:45 AM', time_depart : '1:45 PM', guest : 84356, persons : 2, table : [3], comments : '' },
-    { id : 23457, date : '20-12-2018', time_arrival : '6:30 PM', time_depart : '9:30 PM', guest : 74309, persons : 5, table : [8], comments : '' },
-    { id : 23458, date : '20-12-2018', time_arrival : '11:30 AM', time_depart : '3:30 PM', guest : 48526, persons : 4, table : [12], comments : '' },
-    { id : 23459, date : '21-12-2018', time_arrival : '11:30 AM', time_depart : '3:30 PM', guest : 38756, persons : 4, table : [16], comments : '' },
-    { id : 23460, date : '23-12-2018', time_arrival : '10:30 AM', time_depart : '1:30 PM', guest : 64526, persons : 4, table : [21], comments : '' }
+    { id : 23456, date : '19-01-2018', time_arrival : '9:45', time_depart : '12:45', guest : 84356, persons : 2, table : [3], comments : '' },
+    { id : 23457, date : '20-01-2018', time_arrival : '10:15', time_depart : '13:15', guest : 74309, persons : 5, table : [8], comments : '' },
+    { id : 23458, date : '20-12-2018', time_arrival : '11:25', time_depart : '14:25', guest : 48526, persons : 4, table : [12], comments : '' },
+    { id : 23459, date : '21-12-2018', time_arrival : '10:35', time_depart : '13:35', guest : 38756, persons : 4, table : [16], comments : '' },
+    { id : 23460, date : '23-12-2018', time_arrival : '9:25', time_depart : '12:25', guest : 64526, persons : 4, table : [21], comments : '' }
   ] );
   
 
   glob( 'arr', 'ingredients',[
+<<<<<<< HEAD
     {id :12000, name : 'macaroni', price : 1.00, category : 'pasta', unit : 'gram', allergies : 'gluten'},
     {id :12001, name : 'steak', price : 2.00, category : 'meat', unit : 'piece', allergies : 'none'},
     {id :12002, name : 'cheddar cheese', price : 1.50, category : 'cheese', unit : 'gram', allergies : 'milk'},
@@ -36,6 +37,13 @@ function globArr(){
     {id :12011, name : 'Coca cola', price : 0.50, category : 'beverage', unit : 'piece', allergies : 'none'},
     {id :12012, name : 'Hotdogs', price : 0.73, category : 'meat', unit : 'piece', allergies : 'none'},
 
+=======
+    {id :12000, name : 'Spaghetti', price : 1.00, type : 'pasta', unit : 'gram', allergies : 'gluten'},
+    {id :12001, name : 'steak', price : 2.00, type : 'meat', unit : 'stuks', allergies : 'none'},
+    {id :12002, name : 'goat cheese', price : 1.50, type : 'cheese', unit : 'liter', allergies : 'milk'},
+    {id :12003, name : 'wallnuts', price : 0.57, type : 'nuts', unit : 'gram', allergies : 'nuts'},
+    {id :12004, name : 'carrot', price : 0.30, type : 'vegetable', unit : 'gram', allergies : 'none'}
+>>>>>>> 08794381430172c6cced7d8564b4113a0543d0c8
   ]);
 
   glob( 'arr', 'guests' , [

@@ -29,8 +29,13 @@ function setModule( modules ){
       id : 'guests',
       label : 'Manage Guests'
     },{
+<<<<<<< HEAD
       id : 'menuitems',
       label : 'Manage Menu Items',
+=======
+      id : 'menu',
+      label : 'Manage Menu',
+>>>>>>> 08794381430172c6cced7d8564b4113a0543d0c8
       items : [
         {
           id : 'ingredients',
@@ -40,9 +45,6 @@ function setModule( modules ){
     },{
       id : 'tables',
       label : 'Manage Tables'
-    },{
-      id : 'invoices',
-      label : 'Invoices'
     }
   ])
   navMenu( _glob.arr.pages )
@@ -51,12 +53,21 @@ function setModule( modules ){
 }
 
 function getModule( endpoint ){
+<<<<<<< HEAD
 
   //try{
     endpoint.indexOf( '/' ) > 0 ? _glob.module[ `${endpoint.split( '/' )[0]}/${endpoint.split( '/' )[1]}` ]() : _glob.module[ endpoint ]()
   //}catch( error ) {
   //  console.warn( `${endpoint} : ${error}` )
   //}
+=======
+      console.log( endpoint)
+  try{
+    endpoint.indexOf( '/' ) > 0 ? _glob.module[ `${endpoint.split( '/' )[0]}/${endpoint.split( '/' )[1]}` ]() : _glob.module[ endpoint ]()
+  }catch( error ) {
+    console.warn( `${endpoint} : ${error}` )
+  }
+>>>>>>> 08794381430172c6cced7d8564b4113a0543d0c8
 }
 
 function pageModule() {
