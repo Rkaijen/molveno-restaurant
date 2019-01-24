@@ -48,21 +48,13 @@ function setModule( modules ){
 }
 
 function getModule( endpoint ){
-<<<<<<< HEAD
 
-  //try{
-    endpoint.indexOf( '/' ) > 0 ? _glob.module[ `${endpoint.split( '/' )[0]}/${endpoint.split( '/' )[1]}` ]() : _glob.module[ endpoint ]()
-  //}catch( error ) {
-  //  console.warn( `${endpoint} : ${error}` )
-  //}
-=======
       console.log( endpoint)
   try{
     endpoint.indexOf( '/' ) > 0 ? _glob.module[ `${endpoint.split( '/' )[0]}/${endpoint.split( '/' )[1]}` ]() : _glob.module[ endpoint ]()
   }catch( error ) {
     console.warn( `${endpoint} : ${error}` )
   }
->>>>>>> 08794381430172c6cced7d8564b4113a0543d0c8
 }
 
 function pageModule() {
