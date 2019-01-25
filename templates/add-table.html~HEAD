@@ -1,0 +1,31 @@
+<h3>Add Table</h3><hr />
+  <form>
+    <div class="form-group row">
+      <div class="form-group col-md-2">
+        <label for="table_id">Table nr.</label>
+        <input type="number" min="1" max="999" class="form-control" id="table_id" autocomplete="off" placeholder="">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="chairs">Chair amount</label>
+        <input type="number" min="0" max="24" class="form-control" id="chairs" autocomplete="off" placeholder="4">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="wheelchair">Wheelchair accessible</label>
+        <select class="form-control" id="wheelchair">
+          <option value="0">No</option>
+          <option value="1" selected="selected">Yes</option>
+        </select>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="table_status">Status</label>
+        <select class="form-control" id="table_status">
+          <option value="0" selected="selected">Out of order</option>
+          <option value="1">Available</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row" style="padding:10px;" id="add_options">
+      <button class="btn btn-primary ">Save Table</button> <a href="#tables/overview" role="button" class="btn btn-light"><i class="fas fa-list"></i> Back to Overview</a>
+    </div>
+  </form>

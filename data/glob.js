@@ -20,12 +20,21 @@ function globArr(){
     { id : 23460, date : '23-02-2019', time_arrival : '9:25', time_depart : '12:25', guest : 64526, persons : 4, table : [21], comments : '' }
   ] );
 
+
   glob( 'arr', 'ingredients',[
-    {id :12000, name : 'Spaghetti', price : 1.00, type : 'pasta', unit : 'gram', allergies : 'gluten'},
-    {id :12001, name : 'steak', price : 2.00, type : 'meat', unit : 'stuks', allergies : 'none'},
-    {id :12002, name : 'goat cheese', price : 1.50, type : 'cheese', unit : 'liter', allergies : 'milk'},
-    {id :12003, name : 'wallnuts', price : 0.57, type : 'nuts', unit : 'gram', allergies : 'nuts'},
-    {id :12004, name : 'carrot', price : 0.30, type : 'vegetable', unit : 'gram', allergies : 'none'}
+    {id :12000, name : 'macaroni', price : 1.00, category : 'pasta', unit : 'gram', allergies : 'gluten'},
+    {id :12001, name : 'steak', price : 2.00, category : 'meat', unit : 'piece', allergies : 'none'},
+    {id :12002, name : 'cheddar cheese', price : 1.50, category : 'cheese', unit : 'gram', allergies : 'milk'},
+    {id :12003, name : 'wallnuts', price : 1.57, category : 'nuts', unit : 'gram', allergies : 'nuts'},
+    {id :12004, name : 'mozzarella', price : 0.96, category : 'cheese', unit : 'gram', allergies : 'milk'},
+    {id :12005, name : 'tomato sauce', price : 0.31, category : 'sauce', unit : 'mililiter', allergies : 'none'},
+    {id :12006, name : 'pizza dough', price : 1.12, category : 'dough', unit : 'ball', allergies : 'gluten'},
+    {id :12007, name : 'oregano', price : 0.08, category : 'herbs', unit : 'miligram', allergies : 'none'},
+    {id :12008, name : 'carrot', price : 0.30, category : 'vegetable', unit : 'gram', allergies : 'none'},
+    {id :12009, name : 'lettuce', price : 0.24, category : 'vegetable', unit : 'gram', allergies : 'none'},
+    {id :12010, name : 'potatoes', price : 0.45, category : 'vegetable', unit : 'gram', allergies : 'none'},
+    {id :12011, name : 'Coca cola', price : 0.50, category : 'beverage', unit : 'piece', allergies : 'none'},
+    {id :12012, name : 'Hotdogs', price : 0.73, category : 'meat', unit : 'piece', allergies : 'none'},
   ]);
 
   glob( 'arr', 'guests' , [
@@ -71,7 +80,13 @@ function globArr(){
     {id : 30, nr: 30, chairs : 6, reservation : 0, guest: 0, order : 0, wheelchair: 1, status: 1 },
   ] );
 
+  glob( 'arr', 'menuitems' , [
+    { id : 13000, name : 'Pizza Margarita', ingredients : [{ id : 12004, quantity : 125}, { id : 12005, quantity : 100}, { id : 12006, quantity : 450}, { id : 12007, quantity : 5}], price: 12.00 , percentage :250, recipe : 'Make pizza', picture : '...'},
+    { id : 13001, name : 'Coca Cola', ingredients : [{id: 12011, quantity : 1}], price: 2.00, percentage : 400, recipe : '...', picture : '...'},
+    { id : 13002, name : 'Mac & Cheese', ingredients : [{ id : 12000, quantity : 100}, { id : 12002, quantity : 200}, { id : 12012, quantity : 100}], price: 8.00, percentage : 300, recipe : 'Make Mac & Cheese', picture : '...'},
 
+
+  ] );
   glob( 'arr', 'orders' , [
     //id, guest, order, date, invoice, menuitems
   ] );
