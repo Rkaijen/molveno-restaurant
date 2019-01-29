@@ -47,7 +47,7 @@ function getGuestName( id ){
   firstname = guest.firstname,
   preposition = guest.preposition,
   lastname = guest.lastname;
-  if( preposition !== '' ) preposition =+ ' '
+  if( preposition !== '' ) preposition += ' '
   return `${firstname} ${preposition}${lastname}`
 }
 /* -----------------------------------------------------------------------------

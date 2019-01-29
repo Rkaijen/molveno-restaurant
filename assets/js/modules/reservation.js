@@ -32,8 +32,8 @@ const reservation = (function(){
       navActiveItm( 'reservations/add' )
       $( 'nav#primary a#reservations').addClass( 'active' )
 
-      let add_form = output.querySelector( 'form' ),
-      table_select = document.querySelector( 'select#table_select')
+      let add_form = output.querySelector( 'form' )
+      let table_select = document.querySelector( 'select#table_select')
       for( let table of _glob.arr.tables ){
         let table_option = document.createElement( 'option' )
         table_option.innerHTML = table.nr
@@ -141,9 +141,9 @@ const reservation = (function(){
         seats += getTable(table.options[i].value).chairs
       }
     }
-    let span_header = $('#page_output h3 span').html()
-    console.log( span_header )
-    if( firstname !== '') $( '#page_output h3').html( `<span>${span_header}<span> <small class="text-muted">for <b>${name}</b>${persons} at table <b>${tables.join('+')}</b> (${seats} seats)<small>`);
+    let span_header = $('#page_output h3 span.header').html()
+
+    if( firstname !== '') $( '#page_output h3').html( `<span class="header">${span_header}</span> <small class="text-muted">for <b>${name}</b>${persons} at table <b>${tables.join('+')}</b> (${seats} seats)<small>`);
   }
 
   let validateReservationDate = ( form ) => {
@@ -458,7 +458,17 @@ const reservation = (function(){
 /* -----------------------------------------------------------------------------
 * update
 */
+  let tablesSelectOptions = ( callback ) => {
+    let table_select = document.querySelector( 'select#table_select')
+    for( let table of _glob.arr.tables ){
+      let table_option = document.createElement( 'option' )
+      table_option.setAttribute( 'value', table.nr )
+      table_option.innerHTML = table.nr
 
+      table_select.appendChild( table_option )
+    }
+    callback();
+  }
   let updateReservation = ( id ) => {
     navTab({
       id : 'update',
@@ -473,8 +483,6 @@ const reservation = (function(){
       update_reservation = form.elements, reservation = getReservation( id ),
       guest_fields = [ 'firstname', 'preposition', 'lastname', 'email', 'telephone' ]
 
-
-
       for( let field of update_reservation ){
         if( guest_fields.includes( field.id ) ){
           //field.setAttribute( 'disabled', 'disabled' )
@@ -482,14 +490,23 @@ const reservation = (function(){
           field.value = guest[ field.id ]
           //for( let guest_field of guest_fields ) if( guest[ guest_field ] === '' ) $( `#col_${guest_field}` ).hide()
           $( '#edit_guest' ).attr( 'href', `#guests/update/${guest.id}` )
-        }else if ( field.id === 'table_select' ) {
-          for( let table of reservation.table ) document.querySelector( `select#table_select option[value="${table}"]`).selected = true
+
         } else {
           field.value = reservation[ field.id ]
         }
       }
       //$( form ).on( 'submit', (event) => {
+      tablesSelectOptions( ()=>{
+        for( let table of getReservation( id ).table ){
+
+          document.querySelector( `select#table_select option[value="${table}"]`).selected = true
+
+        }
+      })
+
       validateReservation(form, () => {
+
+
         //event.preventDefault()
         update_reservation = form.elements;
 

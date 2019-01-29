@@ -43,13 +43,12 @@ function setModule( modules ){
     }
   ])
   navMenu( _glob.arr.pages )
-  console.log( _glob )
   pageModule()
 }
 
 function getModule( endpoint ){
 
-      console.log( endpoint)
+
   try{
     endpoint.indexOf( '/' ) > 0 ? _glob.module[ `${endpoint.split( '/' )[0]}/${endpoint.split( '/' )[1]}` ]() : _glob.module[ endpoint ]()
   }catch( error ) {

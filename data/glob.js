@@ -43,7 +43,7 @@ function globArr(){
     { id : 74309, firstname : 'Boyce', preposition : '', lastname : 'Villafuerte', email : 'b.villafuerte@tiscali.it', telephone : '+393164716566', country : 'it' },
     { id : 48526, firstname : 'Lisette', preposition : '', lastname : 'Copeland', email : 'l.copeland@vodafone.co.uk', telephone : '', country : 'uk' },
     { id : 38756, firstname : 'Horacio', preposition : '', lastname : 'Lomeli', email : 'h.lomeli@telefonica.it', telephone : '', country : 'it' },
-    { id : 64526, firstname : 'Jan', preposition : '', lastname : 'Cornelissen', email : 'j.cornelissen@telfort.nl', telephone : '+3130584532', country : 'nl' },
+    { id : 64526, firstname : 'Jan', preposition : 'van', lastname : 'Cornelissen', email : 'j.cornelissen@telfort.nl', telephone : '+3130584532', country : 'nl' },
   ] );
 
   glob( 'arr', 'tables' , [
