@@ -8,6 +8,7 @@ const ingredient = (function(){
   let mainIngredients = function(){
     overviewIngredients();
   }
+
   function getIngredient(id1){
     let id;
     if(isNaN(id)){
@@ -88,6 +89,17 @@ let overviewIngredients = () => {
             })
           ])
         )
+      } else if (field.field === 'price') {
+        let price = String(item[ field.field ])
+        if( !price.includes('.') ){
+          price += ',00'
+        }else if( price.split('.')[1].length === 1 ){
+          price += '0'
+
+        }
+        price = price.replace('.',',')
+        table_td.innerHTML = `&euro; ${price}`
+
       }else {
         table_td.innerText = item[ field.field ]
       }

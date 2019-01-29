@@ -150,8 +150,8 @@ const reservation = (function(){
 
     let reservation = form.elements,
     update_date = () => {
-      $('#date_feedback').remove()
-      $('input#date').after(`<small class="muted feedback" id="date_feedback">${moment($('input#date').val(),'DD-MM-YYYY').format('dddd LL')}</small>`)
+
+      $('#date_feedback').html(`${moment($('input#date').val(),'DD-MM-YYYY').format('dddd LL')}`)
     }
     $( reservation.date )
       .datepicker( { format:'dd-mm-yyyy', startDate: '0' } )
