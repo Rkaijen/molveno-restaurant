@@ -141,8 +141,9 @@ const reservation = (function(){
         seats += getTable(table.options[i].value).chairs
       }
     }
-
-    if( firstname !== '') $( '#page_output h3').html( `${$('#page_output h3 span').html()} <small class="text-muted">for <b>${name}</b>${persons} at table <b>${tables.join('+')}</b> (${seats} seats)<small>`);
+    let span_header = $('#page_output h3 span').html()
+    console.log( span_header )
+    if( firstname !== '') $( '#page_output h3').html( `<span>${span_header}<span> <small class="text-muted">for <b>${name}</b>${persons} at table <b>${tables.join('+')}</b> (${seats} seats)<small>`);
   }
 
   let validateReservationDate = ( form ) => {
