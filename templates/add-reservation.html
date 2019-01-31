@@ -1,5 +1,5 @@
 <div>
-  <h3><span>Add Reservation</span></h3><hr />
+  <h3><span class="header">Add Reservation</span></h3><hr />
     <form>
       <div class="form-group row">
          <div class="col-sm-2 col-form-label"><strong><i class="fas fa-user"></i> Guest</strong></div>
@@ -30,23 +30,21 @@
       </div>
 
   <hr />
-      <div class="form-group row" id="reservation" data-hidebefore="guest">
+      <div class="form-group row">
         <div class="col-sm-2 col-form-label"><strong><i class="far fa-calendar"></i> Reservation</strong></div>
 
-        <div class="form-group col-md-4">
-          <label for="date">Date</label>
+        <div class="form-group col-md-3">
+
+          <label for="date">Date </label>
           <input type="text" class="form-control" id="date" autocomplete="off" />
+          <small id="date_feedback"></small>
         </div>
         <div class="form-group col-md-3">
           <label for="time_arrival">Time Arrival</label>
           <div class="input-group bootstrap-timepicker timepicker">
 
             <input type="text" class="form-control" id="time_arrival" autocomplete="off"  />
-            <span class="input-group-append">
-                <a class="btn rounded-right datepickerbutton selectTime" role="button" tabindex="0" title="Choose time...">
-                    <i class="far fa-clock"></i>
-                </a>
-            </span>
+
           </div>
         </div>
         <div class="form-group col-md-3">
@@ -54,16 +52,16 @@
           <div class="input-group bootstrap-timepicker timepicker">
 
             <input type="text" class="form-control" id="time_depart" autocomplete="off"  />
-            <span class="input-group-append">
-                <a class="btn rounded-right datepickerbutton selectTime" role="button" tabindex="0" title="Choose time...">
-                    <i class="far fa-clock"></i>
-                </a>
-            </span>
+
           </div>
         </div>
+
+
       </div>
       <div class="form-group row">
-        <div class="form-group col-md-2 offset-md-2">
+        <div class="col-sm-2 col-form-label"></div>
+        <div class="form-group col-md-2">
+
           <label for="persons">Persons</label>
           <input type="number" class="form-control" id="persons" autocomplete="off" />
         </div>
