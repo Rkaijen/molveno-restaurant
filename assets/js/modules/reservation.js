@@ -198,8 +198,6 @@ const reservation = (function(){
 
       $( reservation.time_depart ).timepicker({
 
-
-
         minuteStep: 5,
         showMeridian: false
 
