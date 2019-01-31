@@ -39,6 +39,16 @@ const reservation = (function(){
         table_option.innerHTML = table.nr
         table_select.appendChild( table_option )
       }
+      $('option').mousedown(function(e) {
+          e.preventDefault();
+          $(this).prop('selected', !$(this).prop('selected'));
+          return false;
+      });
+      //TODO: the function that says logged need to auto select tables
+      $('input#persons').on('input', function() {
+        console.log("logged");
+      // do something
+      });
       validateReservation( add_form, () => {
         let add_reservation = add_form.elements;
         let add_reservation_id = getRandomInt(10000,99999),
@@ -456,6 +466,8 @@ const reservation = (function(){
 /* -----------------------------------------------------------------------------
 * update
 */
+
+
   let tablesSelectOptions = ( callback ) => {
     let table_select = document.querySelector( 'select#table_select')
     for( let table of _glob.arr.tables ){
@@ -465,6 +477,16 @@ const reservation = (function(){
 
       table_select.appendChild( table_option )
     }
+    $('option').mousedown(function(e) {
+        e.preventDefault();
+        $(this).prop('selected', !$(this).prop('selected'));
+        return false;
+    });
+    //TODO: the function that says logged need to auto select tables
+    $('input#persons').on('input', function() {
+    // do something
+    console.log("logged");
+    });
     callback();
   }
   let updateReservation = ( id ) => {
