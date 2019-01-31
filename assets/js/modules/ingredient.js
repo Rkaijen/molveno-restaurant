@@ -8,29 +8,14 @@ const ingredient = (function(){
   let mainIngredients = function(){
     overviewIngredients();
   }
-  function getIngredient(id1){
-    let id;
-    if(isNaN(id)){
-      id = id1/1;
-    }else{
-      id = id1;
-    }
+
+  let getIngredient = ( id ) => {
     for( let ingredient of _glob.arr.ingredients ) {
-      let ingredientId;
-      if(isNaN(ingredient.id)){
-        ingredientId = ingredient.id/1;
-      }else{
-        ingredientId = ingredient.id;
-      }
-      if( ingredientId === id) {
-        return ingredient;
-      }
+      if( ingredient.id/1 === id/1 ) return ingredient
     }
-    console.log("error 404: +ingredient with id:" + id + " is not found");
-    return;
   }
   function setIngredient( ingredient ) {
-    console.log("set entered");
+
     for( let i = 0; i < _glob.arr.ingredients.length; i++) {
       if( _glob.arr.ingredients[i].id/1 === ingredient.id/1 ) _glob.arr.ingredients[i] = ingredient
     }
@@ -88,6 +73,17 @@ let overviewIngredients = () => {
             })
           ])
         )
+      } else if (field.field === 'price') {
+        let price = String(item[ field.field ])
+        if( !price.includes('.') ){
+          price += ',00'
+        }else if( price.split('.')[1].length === 1 ){
+          price += '0'
+
+        }
+        price = price.replace('.',',')
+        table_td.innerHTML = `&euro; ${price}`
+
       }else {
         table_td.innerText = item[ field.field ]
       }
@@ -132,6 +128,28 @@ let overviewIngredients = () => {
 
   function validateIngredient( form, callback ){
 
+    let allergies = document.querySelector('select#allergies')
+    for( let allergy of _glob.arr.allergies ){
+      let allergy_option = document.createElement( 'option' )
+      allergy_option.setAttribute( 'value', allergy.id )
+      allergy_option.innerText = allergy.label;
+      allergies.appendChild( allergy_option )
+    }
+    let units = document.querySelector('select#unit')
+    for( let unit of _glob.arr.units ){
+      let unit_option = document.createElement( 'option' )
+      unit_option.setAttribute( 'value', unit.id )
+      unit_option.innerText = unit.label;
+      units.appendChild( unit_option )
+    }
+    let categories = document.querySelector( 'select#category' )
+    for( let category of _glob.arr.categories ){
+      let category_option = document.createElement( 'option' )
+      category_option.setAttribute( 'value', category.id )
+      category_option.innerText = category.label;
+      categories.appendChild( category_option )
+    }
+
     let button = form.querySelector( 'button' ),
     ingredient = form.elements,
     valid_data = true,
@@ -155,7 +173,7 @@ let overviewIngredients = () => {
   }
 
   let deleteIngredient = function(id){
-    console.log(id);
+
       let ingredient = formatIngredient(getIngredient( id )),
       output = document.getElementById( 'page_output' )
       navTab({
@@ -183,10 +201,12 @@ let overviewIngredients = () => {
   * add
   */
   let addIngredient = function(){
-    console.log("addIngredient says hi");
+
     let output = document.querySelector( '#page_output' )
     $( output ).load( 'templates/add-ingredient.html', () => {
+      navActiveItm( 'ingredients/add' )
       let add_form = output.querySelector( 'form' )
+
       validateIngredient( add_form, () => {
         let add_ingredient = add_form.elements;
         let add_ingredient_id = getRandomInt(10000,99999),
