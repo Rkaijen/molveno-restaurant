@@ -23,17 +23,16 @@ const table = (function(){
       validateTable( add_form, () => {
         let add_table = add_form.elements;
         let add_table_data = {
-          nr : parseInt(add_table.nr.value),
+          id : parseInt(add_table.id.value),
           chairs : add_table.chairs.value,
           wheelchair : add_table.wheelchair.value,
           status : add_table.table_status.value
         }
-        add_table_data[ 'id' ] = getRandomInt(10000,99999)
         _glob.arr.tables.unshift( add_table_data )
         console.log( _glob.arr.tables )
 
         navTabRemove( 'update' )
-        bsAlert( 'article.page-content', 'primary', 'fas fa-info-circle', `Table <b>${add_table.nr.value}</b> has added`,()=>{
+        bsAlert( 'article.page-content', 'primary', '', `Table for <b>${add_table.id.value}</b> has been saved`,()=>{
           location.hash = '#tables/overview'
         })
       })
@@ -53,7 +52,7 @@ const table = (function(){
     nav_tab_active.innerHTML = `<i class="fas fa-list"></i> Overview`
     let arrayTables = _glob.arr.tables;
     let overview_fields = [
-      { label : 'Table number', field : 'nr' },
+      { label : 'Table number', field : 'id' },
       { label : '<i class="fas fa-chair"></i> Chairs', field : 'chairs' },
       { label : '<i class="fab fa-accessible-icon"></i> Wheelchair access', field : 'wheelchair' },
       { label : 'Status', field : 'status' },
@@ -131,7 +130,6 @@ const table = (function(){
 
     $( 'table' ).DataTable()
 
-
   }
 
 /* -----------------------------------------------------------------------------
@@ -172,7 +170,7 @@ const table = (function(){
 
 
         navTabRemove( 'update' )
-        bsAlert( 'article.page-content', 'primary', 'fas fa-info-circle', `Table ${getTable(table.id).id} has been updated`,()=>{
+        bsAlert( 'article.page-content', 'primary', '', `Table ${getTable(table.id).id} has been updated`,()=>{
           location.hash = '#tables/overview'
         })
 
@@ -183,7 +181,7 @@ const table = (function(){
 
   let validateTable = ( form, callback ) => {
     let valid_data = true;
-    let table_id_input = document.getElementById('nr');
+    let table_id_input = document.getElementById('id');
 
     let new_table_id = (_glob.arr.tables.length)+1;
     table_id_input.setAttribute('min',new_table_id);
@@ -222,7 +220,7 @@ const table = (function(){
         _glob.arr.tables = tmp_arr;
         overviewTables()
         navTabRemove( 'delete' )
-        bsAlert( '#page_output', 'primary', 'fas fa-info-circle', `Table ${getTable(table.id).id} has been deleted` )
+        bsAlert( 'article.page-content', 'primary', '', `Table ${getTable(table.id).id} has been deleted` )
 
       })
       $( '.overview-link' ).on( 'click', (event) => navTabRemove( 'delete' ) )
