@@ -9,29 +9,13 @@ const ingredient = (function(){
     overviewIngredients();
   }
 
-  function getIngredient(id1){
-    let id;
-    if(isNaN(id)){
-      id = id1/1;
-    }else{
-      id = id1;
-    }
+  let getIngredient = ( id ) => {
     for( let ingredient of _glob.arr.ingredients ) {
-      let ingredientId;
-      if(isNaN(ingredient.id)){
-        ingredientId = ingredient.id/1;
-      }else{
-        ingredientId = ingredient.id;
-      }
-      if( ingredientId === id) {
-        return ingredient;
-      }
+      if( ingredient.id/1 === id/1 ) return ingredient
     }
-    console.log("error 404: +ingredient with id:" + id + " is not found");
-    return;
   }
   function setIngredient( ingredient ) {
-    console.log("set entered");
+
     for( let i = 0; i < _glob.arr.ingredients.length; i++) {
       if( _glob.arr.ingredients[i].id/1 === ingredient.id/1 ) _glob.arr.ingredients[i] = ingredient
     }
