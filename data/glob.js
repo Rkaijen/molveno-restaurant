@@ -23,7 +23,7 @@ function globArr(){
 
   glob( 'arr', 'ingredients',[
     {id :12000, name : 'macaroni', price : 1.00, category : 'pasta', unit : 'gram', allergies : 'gluten'},
-    {id :12001, name : 'steak', price : 2.00, category : 'meat', unit : 'piece', allergies : 'none'},
+    {id :12001, name : 'steak', price : 2.00, category : 'meat', unit : 'piece', allergies : ''},
     {id :12002, name : 'cheddar cheese', price : 1.50, category : 'cheese', unit : 'gram', allergies : 'milk'},
     {id :12003, name : 'wallnuts', price : 1.57, category : 'nuts', unit : 'gram', allergies : 'nuts'},
     {id :12004, name : 'mozzarella', price : 0.96, category : 'cheese', unit : 'gram', allergies : 'milk'},
@@ -86,16 +86,49 @@ function globArr(){
     { id : 13002, name : 'Mac & Cheese', ingredients : [{ id : 12000, quantity : 100}, { id : 12002, quantity : 200}, { id : 12012, quantity : 100}], price: 8.00, percentage : 300, recipe : 'Make Mac & Cheese', picture : '...'},
 
 
-  ] );
+  ] )
   glob( 'arr', 'orders' , [
     //id, guest, order, date, invoice, menuitems
-  ] );
+  ] )
 
 
-  glob( 'arr', 'invoices' , [
-      // id, order, guest, amount, menuitems
-  ] );
 
+  glob( 'arr', 'allergies', [
+    { id : 0, label : 'Peanuts'},
+    { id : 1, label : 'Nuts'},
+    { id : 2, label : 'Shellfish'},
+    { id : 3, label : 'Fish'},
+    { id : 4, label : 'Milk'},
+    { id : 5, label : 'Gluten'},
+    { id : 6, label : 'Soya'},
+    { id : 7, label : 'Milk'},
+    { id : 8, label : 'Gluten'},
+    { id : 9, label : 'Soya'},
+    { id : 10, label : 'Sesame seeds'},
+    { id : 11, label : 'Lupin'},
+    { id : 12, label : 'Sulphur Dioxide'}
+  ])
+  glob( 'arr', 'units' , [
+    { id : 1, label : 'piece (pcs)' },
+    { id : 2, label : 'miligram (mg)' },
+    { id : 3, label : 'gram (g)' },
+    { id : 4, label : 'pound (lb)' },
+    { id : 5, label : 'kilogram (kg)' },
+    { id : 6, label : 'liter (l)' }
+
+  ] )
+  glob( 'arr', 'categories' , [
+    { id : 1, label : 'Pork' },
+    { id : 2, label : 'Beef' },
+    { id : 3, label : 'Poultry' },
+    { id : 4, label : 'Game' },
+    { id : 5, label : 'Fruit' },
+    { id : 6, label : 'Vegetables' },
+    { id : 7, label : 'Pasta' },
+    { id : 8, label : 'Bread' },
+
+
+  ] )
 
 
 }
