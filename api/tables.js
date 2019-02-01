@@ -57,11 +57,11 @@ app.get('/api/tables/:id', function(req, res) {
 
 app.put('/api/tables/:id', function(req, res) {
 
-        // First read id from params
+
         let id = +req.params.id
         let table = req.body;
 
-
+        //TODO: aanpassen definitieve velden 
 
         connection.query(
           'UPDATE tables SET nr, chairs=?,wheelchair=?, status=? Where id = ?',
@@ -81,7 +81,7 @@ app.put('/api/tables/:id', function(req, res) {
                     res.end(JSON.stringify(user));
                   } else {
                     res.setHeader('Content-Type', 'application/json')
-                    res.status(404).end(); // rloman send 404???
+                    res.status(404).end();
                   }
                 } else {
                   throw err;
