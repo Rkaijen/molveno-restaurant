@@ -67,7 +67,7 @@ const api = (function(){
     const table = args.table,
     fields = args.fields,
     key = args.key;
-    app.put('/api/tables/:id', function(req, res) {
+    app.put( `/api/${table}/:${key}`, function(req, res) {
 
 
             let pointer = +req.params[ key ]
