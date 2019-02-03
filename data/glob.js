@@ -80,7 +80,7 @@ function globArr(){
     {id : 30, nr: 30, chairs : 6, reservation : 0, guest: 0, order : 0, wheelchair: 1, status: 1 },
   ] );
 
-  glob( 'arr', 'menuitems' , [
+  glob( 'arr', 'menu' , [
     { id : 13000, name : 'Pizza Margarita', ingredients : [{ id : 12004, quantity : 125}, { id : 12005, quantity : 100}, { id : 12006, quantity : 450}, { id : 12007, quantity : 5}], price: 12.00 , percentage :250, recipe : 'Make pizza', picture : '...'},
     { id : 13001, name : 'Coca Cola', ingredients : [{id: 12011, quantity : 1}], price: 2.00, percentage : 400, recipe : '...', picture : '...'},
     { id : 13002, name : 'Mac & Cheese', ingredients : [{ id : 12000, quantity : 100}, { id : 12002, quantity : 200}, { id : 12012, quantity : 100}], price: 8.00, percentage : 300, recipe : 'Make Mac & Cheese', picture : '...'},
