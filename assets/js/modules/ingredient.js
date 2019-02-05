@@ -66,7 +66,7 @@ let overviewIngredients = () => {
         table_td.appendChild(
           bsBtnGrp([
             bsBtn( 'Edit', 'btn-sm', 'far fa-edit', () => {
-              location.hash = `#ingredients/edit/${item.id}`
+              location.hash = `#ingredients/update/${item.id}`
             }),
             bsBtn( 'Delete', 'btn-sm', 'fas fa-minus-circle', () => {
               location.hash = `#ingredients/delete/${item.id}`
@@ -201,7 +201,7 @@ let overviewIngredients = () => {
   * add
   */
   let addIngredient = function(){
-
+    $( 'nav#primary a#ingredients').addClass( 'active' )
     let output = document.querySelector( '#page_output' )
     $( output ).load( 'templates/add-ingredient.html', () => {
       navActiveItm( 'ingredients/add' )
@@ -229,7 +229,8 @@ let overviewIngredients = () => {
   /* -----------------------------------------------------------------------------
   * delete
   */
-  let editIngredient = ( id ) => {
+  let updateIngredient = ( id ) => {
+    $( 'nav#primary a#ingredients').addClass( 'active' )
     navTab({
       id : 'update',
       href : `#ingredients/update/${id}`,
@@ -280,6 +281,6 @@ let overviewIngredients = () => {
     delete : deleteIngredient,
     view : viewIngredient,
     add : addIngredient,
-    edit : editIngredient
+    update : updateIngredient
   }
 })()
