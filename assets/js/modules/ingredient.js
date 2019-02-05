@@ -20,7 +20,8 @@ const ingredient = (function(){
       if( _glob.arr.ingredients[i].id/1 === ingredient.id/1 ) _glob.arr.ingredients[i] = ingredient
     }
     return ingredient
-  }  let formatIngredient = ( ingredient ) => {
+  }
+  let formatIngredient = ( ingredient ) => {
       if(ingredient){ return (ingredient.name + ": " + ingredient.category + ", " + ingredient.price + " per " + ingredient.unit);}
       }/* -----------------------------------------------------------------------------
 * overview
@@ -127,7 +128,11 @@ let overviewIngredients = () => {
   */}
 
   function validateIngredient( form, callback ){
-
+    let option_select = ( current_val, select ) => {
+      for( let option of option ){
+        if( option.innerText === current_val ) option.setAttribute( 'selected', selected )
+      }
+    }
     let allergies = document.querySelector('select#allergies')
     for( let allergy of _glob.arr.allergies ){
       let allergy_option = document.createElement( 'option' )
@@ -148,6 +153,10 @@ let overviewIngredients = () => {
       category_option.setAttribute( 'value', category.id )
       category_option.innerText = category.label;
       categories.appendChild( category_option )
+    }
+    let update_id = location.hash.split('/')[2]
+    if( location.hash.split('/')[2] ){ //update?
+
     }
 
     let button = form.querySelector( 'button' ),
@@ -244,12 +253,14 @@ let overviewIngredients = () => {
       edit_ingredient = form.elements,
       ingredient = getIngredient( id )
       let ingred = getIngredient(id);
+
       document.getElementById("name").value = ingred.name;
       document.getElementById("price").value = ingred.price;
-      document.getElementById("unit").value = ingred.unit;
-      document.getElementById("category").value = ingred.category;
-      document.getElementById("allergies").value = ingred.allergies;
-      $( form ).on( 'submit', (event) => {
+      //document.getElementById("unit").value = ingred.unit;
+      //document.getElementById("category").value = ingred.category;
+      //document.getElementById("allergies").value = ingred.allergies;
+      //$( form ).on( 'submit', (event) => {
+      validateIngredient( form, () => {
         event.preventDefault()
         edit_ingredient = event.target.elements;
 
