@@ -155,12 +155,18 @@ let overviewIngredients = () => {
       categories.appendChild( category_option )
     }
     let select_option = ( select, val ) => {
-      
+      for( let option of select.options ){
+        if( option.innerText === val ){
+          option.setAttribute( 'selected', 'selected' )
+        }
+      }
     }
     let update_id = location.hash.split('/')[2]
     if( update_id ){ //update?
       let ingredient = getIngredient( update_id )
-
+      select_option( allergies, ingredient.allergies )
+      select_option( units, ingredient.unit )
+      select_option( categories, ingredient.category )
     }
 
     let button = form.querySelector( 'button' ),

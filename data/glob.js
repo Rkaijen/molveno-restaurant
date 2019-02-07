@@ -22,7 +22,7 @@ function globArr(){
 
 
   glob( 'arr', 'ingredients',[
-    {id :12000, name : 'macaroni', price : 1.00, category : 'pasta', unit : 'gram', allergies : 'gluten'},
+    {id :12000, name : 'macaroni', price : 1.00, category : 'pasta', unit : 'gram', allergies : 'Gluten'},
     {id :12001, name : 'steak', price : 2.00, category : 'meat', unit : 'piece', allergies : ''},
     {id :12002, name : 'cheddar cheese', price : 1.50, category : 'cheese', unit : 'gram', allergies : 'milk'},
     {id :12003, name : 'wallnuts', price : 1.57, category : 'nuts', unit : 'gram', allergies : 'nuts'},
