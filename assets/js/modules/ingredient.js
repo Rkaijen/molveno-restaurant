@@ -20,7 +20,8 @@ const ingredient = (function(){
       if( _glob.arr.ingredients[i].id/1 === ingredient.id/1 ) _glob.arr.ingredients[i] = ingredient
     }
     return ingredient
-  }  let formatIngredient = ( ingredient ) => {
+  }
+  let formatIngredient = ( ingredient ) => {
       if(ingredient){ return (ingredient.name + ": " + ingredient.category + ", " + ingredient.price + " per " + ingredient.unit);}
       }/* -----------------------------------------------------------------------------
 * overview
@@ -66,7 +67,7 @@ let overviewIngredients = () => {
         table_td.appendChild(
           bsBtnGrp([
             bsBtn( 'Edit', 'btn-sm', 'far fa-edit', () => {
-              location.hash = `#ingredients/edit/${item.id}`
+              location.hash = `#ingredients/update/${item.id}`
             }),
             bsBtn( 'Delete', 'btn-sm', 'fas fa-minus-circle', () => {
               location.hash = `#ingredients/delete/${item.id}`
@@ -127,27 +128,35 @@ let overviewIngredients = () => {
   */}
 
   function validateIngredient( form, callback ){
-
+    let option_select = ( current_val, select ) => {
+      for( let option of option ){
+        if( option.innerText === current_val ) option.setAttribute( 'selected', selected )
+      }
+    }
     let allergies = document.querySelector('select#allergies')
     for( let allergy of _glob.arr.allergies ){
       let allergy_option = document.createElement( 'option' )
-      //allergy_option.setAttribute( 'value', allergy.id )
+      allergy_option.setAttribute( 'value', allergy.id )
       allergy_option.innerText = allergy.label;
       allergies.appendChild( allergy_option )
     }
     let units = document.querySelector('select#unit')
     for( let unit of _glob.arr.units ){
       let unit_option = document.createElement( 'option' )
-      //unit_option.setAttribute( 'value', unit.id )
+      unit_option.setAttribute( 'value', unit.id )
       unit_option.innerText = unit.label;
       units.appendChild( unit_option )
     }
     let categories = document.querySelector( 'select#category' )
     for( let category of _glob.arr.categories ){
       let category_option = document.createElement( 'option' )
-      //category_option.setAttribute( 'value', category.id )
+      category_option.setAttribute( 'value', category.id )
       category_option.innerText = category.label;
       categories.appendChild( category_option )
+    }
+    let update_id = location.hash.split('/')[2]
+    if( location.hash.split('/')[2] ){ //update?
+
     }
 
     let button = form.querySelector( 'button' ),
@@ -201,7 +210,7 @@ let overviewIngredients = () => {
   * add
   */
   let addIngredient = function(){
-
+    $( 'nav#primary a#ingredients').addClass( 'active' )
     let output = document.querySelector( '#page_output' )
     $( output ).load( 'templates/add-ingredient.html', () => {
       navActiveItm( 'ingredients/add' )
@@ -229,25 +238,29 @@ let overviewIngredients = () => {
   /* -----------------------------------------------------------------------------
   * delete
   */
-  let editIngredient = ( id ) => {
+  let updateIngredient = ( id ) => {
+    $( 'nav#primary a#ingredients').addClass( 'active' )
     navTab({
-      id : 'edit',
-      href : `#ingredients/edit/${id}`,
+      id : 'update',
+      href : `#ingredients/update/${id}`,
       icon : 'far fa-edit',
       label : 'Edit Ingredient'
 
     })
     let output = document.querySelector( '#page_output' )
-    $( output ).load( 'templates/edit-ingredient.html', () => {
+    $( output ).load( 'templates/update-ingredient.html', () => {
       let form = output.querySelector( 'form'),
-      edit_ingredient = form.elements, ingredient = getIngredient( id )
+      edit_ingredient = form.elements,
+      ingredient = getIngredient( id )
       let ingred = getIngredient(id);
+
       document.getElementById("name").value = ingred.name;
       document.getElementById("price").value = ingred.price;
-      document.getElementById("unit").value = ingred.unit;
-      document.getElementById("category").value = ingred.category;
-      document.getElementById("allergies").value = ingred.allergies;
-      $( form ).on( 'submit', (event) => {
+      //document.getElementById("unit").value = ingred.unit;
+      //document.getElementById("category").value = ingred.category;
+      //document.getElementById("allergies").value = ingred.allergies;
+      //$( form ).on( 'submit', (event) => {
+      validateIngredient( form, () => {
         event.preventDefault()
         edit_ingredient = event.target.elements;
 
@@ -264,13 +277,13 @@ let overviewIngredients = () => {
         bsAlert( '.page-content', 'primary', '', ` ingredient: ${formatIngredient(set_ingredient)} has been edited`,()=>{
           location.hash = '#ingredients/overview'
         })
-          console.log("pass 1");
+
       })
-      console.log("pass 2");
-      $( '.overview-link' ).on( 'click', (event) => navTabRemove( 'edit' ) )
-      console.log("pass 3");
+
+      $( '.overview-link' ).on( 'click', (event) => navTabRemove( 'update' ) )
+
     })
-    console.log("pass 4");
+
   }
 
   return{
@@ -279,6 +292,6 @@ let overviewIngredients = () => {
     delete : deleteIngredient,
     view : viewIngredient,
     add : addIngredient,
-    edit : editIngredient
+    update : updateIngredient
   }
 })()
