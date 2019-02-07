@@ -1,9 +1,5 @@
 "use strict";
 
-
-
-
-
 const api = (function(){
 
   const mysql = require('mysql');
@@ -11,12 +7,12 @@ const api = (function(){
   const app = express();
   const bodyParser = require('body-parser');
 
-  app.use(bodyParser.json());
-  app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+  app.use( bodyParser.json() )
+  app.use( function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Methods", "*")
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+    next()
   });
 
   const connection = mysql.createConnection({
@@ -25,16 +21,16 @@ const api = (function(){
     password: 'mcrajmolveno2019',
     database: 'robkai1q_molvenodb'
   });
-  // api.get( { table : 'tables'[, key : 'id']})
+  // api.get( { table : 'tables'[ key : 'id']})
   const get = function( args, callback ){
     const table = args.table,
     key = args.key;
     if( key ){
-      app.get( `/api/${table}/:${key}`, function(req, res) {
+      app.get( `/api/${table}/:${key}`, function( req, res ) {
 
         let pointer = +req.params[ key ]
 
-        connection.query('SELECT * FROM ${table} where ${key}=?', key, (err, rows) => {
+        connection.query(`SELECT * FROM ${table} where ${key}=?`, pointer, ( err, rows ) => {
           if (!err) {
             let record = rows[0];
             res.setHeader('Content-Type', 'application/json')
@@ -51,11 +47,11 @@ const api = (function(){
         })
       })
     } else {
-      app.get('/api/${table}', function(req, res) {
+      app.get(`/api/${table}`, function(req, res) {
 
-        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Content-Type', 'application/json')
 
-        connection.query('SELECT * FROM ${table}', ( err, records ) => {
+        connection.query(`SELECT * FROM ${table}`, ( err, records ) => {
           if (!err) {
             res.end( JSON.stringify(records) )
           } else {
@@ -64,14 +60,14 @@ const api = (function(){
         })
       })
     }
-    if( callback ) callback();
+    if( callback ) callback()
   }
 
   const put = function( args, callback ){
     const table = args.table,
     fields = args.fields,
     key = args.key;
-    app.put('/api/tables/:id', function(req, res) {
+    app.put( `/api/${table}/:${key}`, function(req, res) {
 
 
             let pointer = +req.params[ key ]

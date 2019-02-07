@@ -184,7 +184,10 @@ const table = (function(){
     let table_id_input = document.getElementById('id');
 
     let new_table_id = (_glob.arr.tables.length)+1;
+
+
     table_id_input.setAttribute('min',new_table_id);
+
     table_id_input.value = new_table_id;
 
     $( form ).on( 'submit', (event) => {
