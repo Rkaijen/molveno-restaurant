@@ -11,7 +11,7 @@ const ingredient = (function(){
 
   let getIngredient = ( id ) => {
     for( let ingredient of _glob.arr.ingredients ) {
-      if( ingredient.id/1 === id/1 ) return ingredient
+      if( parseInt(ingredient.id) === parseInt(id) ) return ingredient
     }
   }
   function setIngredient( ingredient ) {
@@ -106,7 +106,7 @@ let overviewIngredients = () => {
   * view
   */
   let viewIngredient = ( id ) => {
-    console.log( id )
+
     /*
     let ingredient = getIngredient( id ),
     output = document.getElementById( 'page_output' )
@@ -154,8 +154,12 @@ let overviewIngredients = () => {
       category_option.innerText = category.label;
       categories.appendChild( category_option )
     }
+    let select_option = ( select, val ) => {
+      
+    }
     let update_id = location.hash.split('/')[2]
-    if( location.hash.split('/')[2] ){ //update?
+    if( update_id ){ //update?
+      let ingredient = getIngredient( update_id )
 
     }
 
