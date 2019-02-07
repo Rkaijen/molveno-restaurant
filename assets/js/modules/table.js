@@ -53,7 +53,7 @@ const table = (function(){
     nav_tab_active.innerHTML = `<i class="fas fa-list"></i> Overview`
     let arrayTables = _glob.arr.tables;
     let overview_fields = [
-      { label : 'Table number', field : 'id' },
+      { label : 'Table number', field : 'nr' },
       { label : '<i class="fas fa-chair"></i> Chairs', field : 'chairs' },
       { label : '<i class="fab fa-accessible-icon"></i> Wheelchair access', field : 'wheelchair' },
       { label : 'Status', field : 'status' },
@@ -149,7 +149,8 @@ const table = (function(){
     $( output ).load( 'templates/update-table.html', () => {
       output.querySelector( '#h2_title_id' ).innerHTML = id;
       let form = output.querySelector( 'form'),
-      update_table = form.elements, table = getTable( id ),
+      update_table = form.elements,
+      table = getTable( id ),
       table_fields = [ 'id', 'chairs', 'wheelchair', 'status' ]
       for( let field of update_table ){
         if( table_fields.includes( field.id ) ){
@@ -171,7 +172,7 @@ const table = (function(){
 
 
         navTabRemove( 'update' )
-        bsAlert( 'article.page-content', 'primary', '', `Table ${getTable(table.id).id} has been updated`,()=>{
+        bsAlert( 'article.page-content', 'primary', '', `Table ${table.nr} has been updated`,()=>{
           location.hash = '#tables/overview'
         })
 
@@ -269,7 +270,7 @@ const table = (function(){
 * get
 */
 function getTable( id ){
-  for( let table of _glob.arr.tables ) if( table.id === id/1 ) return table;
+  for( let table of _glob.arr.tables ) if( parseInt(table.id) === parseInt(id) ) return table;
 }
 
 function getTablesSeats( tables ){
