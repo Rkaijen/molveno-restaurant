@@ -197,7 +197,7 @@ const table = (function(){
           }
         }
       }
-      console.log(  checkTableNr( nr_input ) )
+
       if( checkTableNr( nr_input ) ) {
         $( event.target ).addClass( 'is-invalid' ).after( `<div class="invalid-feedback" id="table-invalid">Table nr ${nr_input} already exists</div>` );
         valid_data = false
@@ -241,9 +241,11 @@ const table = (function(){
         let tmp_arr = [];
         for( let item of _glob.arr.tables ) if( item.id/1 !== id/1 ) tmp_arr.push( item )
         _glob.arr.tables = tmp_arr;
-        overviewTables()
+
         navTabRemove( 'delete' )
-        bsAlert( 'article.page-content', 'primary', '', `Table ${getTable(table.id).id} has been deleted` )
+        bsAlert( 'article.page-content', 'primary', '', `Table ${table.nr} has been deleted`,()=>{
+          location.hash = '#tables/overview'
+        } )
 
       })
       $( '.overview-link' ).on( 'click', (event) => navTabRemove( 'delete' ) )
