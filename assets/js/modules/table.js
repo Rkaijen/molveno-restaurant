@@ -23,7 +23,8 @@ const table = (function(){
       validateTable( add_form, () => {
         let add_table = add_form.elements;
         let add_table_data = {
-          id : parseInt(add_table.id.value),
+          id : getRandomInt( 0, 99999 ),
+          nr : add_table.nr.value,
           chairs : add_table.chairs.value,
           wheelchair : add_table.wheelchair.value,
           status : add_table.table_status.value
@@ -161,7 +162,7 @@ const table = (function(){
         update_table = event.target.elements;
 
         let set_table = setTable({
-          id : parseInt(update_table.id.value),
+          nr : parseInt(update_table.nr.value),
           chairs : update_table.chairs.value,
           wheelchair : update_table.wheelchair.value,
           status : update_table.table_status.value
@@ -180,15 +181,34 @@ const table = (function(){
   }
 
   let validateTable = ( form, callback ) => {
+    const tables = _glob.arr.tables
     let valid_data = true;
-    let table_id_input = document.getElementById('id');
+    let table_nr_input = document.getElementById('nr')
+    let new_table_nr = ( tables[ tables.length-1 ].nr )+1
+    table_nr_input.value = new_table_nr;
+    table_nr_input.addEventListener( 'change', (event) => {
+      $( event.target ).removeClass( 'is-invalid' )
+      const nr_input = event.target.value
 
-    let new_table_id = (_glob.arr.tables.length)+1;
+      let checkTableNr = ( nr ) => {
+        for( let table of tables ){
+          if( parseInt( nr ) === parseInt( table.nr ) ){
+            return true
+          }
+        }
+      }
+      console.log(  checkTableNr( nr_input ) )
+      if( checkTableNr( nr_input ) ) {
+        $( event.target ).addClass( 'is-invalid' ).after( `<div class="invalid-feedback" id="table-invalid">Table nr ${nr_input} already exists</div>` );
+        valid_data = false
+        //bsAlert( 'article.page-content', 'warning', '', `Table nr ${nr_input} already exists` )
+      }else{
+        $( '.invalid-feedback' ).remove();
+        valid_data = true
+      }
+    })
 
 
-    table_id_input.setAttribute('min',new_table_id);
-
-    table_id_input.value = new_table_id;
 
     $( form ).on( 'submit', (event) => {
       event.preventDefault()
@@ -240,7 +260,6 @@ const table = (function(){
     delete : deleteTable
   }
 })()
-
 
 
 
