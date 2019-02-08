@@ -24,18 +24,19 @@ function globArr(){
   glob( 'arr', 'ingredients',[
     {id :12000, name : 'macaroni', price : 1.00, category : 'pasta', unit : 'gram', allergies : 'Gluten'},
     {id :12001, name : 'steak', price : 2.00, category : 'meat', unit : 'piece', allergies : ''},
-    {id :12002, name : 'cheddar cheese', price : 1.50, category : 'cheese', unit : 'gram', allergies : 'milk'},
-    {id :12003, name : 'wallnuts', price : 1.57, category : 'nuts', unit : 'gram', allergies : 'nuts'},
-    {id :12004, name : 'mozzarella', price : 0.96, category : 'cheese', unit : 'gram', allergies : 'milk'},
-    {id :12005, name : 'tomato sauce', price : 0.31, category : 'sauce', unit : 'mililiter', allergies : 'none'},
-    {id :12006, name : 'pizza dough', price : 1.12, category : 'dough', unit : 'ball', allergies : 'gluten'},
-    {id :12007, name : 'oregano', price : 0.08, category : 'herbs', unit : 'miligram', allergies : 'none'},
-    {id :12008, name : 'carrot', price : 0.30, category : 'vegetable', unit : 'gram', allergies : 'none'},
-    {id :12009, name : 'lettuce', price : 0.24, category : 'vegetable', unit : 'gram', allergies : 'none'},
-    {id :12010, name : 'potatoes', price : 0.45, category : 'vegetable', unit : 'gram', allergies : 'none'},
-    {id :12011, name : 'Coca cola', price : 0.50, category : 'beverage', unit : 'piece', allergies : 'none'},
-    {id :12012, name : 'Hotdogs', price : 0.73, category : 'meat', unit : 'piece', allergies : 'none'},
+    {id :12002, name : 'cheddar cheese', price : 1.50, category : 'cheese', unit : 'gram', allergies : 'Milk'},
+    {id :12003, name : 'wallnuts', price : 1.57, category : 'nuts', unit : 'gram', allergies : 'Nuts'},
+    {id :12004, name : 'mozzarella', price : 0.96, category : 'cheese', unit : 'gram', allergies : 'Milk'},
+    {id :12005, name : 'tomato sauce', price : 0.31, category : 'sauce', unit : 'mililiter', allergies : ''},
+    {id :12006, name : 'pizza dough', price : 1.12, category : 'dough', unit : 'ball', allergies : 'Gluten'},
+    {id :12007, name : 'oregano', price : 0.08, category : 'herbs', unit : 'miligram', allergies : ''},
+    {id :12008, name : 'carrot', price : 0.30, category : 'vegetable', unit : 'gram', allergies : ''},
+    {id :12009, name : 'lettuce', price : 0.24, category : 'vegetable', unit : 'gram', allergies : ''},
+    {id :12010, name : 'potatoes', price : 0.45, category : 'vegetable', unit : 'gram', allergies : ''},
+    {id :12011, name : 'Coca cola', price : 0.50, category : 'beverage', unit : 'piece', allergies : ''},
+    {id :12012, name : 'Hotdogs', price : 0.73, category : 'meat', unit : 'piece', allergies : ''},
   ]);
+
 
   glob( 'arr', 'guests' , [
     // id, firstname, preposition, lastname, email, telephone, country
@@ -45,6 +46,7 @@ function globArr(){
     { id : 38756, firstname : 'Horacio', preposition : '', lastname : 'Lomeli', email : 'h.lomeli@telefonica.it', telephone : '', country : 'it' },
     { id : 64526, firstname : 'Jan', preposition : 'van', lastname : 'Cornelissen', email : 'j.cornelissen@telfort.nl', telephone : '+3130584532', country : 'nl' },
   ] );
+
 
   glob( 'arr', 'tables' , [
     //id, chairs, reservation, guest, wheelchair
@@ -80,33 +82,36 @@ function globArr(){
     {id : 30, nr: 30, chairs : 6, reservation : 0, guest: 0, order : 0, wheelchair: 1, status: 1 },
   ] );
 
+
   glob( 'arr', 'menu' , [
     { id : 13000, name : 'Pizza Margarita', ingredients : [{ id : 12004, quantity : 125}, { id : 12005, quantity : 100}, { id : 12006, quantity : 450}, { id : 12007, quantity : 5}], price: 12.00 , percentage :250, recipe : 'Make pizza', picture : '...'},
     { id : 13001, name : 'Coca Cola', ingredients : [{id: 12011, quantity : 1}], price: 2.00, percentage : 400, recipe : '...', picture : '...'},
     { id : 13002, name : 'Mac & Cheese', ingredients : [{ id : 12000, quantity : 100}, { id : 12002, quantity : 200}, { id : 12012, quantity : 100}], price: 8.00, percentage : 300, recipe : 'Make Mac & Cheese', picture : '...'},
+  ])
 
 
-  ] )
   glob( 'arr', 'orders' , [
     //id, guest, order, date, invoice, menuitems
   ] )
 
 
-
   glob( 'arr', 'allergies', [
-    { id : 0, label : 'Peanuts'},
-    { id : 1, label : 'Nuts'},
-    { id : 2, label : 'Shellfish'},
-    { id : 3, label : 'Fish'},
-    { id : 5, label : 'Milk'},
-    { id : 6, label : 'Soya'},
-    { id : 7, label : 'Milk'},
-    { id : 8, label : 'Gluten'},
-    { id : 9, label : 'Soya'},
-    { id : 10, label : 'Sesame seeds'},
-    { id : 11, label : 'Lupin'},
-    { id : 12, label : 'Sulphur Dioxide'}
+    { id : 1, label : 'Peanuts'},
+    { id : 2, label : 'Nuts'},
+    { id : 3, label : 'Shellfish'},
+    { id : 4, label : 'Fish'},
+    { id : 5, label : 'Eggs'},
+    { id : 6, label : 'Milk'},
+    { id : 7, label : 'Gluten'},
+    { id : 8, label : 'Soya'},
+    { id : 9, label : 'Sesame seeds'},
+    { id : 10, label : 'Celery'},
+    { id : 11, label : 'Musterd'},
+    { id : 12, label : 'Lupin'},
+    { id : 13, label : 'Sulphur dioxide'},
   ])
+
+
   glob( 'arr', 'units' , [
     { id : 1, label : 'piece (pcs)' },
     { id : 2, label : 'miligram (mg)' },
@@ -114,8 +119,9 @@ function globArr(){
     { id : 4, label : 'pound (lb)' },
     { id : 5, label : 'kilogram (kg)' },
     { id : 6, label : 'liter (l)' }
+  ])
 
-  ] )
+
   glob( 'arr', 'categories' , [
     { id : 1, label : 'Pork' },
     { id : 2, label : 'Beef' },
@@ -125,9 +131,7 @@ function globArr(){
     { id : 6, label : 'Vegetables' },
     { id : 7, label : 'Pasta' },
     { id : 8, label : 'Bread' },
-
-
-  ] )
+  ])
 
 
 }
