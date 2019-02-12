@@ -33,7 +33,7 @@ const table = (function(){
         console.log( _glob.arr.tables )
 
         navTabRemove( 'update' )
-        bsAlert( 'article.page-content', 'primary', '', `Table for <b>${add_table.id.value}</b> has been saved`,()=>{
+        bsAlert( 'article.page-content', 'primary', '', `Table <b>${add_table_data.nr}</b>  saved`,()=>{
           location.hash = '#tables/overview'
         })
       })
@@ -172,7 +172,7 @@ const table = (function(){
 
 
         navTabRemove( 'update' )
-        bsAlert( 'article.page-content', 'primary', '', `Table ${table.nr} has been updated`,()=>{
+        bsAlert( 'article.page-content', 'primary', '', `Table <b>${table.nr}</b> saved`,()=>{
           location.hash = '#tables/overview'
         })
 
@@ -244,7 +244,7 @@ const table = (function(){
         _glob.arr.tables = tmp_arr;
 
         navTabRemove( 'delete' )
-        bsAlert( 'article.page-content', 'primary', '', `Table ${table.nr} has been deleted`,()=>{
+        bsAlert( 'article.page-content', 'primary', '', `Table <b>${table.nr}</b> deleted`,()=>{
           location.hash = '#tables/overview'
         } )
 

@@ -210,7 +210,7 @@ let overviewIngredients = () => {
           _glob.arr.ingredients = tmp_arr;
           overviewIngredients()
           navTabRemove( 'delete' )
-          bsAlert( '#page_output', 'primary', '', `are you sure you want to delete:  ${ingredient} has been deleted` )
+          bsAlert( '#page_output', 'primary', '', `Ingredient <b>${ingredient}</b> deleted` )
 
         })
         $( '.overview-link' ).on( 'click', (event) => navTabRemove( 'delete' ) )
@@ -238,7 +238,7 @@ let overviewIngredients = () => {
           allergies : add_ingredient.allergies.value
         }
         _glob.arr.ingredients.unshift( add_ingredient_data )
-          bsAlert( 'article.page-content','primary','',`Ingredient ${add_ingredient_data.name} has been saved`,() => {
+          bsAlert( 'article.page-content','primary','',`Ingredient <b>${add_ingredient_data.name}</b> saved`,() => {
             location.hash = '#ingredients'
         })
 
@@ -284,7 +284,7 @@ let overviewIngredients = () => {
         })
 
         navTabRemove( 'edit' )
-        bsAlert( '.page-content', 'primary', '', ` ingredient: ${formatIngredient(set_ingredient)} has been edited`,()=>{
+        bsAlert( '.page-content', 'primary', '', ` Ingredient <b>${set_ingredient.name}</b> saved`,()=>{
           location.hash = '#ingredients/overview'
         })
 

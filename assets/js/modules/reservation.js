@@ -75,7 +75,7 @@ const reservation = (function(){
         let guest_name_preposition = guest_data.preposition;
         if( guest_name_preposition !== '') guest_name_preposition += ' '
 
-        bsAlert( 'article.page-content','primary','',`Reservation for <b>${guest_data.firstname} ${guest_name_preposition}${guest_data.lastname}</b> has been saved` )
+        bsAlert( 'article.page-content','primary','',`Reservation for <b>${guest_data.firstname} ${guest_name_preposition}${guest_data.lastname}</b> saved` )
         location.hash = '#reservations'
       })
     })
@@ -456,7 +456,7 @@ const reservation = (function(){
         _glob.arr.reservations = tmp_arr;
         overviewReservations()
         navTabRemove( 'delete' )
-        bsAlert( 'article.page-content', 'primary', '', `Reservation for <b>${guest}</b> ${reservation} has been deleted` )
+        bsAlert( 'article.page-content', 'primary', '', `Reservation for <b>${guest}</b> ${reservation} deleted` )
 
       })
       $( '.overview-link' ).on( 'click', (event) => navTabRemove( 'delete' ) )
@@ -551,7 +551,7 @@ const reservation = (function(){
         })
 
         navTabRemove( 'update' )
-        bsAlert( 'article.page-content', 'primary', '', `Reservation for ${getGuestName(reservation.guest)} on ${formatReservation(set_reservation)} has been updated`,()=>{
+        bsAlert( 'article.page-content', 'primary', '', `Reservation for ${getGuestName(reservation.guest)} saved`,()=>{
           location.hash = '#reservations/overview'
         })
 
