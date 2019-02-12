@@ -107,6 +107,7 @@ const reservation = (function(){
     if($( 'input#date').val() === '') $( button ).attr( 'disabled','disabled' )
     validateReservationDate( form )
     validateReservationTable( form )
+
     $( 'input#date').on( 'change', (event) => {
       if( valid_data ) button.removeAttribute( 'disabled' )
     })
@@ -115,11 +116,18 @@ const reservation = (function(){
       event.preventDefault()
       if ( reservation.firstname.value === '' || reservation.firstname.value === '' ){
         valid_data = false
-        bsAlert( 'article.page-content','warning','fas fa-exclamation-triangle',`First and last name cannot be empty` )
+        bsAlert( 'article.page-content','warning','fas fa-exclamation-triangle',`First and last name are required` )
       }
       if ( reservation.email.value === '' && reservation.telephone.value === '' ){
         valid_data = false
-        bsAlert( 'article.page-content','warning','fas fa-exclamation-triangle',`Telephone or email cannot be empty` )
+        bsAlert( 'article.page-content','warning','fas fa-exclamation-triangle',`Telephone or email are required` )
+        $( 'input#email,input#telephone').on('keyup', (event) => {
+            if( event.target.value !== '' ) {
+              valid_data = true
+            }else{
+              valid_data = false
+            }
+        })
       }
       if ( reservation.date.value === '' ){
         valid_data = false
