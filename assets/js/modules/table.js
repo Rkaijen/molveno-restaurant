@@ -200,7 +200,7 @@ const table = (function(){
       }
 
       if( checkTableNr( nr_input ) ) {
-        $( event.target ).addClass( 'is-invalid' ).after( `<div class="invalid-feedback" id="table-invalid">Table nr ${nr_input} already exists</div>` );
+        $( event.target ).addClass( 'is-invalid' ).after( `<div class="invalid-feedback" id="table-invalid"><i class="fas fa-exclamation-triangle"></i>Table nr ${nr_input} already exists</div>` );
         valid_data = false
         //bsAlert( 'article.page-content', 'warning', '', `Table nr ${nr_input} already exists` )
       }else{
