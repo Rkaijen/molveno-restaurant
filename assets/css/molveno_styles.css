@@ -206,6 +206,21 @@ main#page {
     }
 
 /* page general styling settings */
+/*
+.icon::before {
+   display: inline-block;
+   font-style: normal;
+   font-variant: normal;
+   text-rendering: auto;
+   -webkit-font-smoothing: antialiased;
+ }
+
+
+.invalid-feedback::before{
+  content: "\f071 ";
+  font-family: "Font Awesome 5 Free";
+}
+*/
 
 .page {
   position: relative;
