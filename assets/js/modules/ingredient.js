@@ -136,21 +136,21 @@ let overviewIngredients = () => {
     let allergies = document.querySelector('select#allergies')
     for( let allergy of _glob.arr.allergies ){
       let allergy_option = document.createElement( 'option' )
-      allergy_option.setAttribute( 'value', allergy.id )
+      //allergy_option.setAttribute( 'value', allergy.id )
       allergy_option.innerText = allergy.label;
       allergies.appendChild( allergy_option )
     }
     let units = document.querySelector('select#unit')
     for( let unit of _glob.arr.units ){
       let unit_option = document.createElement( 'option' )
-      unit_option.setAttribute( 'value', unit.id )
+      //unit_option.setAttribute( 'value', unit.id )
       unit_option.innerText = unit.label;
       units.appendChild( unit_option )
     }
     let categories = document.querySelector( 'select#category' )
     for( let category of _glob.arr.categories ){
       let category_option = document.createElement( 'option' )
-      category_option.setAttribute( 'value', category.id )
+      //category_option.setAttribute( 'value', category.id )
       category_option.innerText = category.label;
       categories.appendChild( category_option )
     }
