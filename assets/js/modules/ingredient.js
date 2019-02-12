@@ -22,7 +22,16 @@ const ingredient = (function(){
     return ingredient
   }
   let formatIngredient = ( ingredient ) => {
-      if(ingredient){ return (ingredient.name + ": " + ingredient.category + ", " + ingredient.price + " per " + ingredient.unit);}
+    let price = String( ingredient.price )
+    if( !price.includes('.') ){
+      price += ',00'
+    }else if( price.split('.')[1].length === 1 ){
+      price += '0'
+    }
+    price = price.replace('.',',')
+
+      //if(ingredient){ return (ingredient.name + ": " + ingredient.category + ", " +  ingredient.price + " per " + ingredient.unit);}
+      if( ingredient ) return `<b>${ingredient.name}</b> in category <b>${ingredient.category}</b>;  <b>&euro; ${price}</b>  per <b>${ingredient.unit}</b>`
       }/* -----------------------------------------------------------------------------
 * overview
 */
