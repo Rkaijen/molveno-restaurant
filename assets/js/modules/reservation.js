@@ -74,7 +74,7 @@ const reservation = (function(){
         _glob.arr.reservations.unshift( add_reservation_data )
         let guest_name_preposition = guest_data.preposition;
         if( guest_name_preposition !== '') guest_name_preposition += ' '
-        
+
         bsAlert( 'article.page-content','primary','',`Reservation for <b>${guest_data.firstname} ${guest_name_preposition}${guest_data.lastname}</b> has been saved` )
         location.hash = '#reservations'
       })
