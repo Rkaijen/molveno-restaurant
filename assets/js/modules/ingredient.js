@@ -220,10 +220,13 @@ let overviewIngredients = () => {
   * add
   */
   let addIngredient = function(){
-    $( 'nav#primary a#ingredients').addClass( 'active' )
+
+
     let output = document.querySelector( '#page_output' )
     $( output ).load( 'templates/add-ingredient.html', () => {
       navActiveItm( 'ingredients/add' )
+      $( 'nav#primary a#ingredients').addClass( 'active' )
+      console.log( $( 'nav#primary a#ingredients').attr('class') )
       let add_form = output.querySelector( 'form' )
 
       validateIngredient( add_form, () => {
