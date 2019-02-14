@@ -22,19 +22,19 @@ function globArr(){
 
 
   glob( 'arr', 'ingredients',[
-    {id :12000, name : 'macaroni', price : 1.00, category : 'pasta', unit : 'gram', allergies : 'Gluten'},
-    {id :12001, name : 'steak', price : 2.00, category : 'meat', unit : 'piece', allergies : ''},
-    {id :12002, name : 'cheddar cheese', price : 1.50, category : 'cheese', unit : 'gram', allergies : 'Milk'},
-    {id :12003, name : 'wallnuts', price : 1.57, category : 'nuts', unit : 'gram', allergies : 'Nuts'},
-    {id :12004, name : 'mozzarella', price : 0.96, category : 'cheese', unit : 'gram', allergies : 'Milk'},
-    {id :12005, name : 'tomato sauce', price : 0.31, category : 'sauce', unit : 'mililiter', allergies : ''},
-    {id :12006, name : 'pizza dough', price : 1.12, category : 'dough', unit : 'ball', allergies : 'Gluten'},
-    {id :12007, name : 'oregano', price : 0.08, category : 'herbs', unit : 'miligram', allergies : ''},
-    {id :12008, name : 'carrot', price : 0.30, category : 'vegetable', unit : 'gram', allergies : ''},
-    {id :12009, name : 'lettuce', price : 0.24, category : 'vegetable', unit : 'gram', allergies : ''},
-    {id :12010, name : 'potatoes', price : 0.45, category : 'vegetable', unit : 'gram', allergies : ''},
-    {id :12011, name : 'Coca cola', price : 0.50, category : 'beverage', unit : 'piece', allergies : ''},
-    {id :12012, name : 'Hotdogs', price : 0.73, category : 'meat', unit : 'piece', allergies : ''},
+    {id :12000, name : 'macaroni', price : 1.00, category : 'Pasta', unit : 'grams (g)', allergies : 'Gluten'},
+    {id :12001, name : 'steak', price : 2.00, category : 'Beef', unit : 'piece (pcs)', allergies : ''},
+    {id :12002, name : 'cheddar cheese', price : 1.50, category : 'Cheese', unit : 'grams (g)', allergies : 'Milk'},
+    {id :12003, name : 'wallnuts', price : 1.57, category : 'Nuts', unit : 'grams (g)', allergies : 'Nuts'},
+    {id :12004, name : 'mozzarella', price : 0.96, category : 'Cheese', unit : 'grams (g)', allergies : 'Milk'},
+    {id :12005, name : 'tomato sauce', price : 0.31, category : 'Sauce', unit : 'milliliters (ml)', allergies : ''},
+    {id :12006, name : 'pizza dough', price : 1.12, category : 'Dough', unit : 'grams (g)', allergies : 'Gluten'},
+    {id :12007, name : 'oregano', price : 0.08, category : 'Herbs', unit : 'milligram (mg)', allergies : ''},
+    {id :12008, name : 'carrot', price : 0.30, category : 'Vegetables', unit : 'grams (g)', allergies : ''},
+    {id :12009, name : 'lettuce', price : 0.24, category : 'Vegetables', unit : 'grams (g)', allergies : ''},
+    {id :12010, name : 'potatoes', price : 0.45, category : 'Vegetables', unit : 'grams (g)', allergies : ''},
+    {id :12011, name : 'Coca cola', price : 0.50, category : 'Beverages', unit : 'piece (pcs)', allergies : ''},
+    {id :12012, name : 'Hotdogs', price : 0.73, category : 'Meat', unit : 'piece (pcs)', allergies : ''},
   ]);
 
 
@@ -114,11 +114,13 @@ function globArr(){
 
   glob( 'arr', 'units' , [
     { id : 1, label : 'piece (pcs)' },
-    { id : 2, label : 'miligram (mg)' },
-    { id : 3, label : 'gram (g)' },
+    { id : 2, label : 'milligram (mg)' },
+    { id : 3, label : 'grams (g)' },
     { id : 4, label : 'pound (lb)' },
     { id : 5, label : 'kilogram (kg)' },
-    { id : 6, label : 'liter (l)' }
+    { id : 6, label : 'milliliters (ml)' }
+    { id : 7, label : 'liter (l)' }
+
   ])
 
 
