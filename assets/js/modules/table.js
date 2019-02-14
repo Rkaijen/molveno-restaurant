@@ -246,11 +246,9 @@ const table = (function(){
         _glob.arr.tables = tmp_arr;
 
         navTabRemove( 'delete' )
-<<<<<<< HEAD
+
         bsAlert( 'article.page-content', 'primary', '', `Table <b>${table.nr}</b> deleted`,()=>{
-=======
-        bsAlert( 'article.page-content', 'primary', '', `Table ${table.nr} has been deleted`,()=>{
->>>>>>> bc425a42ee977fa408824a8cf2f02698235a1d0b
+
           location.hash = '#tables/overview'
         } )
 
