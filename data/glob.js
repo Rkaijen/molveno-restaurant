@@ -34,6 +34,7 @@ function globArr(){
     {id :12009, name : 'lettuce', price : 0.24, category : 'Vegetables', unit : 'grams (g)', allergies : ''},
     {id :12010, name : 'potatoes', price : 0.45, category : 'Vegetables', unit : 'grams (g)', allergies : ''},
     {id :12011, name : 'Coca cola', price : 0.50, category : 'Beverages', unit : 'piece (pcs)', allergies : ''},
+    
     {id :12012, name : 'Hotdogs', price : 0.73, category : 'Meat', unit : 'piece (pcs)', allergies : ''},
   ]);
 
