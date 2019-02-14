@@ -200,7 +200,9 @@ const table = (function(){
       }
 
       if( checkTableNr( nr_input ) ) {
+
         $( event.target ).addClass( 'is-invalid' ).after( `<div class="invalid-feedback" id="table-invalid"><i class="fas fa-exclamation-triangle"></i> Table nr ${nr_input} already exists</div>` );
+
         valid_data = false
         //bsAlert( 'article.page-content', 'warning', '', `Table nr ${nr_input} already exists` )
       }else{
@@ -244,7 +246,11 @@ const table = (function(){
         _glob.arr.tables = tmp_arr;
 
         navTabRemove( 'delete' )
+<<<<<<< HEAD
         bsAlert( 'article.page-content', 'primary', '', `Table <b>${table.nr}</b> deleted`,()=>{
+=======
+        bsAlert( 'article.page-content', 'primary', '', `Table ${table.nr} has been deleted`,()=>{
+>>>>>>> bc425a42ee977fa408824a8cf2f02698235a1d0b
           location.hash = '#tables/overview'
         } )
 
