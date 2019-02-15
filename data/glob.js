@@ -51,7 +51,7 @@ function globArr(){
     {id : 1, nr: 1, chairs : 2, reservation : 0, guest: 0, order : 0, wheelchair: 1, status: 1 },
     {id : 2, nr: 2, chairs : 2, reservation : 0, guest: 0, order : 0, wheelchair: 1, status: 0 },
     {id : 3, nr: 3, chairs : 4, reservation : 23456, guest: 0, order : 0, wheelchair: 1, status: 1 },
-    {id : 4, nr: 4, chairs : 4, reservation : 0, guest: 0, order : 0, wheelchair: 0, status: 1 },
+    {id : 4, nr: 4, chairs : 4, reservation : 0, guest: 0, order : 0, wheelchair: 0, status: 0 },
     {id : 5, nr: 5, chairs : 4, reservation : 0, guest: 0, order : 0, wheelchair: 1, status: 1 },
     {id : 6, nr: 6, chairs : 6, reservation : 0, guest: 0, order : 0, wheelchair: 1, status: 1 },
     {id : 7, nr: 7, chairs : 6, reservation : 0, guest: 0, order : 0, wheelchair: 1, status: 0 },

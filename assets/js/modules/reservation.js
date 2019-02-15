@@ -74,7 +74,7 @@ const reservation = (function(){
         _glob.arr.reservations.unshift( add_reservation_data )
         let guest_name_preposition = guest_data.preposition;
         if( guest_name_preposition !== '') guest_name_preposition += ' '
-        
+
         bsAlert( 'article.page-content','primary','',`Reservation for <b>${guest_data.firstname} ${guest_name_preposition}${guest_data.lastname}</b> has been saved` )
         location.hash = '#reservations'
       })
@@ -227,10 +227,18 @@ const reservation = (function(){
 
     //if( location.hash.split( '/')[2] ){ // update?
 
-    //} else {
+    //} else {document.querySelector( 'input#persons' )
       let tables = form.querySelector( 'select#table_select' )
       $( tables ).on( 'change' ,(event) => {
         update_header()
+      })
+      let personsField = form.querySelector( 'input#persons' )
+      $( personsField ).on( 'change' ,(event) => {
+        console.log("triggered combine table handler");
+        let result = combineTable(personsField.value);
+        for(let _table of result){
+
+        }
       })
 
       let persons = form.querySelector( 'input#persons' )
@@ -493,21 +501,33 @@ const reservation = (function(){
     while(persons > 0){
       let curTable;
       for( let table of _glob.arr.tables ){
-        if(table.status === 0){
-          if(!(curTable === null)){
-            if(curTable.chairs > persons && table.chairs > persons && table.chairs < curTable.chairs){
-              curTable = table;
-            }else if(curTable.chairs < persons && table.chairs > curTable.chairs){
+        let good = true;
+        for(let passed of returnData){
+          if(!(table.id === passed.id && good === false)){
+            good = true;
+          }else{
+            good = false;
+          }
+        }
+        if(good){
+          if(table.status === 0){
+            if(!(curTable === null || curTable === undefined)){
+              if(curTable.chairs > persons && table.chairs > persons && table.chairs < curTable.chairs){
+                curTable = table;
+              }else if(curTable.chairs < persons && table.chairs > curTable.chairs){
+                curTable = table;
+              }
+            }else{
               curTable = table;
             }
-          }else{
-            curTable = table;
           }
         }
       }
+      console.log(curTable);
       returnData.push(curTable);
       persons -= curTable.chairs;
     }
+    console.log(returnData);
     return returnData;
 }
   let updateReservation = ( id ) => {
