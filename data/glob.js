@@ -81,9 +81,9 @@ function globArr(){
   ] );
 
   glob( 'arr', 'menu' , [
-    { id : 13000, name : 'Pizza Margarita', ingredients : [{ id : 12004, quantity : 125}, { id : 12005, quantity : 100}, { id : 12006, quantity : 450}, { id : 12007, quantity : 5}], price: 12.00 , percentage :250, recipe : 'Make pizza', picture : '...'},
-    { id : 13001, name : 'Coca Cola', ingredients : [{id: 12011, quantity : 1}], price: 2.00, percentage : 400, recipe : '...', picture : '...'},
-    { id : 13002, name : 'Mac & Cheese', ingredients : [{ id : 12000, quantity : 100}, { id : 12002, quantity : 200}, { id : 12012, quantity : 100}], price: 8.00, percentage : 300, recipe : 'Make Mac & Cheese', picture : '...'},
+    { id : 13000, name : 'Pizza Margarita', ingredients : [{ id : 12004, quantity : 125}, { id : 12005, quantity : 100}, { id : 12006, quantity : 450}, { id : 12007, quantity : 5}], category: 4, price: 12.00 , percentage :250, recipe : 'Make pizza', picture : '...'},
+    { id : 13001, name : 'Coca Cola', ingredients : [{id: 12011, quantity : 1}], category: 9, price: 2.00, percentage : 400, recipe : '...', picture : '...'},
+    { id : 13002, name : 'Mac & Cheese', ingredients : [{ id : 12000, quantity : 100}, { id : 12002, quantity : 200}, { id : 12012, quantity : 100}], category: 4, price: 8.00, percentage : 300, recipe : 'Make Mac & Cheese', picture : '...'},
 
 
   ] )
@@ -117,6 +117,9 @@ function globArr(){
     { id : 6, label : 'liter (l)' }
 
   ] )
+
+  // !!!!
+  // Please rename this to 'ingredient_categories' to prevent mistakes with 'menu_categories'
   glob( 'arr', 'categories' , [
     { id : 1, label : 'Pork' },
     { id : 2, label : 'Beef' },
@@ -125,10 +128,22 @@ function globArr(){
     { id : 5, label : 'Fruit' },
     { id : 6, label : 'Vegetables' },
     { id : 7, label : 'Pasta' },
-    { id : 8, label : 'Bread' },
-
-
+    { id : 8, label : 'Bread' }
   ] )
 
+  glob( 'arr', 'menu_categories' , [
+    { id : 1, label : 'Breakfast & Lunch' },
+    { id : 2, label : 'Appetizers' },
+    { id : 3, label : 'Salads' },
+    { id : 4, label : 'Main Dishes' },
+    { id : 5, label : 'Fish Dishes' },
+    { id : 6, label : 'Vegetarian Dishes' },
+    { id : 7, label : 'Side Dishes' },
+    { id : 8, label : 'Desserts' },
+    { id : 9, label : 'Beverages' },
+    { id : 10, label : 'Beers' },
+    { id : 11, label : 'Wines' },
+    { id : 12, label : 'Liquors' }
+  ] )
 
 }

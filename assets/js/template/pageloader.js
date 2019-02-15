@@ -29,7 +29,7 @@ function setModule( modules ){
       id : 'guests',
       label : 'Manage Guests'
     },{
-      id : 'menu',
+      id : 'menuitems',
       label : 'Manage Menu',
       items : [
         {
@@ -51,7 +51,7 @@ function getModule( endpoint ){
 
   try{
     endpoint.indexOf( '/' ) > 0 ? _glob.module[ `${endpoint.split( '/' )[0]}/${endpoint.split( '/' )[1]}` ]() : _glob.module[ endpoint ]()
-  }catch( error ) {
+  } catch( error ) {
     console.warn( `${endpoint} : ${error}` )
   }
 }

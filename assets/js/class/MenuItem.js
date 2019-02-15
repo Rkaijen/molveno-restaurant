@@ -10,7 +10,7 @@ class MenuItem {
       this._price = data.price;
       this._percentage = data.percentage;
       this._recipe = data.recipe;
-      this._pictue = data.picture;
+      this._picture = data.picture;
       this._description = data.description;
     }else{
       this._id = id;
@@ -20,7 +20,7 @@ class MenuItem {
       this._price = price;
       this._percentage = percentage;
       this._recipe = recipe;
-      this._pictue = picture;
+      this._picture = picture;
       this._description = description;
     }
   }

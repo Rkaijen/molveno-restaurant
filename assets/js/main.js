@@ -21,7 +21,7 @@
     'modules/dashboard',
     'modules/guest',
     'modules/ingredient',
-    'modules/menu',
+    'modules/menuitem',
     'modules/order',
     'modules/reservation',
     'modules/table',
@@ -55,11 +55,6 @@
         endpoint : 'reservations/delete',
         action : () => reservation.delete( location.hash.split('/')[2] )
       },{
-        label : 'Invoices',
-        primaryNav : true,
-        endpoint : 'invoices',
-        action : () => mainInvoices()
-      },{
         label : 'Guests',
         primaryNav : true,
         endpoint : 'guests',
@@ -79,23 +74,6 @@
       },{
         endpoint : 'guests/delete',
         action : () => deleteGuest( location.hash.split('/')[2] )
-      },{
-        label : 'Menu',
-        primaryNav : true,
-        endpoint : 'menu',
-        action : () => menu.main()
-      },{
-        endpoint : 'menu/add',
-        action : () => menu.add()
-      },{
-        endpoint : 'menu/overview',
-        action : () => menu.overview()
-      },{
-        endpoint : 'menu/view',
-        action : () => menu.view()
-      },{
-        endpoint : 'menu/delete',
-        action : () => menu.delete( location.hash.split('/')[2] )
       },{
         label : 'Ingredients',
         primaryNav : true,
@@ -131,6 +109,26 @@
       },{
         endpoint : 'tables/delete',
         action : () => table.delete( location.hash.split('/')[2] )
+      },{
+        label : 'Menu Items',
+        primaryNav : true,
+        endpoint : 'menuitems',
+        action : () => menuitem.main()
+      },{
+        endpoint : 'menuitems/add',
+        action : () => menuitem.add()
+      },{
+        endpoint : 'menuitems/overview',
+        action : () => menuitem.overview()
+      },{
+        endpoint : 'menuitems/view',
+        action : () => menuitem.view( location.hash.split('/')[2] )
+      },{
+        endpoint : 'menuitems/update',
+        action : () => menuitem.update( location.hash.split('/')[2] )
+      },{
+        endpoint : 'menuitems/delete',
+        action : () => menuitem.delete( location.hash.split('/')[2] )
       },{
         label : 'Invoices',
         primaryNav : true,
