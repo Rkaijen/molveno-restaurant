@@ -22,7 +22,6 @@
     'modules/guest',
     'modules/ingredient',
     'modules/menu',
-    'modules/menuitem',
     'modules/order',
     'modules/reservation',
     'modules/table',
@@ -84,24 +83,19 @@
         label : 'Menu',
         primaryNav : true,
         endpoint : 'menu',
-        action : () => mainMenu()
+        action : () => menu.main()
       },{
-        label : 'Menu Item',
-        primaryNav : true,
-        endpoint : 'menuitems',
-        action : () => menuitem.main()
+        endpoint : 'menu/add',
+        action : () => menu.add()
       },{
-        endpoint : 'menuitems/add',
-        action : () => menuitem.add()
+        endpoint : 'menu/overview',
+        action : () => menu.overview()
       },{
-        endpoint : 'menuitems/overview',
-        action : () => menuitem.overview()
+        endpoint : 'menu/view',
+        action : () => menu.view()
       },{
-        endpoint : 'menuitems/view',
-        action : () => menuitem.view()
-      },{
-        endpoint : 'menuitems/delete',
-        action : () => menuitem.delete( location.hash.split('/')[2] )
+        endpoint : 'menu/delete',
+        action : () => menu.delete( location.hash.split('/')[2] )
       },{
         label : 'Ingredients',
         primaryNav : true,
@@ -115,8 +109,8 @@
         endpoint : 'ingredients/delete',
         action : () => ingredient.delete( location.hash.split('/')[2] )
       },{
-        endpoint : 'ingredients/edit',
-        action : () => ingredient.edit( location.hash.split('/')[2] )
+        endpoint : 'ingredients/update',
+        action : () => ingredient.update( location.hash.split('/')[2] )
       },{
         endpoint : 'ingredients/add',
         action : () => ingredient.add()
@@ -145,6 +139,6 @@
       }
     ]
     setModule( modules)
-    
+
   })
 })()
