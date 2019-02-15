@@ -483,12 +483,32 @@ const reservation = (function(){
         return false;
     });
     //TODO: the function that says logged need to auto select tables
-    $('input#persons').on('input', function() {
-    // do something
-    console.log("logged");
-    });
+    $('input#persons').on('input', combineTable(document.querySelector( 'input#persons' ).value));
     callback();
   }
+  let combineTable = function(persons){
+    console.log("logged");
+    let returnData = [];
+    while(persons > 0){
+      let curTable;
+      for( let table of _glob.arr.tables ){
+        if(table.status === 0){
+          if(!(curTable === null)){
+            if(curTable.chairs > persons && table.chairs > persons && table.chairs < curTable.chairs){
+              curTable = table;
+            }else if(curTable.chairs < persons && table.chairs > curTable.chairs){
+              curTable = table;
+            }
+          }else{
+            curTable = table;
+          }
+        }
+      }
+      returnData.push(curTable);
+      persons -= curTable.chairs;
+    }
+    return returnData;
+}
   let updateReservation = ( id ) => {
     navTab({
       id : 'update',
